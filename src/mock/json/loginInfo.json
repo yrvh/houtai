@@ -1,0 +1,10 @@
+{
+  "result": "success",
+  "data": {
+    "userSn": "9999000",
+    "username": "金石为开c",
+    "age": 22,
+    "password": "ttt555555"
+  },
+  "msg": ""
+}

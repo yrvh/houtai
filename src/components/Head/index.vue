@@ -1,16 +1,33 @@
 <template>
   <header id="head">
     <div class="head-logo"><img src="@/assets/logo.png" alt="小马物业"></div>
-    <div class="head-exit">
+    <div class="head-exit" :class="{activatedExit:isActivated}" @click="logout" @mouseover="overChangeColor" @mouseleave="leaveChangeColor">
       <i class="iconfont icontuichu1"></i>
-      <span>退出系统</span>
+      <span>&nbsp;&nbsp;退出系统</span>
     </div>
   </header>
 </template>
 
 <script>
   export default {
-    name: "Head"
+    name: "Head",
+    data() {
+      return {
+        isActivated: false
+      }
+    },
+    methods: {
+      logout() {
+        window.sessionStorage.clear();
+        this.$router.push('/login');
+      },
+      overChangeColor() {
+        this.isActivated = true;
+      },
+      leaveChangeColor() {
+        this.isActivated = false;
+      }
+    }
   }
 </script>
 
@@ -18,5 +35,6 @@
   #head{ height: 64px; width: 100%; border-bottom: 1px solid #eee; background-color: #F8F8F8; display: flex; justify-content: space-between; align-items: center;}
   .head-logo{ margin-left: 16px;}
   .head-logo img{ width: 165px;height: 45px;}
-  .head-exit{ color: #666; margin-right: 35px; font-weight: 500; background-color: #f00;}
+  .head-exit{ color: #666; margin-right: 35px; font-weight: 600; cursor: pointer;}
+  .activatedExit{ color: #00A0E9;}
 </style>

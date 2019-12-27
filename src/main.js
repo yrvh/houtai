@@ -6,8 +6,13 @@ import './plugins/element.js'
 
 Vue.config.productionTip = false;
 
-// element-ui 框架
+// 配置请求
+import axios from 'axios'
+// axios.defaults.baseURL = 'http://16.12.12.10/api'   如果不做跨域可以用这种方式
+Vue.prototype.$axios = axios;
 
+// 模拟后台 mock
+require('./mock');
 
 // 自适应
 // function setRem() {

@@ -13,6 +13,13 @@
       "unicode_decimal": 59284
     },
     {
+      "icon_id": "519521",
+      "name": "账户",
+      "font_class": "zhanghu",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
       "icon_id": "538489",
       "name": "加",
       "font_class": "jia",
@@ -53,6 +60,13 @@
       "font_class": "qianbao1",
       "unicode": "e63f",
       "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "902049",
+      "name": "密码",
+      "font_class": "mima",
+      "unicode": "e639",
+      "unicode_decimal": 58937
     },
     {
       "icon_id": "968464",
@@ -102,6 +116,13 @@
       "font_class": "shangchuan1",
       "unicode": "e631",
       "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "1356161",
+      "name": "眼睛-闭",
+      "font_class": "yanjing-bi",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
     },
     {
       "icon_id": "1368541",
@@ -319,6 +340,13 @@
       "font_class": "dalou",
       "unicode": "e699",
       "unicode_decimal": 59033
+    },
+    {
+      "icon_id": "9371345",
+      "name": "眼睛",
+      "font_class": "yanjing",
+      "unicode": "e763",
+      "unicode_decimal": 59235
     },
     {
       "icon_id": "9632604",
