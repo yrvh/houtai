@@ -9,6 +9,11 @@ Vue.config.productionTip = false;
 // 配置请求
 import axios from 'axios'
 // axios.defaults.baseURL = 'http://16.12.12.10/api'   如果不做跨域可以用这种方式
+axios.interceptors.request.use( (config) => {
+  config.headers.Authorization = window.sessionStorage.getItem('token')
+  console.log(config)
+  return config
+})
 Vue.prototype.$axios = axios;
 
 // 模拟后台 mock

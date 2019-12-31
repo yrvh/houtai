@@ -6,5 +6,8 @@
     "age": 22,
     "password": "ttt555555"
   },
-  "msg": ""
+  "meta": {
+    "msg": "获得成功",
+    "status": 200
+  }
 }

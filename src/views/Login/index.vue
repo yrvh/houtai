@@ -59,13 +59,14 @@
       login() {
         this.$refs.loginFormRef.validate( async (valid)=> {
           if(!valid) return
-          const res =await this.$axios.post("/api/loginInfo",this.loginForm)
+          const { data:res } =await this.$axios.post("/api/loginInfo",this.loginForm)
           //const {data: res2} =await this.$axios.post("/api/loginInfo",this.loginForm)  后端接口文档写好后用这个
-          if(res.status !== 200) return this.$message.error('登录失败!~')
+          if(res.meta.status !== 200) return this.$message.error('登录失败!~')
           this.$message.success('登录成功!~')
           console.log(res)
+          console.log(res.data)
           window.sessionStorage.setItem('token',99)   // 将token存储在本地
-          this.$router.push('/home')   // 编程式导航
+          this.$router.push('/xiaoma')   // 编程式导航
         })
       },
     },
