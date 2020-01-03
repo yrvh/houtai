@@ -97,6 +97,12 @@
                 <span>缴费管理</span>
               </template>
             </el-menu-item>
+            <el-menu-item index="/xiaoma/payment3">
+              <template slot="title">
+                <i class="iconfont icon-headerAside-payment3"></i>
+                <span>缴费记录</span>
+              </template>
+            </el-menu-item>
           </el-submenu>
 
           <el-menu-item index="/xiaoma/repairs">
@@ -218,7 +224,6 @@
 
   .el-menu { border-right: none; }
   .el-menu i { color: #fff; }
-  .iconfont { margin-right: 10px; }
   .el-submenu { background-color: #132C4B; }
   .el-submenu.is-active { background: #132C4B !important; }
   .el-submenu:hover {background-color: #132C4B !important; }

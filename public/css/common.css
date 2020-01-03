@@ -3,6 +3,10 @@ ul,li{ list-style: none;}
 img{ display: block;}
 html,body,#app{height: 100%; background-color: #dee;}
 body{ font-size: 16px;}
-.box{ height: 100%;}
 .clearfix:after{ content:""; display: block; clear:both;}
 .el-card{ box-shadow: 0 1px 1px rgba(0,0,0,0.15) !important;}
+.el-pagination{ margin-top: 15px; }
+.el-table{ margin-top: 27px; background-color: #00A0E9; }
+
+
+.iconfont { margin-right: 9px;}

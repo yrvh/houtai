@@ -15,6 +15,30 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-delete:before {
+    content: "\e61b";
+}
+
+.icon-download:before {
+    content: "\e64a";
+}
+
+.icon-export2:before {
+    content: "\e8eb";
+}
+
+.icon-put:before {
+    content: "\e610";
+}
+
+.icon-refresh:before {
+    content: "\e794";
+}
+
+.icon-export:before {
+    content: "\e653";
+}
+
 .icon-search:before {
     content: "\e60c";
 }
@@ -132,9 +156,7 @@
     content: "\e711";
 }
 
-.iconshuaxin:before {
-  content: "\e794";
-}
+
 
 .iconzhanghu:before {
   content: "\e628";
@@ -170,10 +192,6 @@
   content: "\e642";
 }
 
-.icondelete:before {
-  content: "\e61b";
-}
-
 .icontongjifenxi:before {
   content: "\e605";
 }
@@ -186,9 +204,7 @@
   content: "\e62f";
 }
 
-.iconupload:before {
-  content: "\e610";
-}
+
 
 .iconshangchuan1:before {
   content: "\e631";
@@ -246,9 +262,7 @@
   content: "\e619";
 }
 
-.icondayin:before {
-  content: "\e653";
-}
+
 
 
 
@@ -337,17 +351,12 @@
   content: "\e763";
 }
 
-.iconxiazai:before {
-  content: "\e64a";
-}
+
 
 .iconV:before {
   content: "\e6e6";
 }
 
-.iconxiazai-copy:before {
-  content: "\e8eb";
-}
 
 
 .iconaiusers:before {

@@ -1,18 +1,21 @@
 <template>
-  <main-card title="余额管理">
+  <main-card title="缴费记录">
     <div slot="content">
-      <div class="payment1-top">
-        <el-input class="payment1-input" placeholder="所属年月" v-model="queryInfo.query" clearable @clear="getCommunicateList">
+      <div class="payment3-top">
+        <el-input class="payment3-input" placeholder="所属年月" v-model="queryInfo.query" clearable @clear="getCommunicateList">
           <template slot="prepend">款费日期</template>
         </el-input>
-        <el-input class="payment1-input" placeholder="所属年月" v-model="queryInfo.query" clearable @clear="getCommunicateList">
+        <el-input class="payment3-input" placeholder="所属年月" v-model="queryInfo.query" clearable @clear="getCommunicateList">
           <template slot="prepend">款费日期</template>
         </el-input>
-        <el-button type="primary" class="payment1-search" @click="getCommunicateList"><i class="iconfont icon-search"></i>搜索</el-button>
-        <el-button type="danger" class="payment1-clear" @click="getCommunicateList">清空</el-button>
-      </div>
-      <div>
-        <el-button class="payment1-add" @click="addDialogVisible = true"><i class="iconfont icon-refresh"></i>刷新</el-button>
+        <el-input class="payment3-input" placeholder="所属年月" v-model="queryInfo.query" clearable @clear="getCommunicateList">
+          <template slot="prepend">款费日期</template>
+        </el-input>
+        <el-input class="payment3-input" placeholder="所属年月" v-model="queryInfo.query" clearable @clear="getCommunicateList">
+          <template slot="prepend">款费日期</template>
+        </el-input>
+        <el-button type="primary" class="payment3-search" @click="getCommunicateList"><i class="iconfont icon-search"></i>搜索</el-button>
+        <el-button type="danger" class="payment3-clear" @click="getCommunicateList">清空</el-button>
       </div>
 
       <!--   小区列表区, 数据展示   -->
@@ -34,7 +37,7 @@
 <script>
 
   export default {
-    name: "Payment1",
+    name: "Payment3",
     components:{},
     data() {
       // 自定义校验规则
@@ -182,11 +185,9 @@
 </script>
 
 <style scoped>
-  .payment1-top { height: 150px; display: flex; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #eee;}
-  .payment1-input { width: 250px; margin-right: 20px;}
-  .payment1-search { width: 85px; color: #fff; margin: 0 20px; }
-  .payment1-date-picker { }
-  .payment1-clear { width: 85px; color: #fff;}
-
-  .payment1-add { background-color: #06D673; color: #fff; margin: 20px 15px 0 0;}
+  .payment3-top { height: 150px; display: flex; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #eee;}
+  .payment3-input { width: 250px; margin-right: 20px;}
+  .payment3-search { width: 85px; color: #fff; margin: 0 20px; }
+  .payment3-date-picker { }
+  .payment3-clear { width: 85px; color: #fff;}
 </style>

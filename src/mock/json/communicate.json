@@ -1,11 +1,70 @@
 {
   "result": "success",
   "data": {
-    "num": "01",
-    "title": "物业费更新",
-    "date": "2019-10-10",
-    "top": "置顶",
-    "action": "增加,修改,删除"
+    "pagenum": 1,
+    "total": 10,
+    "communicates": [
+      {"id": "01",
+        "name": "文邦国际",
+        "address": "北海市四川路",
+        "account": "00001111",
+        "action": "修改"
+      },
+      {"id": "02",
+        "name": "百丰花园",
+        "address": "北海市海南路",
+        "account": "00002222",
+        "action": "修改"
+      },
+      {"id": "03",
+        "name": "银河产业城",
+        "address": "北海市昆明路",
+        "account": "00003333",
+        "action": "修改"
+      },
+      {"id": "04",
+        "name": "奇珠大厦",
+        "address": "北海市北京路",
+        "account": "00004444",
+        "action": "修改"
+      },
+      {"id": "05",
+        "name": "奇珠大厦5",
+        "address": "北海市北京路",
+        "account": "00004444",
+        "action": "修改"
+      },
+      {"id": "06",
+        "name": "奇珠大厦6",
+        "address": "北海市北京路",
+        "account": "00004444",
+        "action": "修改"
+      },
+      {"id": "07",
+        "name": "奇珠大厦7",
+        "address": "北海市北京路",
+        "account": "00004444",
+        "action": "修改"
+      },
+      {"id": "08",
+        "name": "奇珠大厦8",
+        "address": "北海市北京路",
+        "account": "00004444",
+        "action": "修改"
+      },
+      {"id": "09",
+        "name": "奇珠大厦9",
+        "address": "北海市北京路",
+        "account": "00004444",
+        "action": "修改"
+      },
+      {"id": "10",
+        "name": "奇珠大厦10",
+        "address": "北海市北京路",
+        "account": "00004444",
+        "action": "修改"
+      }
+    ]
   },
   "meta": {
     "msg": "获得成功",

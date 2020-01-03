@@ -6,6 +6,10 @@ import './plugins/element.js'
 
 Vue.config.productionTip = false;
 
+// 注册全局组件Maincard
+import Maincard from '@/components/Maincard'
+Vue.component('main-card',Maincard)
+
 // 配置请求
 import axios from 'axios'
 // axios.defaults.baseURL = 'http://16.12.12.10/api'   如果不做跨域可以用这种方式
