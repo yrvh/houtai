@@ -99,7 +99,7 @@
             </el-menu-item>
             <el-menu-item index="/xiaoma/payment3">
               <template slot="title">
-                <i class="iconfont icon-headerAside-payment3"></i>
+                <i class="iconfont icon-headerAside-approval1"></i>
                 <span>缴费记录</span>
               </template>
             </el-menu-item>

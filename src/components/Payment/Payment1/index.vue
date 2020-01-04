@@ -182,7 +182,7 @@
 </script>
 
 <style scoped>
-  .payment1-top { height: 150px; display: flex; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #eee;}
+  .payment1-top { height: 92px; display: flex; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #eee;}
   .payment1-input { width: 250px; margin-right: 20px;}
   .payment1-search { width: 85px; color: #fff; margin: 0 20px; }
   .payment1-date-picker { }
