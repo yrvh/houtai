@@ -15,6 +15,30 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-home-top1:before {
+    content: "\e888";
+}
+
+.icon-home-top2:before {
+    content: "\e8a3";
+}
+
+.icon-home-top3:before {
+    content: "\e62f";
+}
+
+.icon-home-top4:before {
+    content: "\e63f";
+}
+
+.icon-home-top5:before {
+    content: "\e613";
+}
+
+.icon-home-top6:before {
+    content: "\e66e";
+}
+
 .icon-delete:before {
     content: "\e61b";
 }
@@ -180,9 +204,7 @@
   content: "\e601";
 }
 
-.iconqianbao1:before {
-  content: "\e63f";
-}
+
 
 .iconmima:before {
   content: "\e639";
@@ -200,9 +222,6 @@
   content: "\e62d";
 }
 
-.iconbucaozulin-bian:before {
-  content: "\e62f";
-}
 
 
 
@@ -226,17 +245,11 @@
   content: "\e611";
 }
 
-.iconquanxianyuechi:before {
-  content: "\e8a3";
-}
 
 .iconkehuguanli:before {
   content: "\e6ea";
 }
 
-.iconjiudian:before {
-  content: "\e888";
-}
 
 .iconless:before {
   content: "\e60e";
@@ -254,9 +267,7 @@
   content: "\e685";
 }
 
-.iconqichuyue:before {
-  content: "\e66e";
-}
+
 
 .iconyonghuguanli:before {
   content: "\e619";
@@ -286,9 +297,7 @@
   content: "\e648";
 }
 
-.iconIcon-yonghu:before {
-  content: "\e613";
-}
+
 
 .iconico_jiudianguanli_yuanqifangtai:before {
   content: "\e8e9";
