@@ -2,9 +2,9 @@
   <div class="login-container">
     <div class="login-box" @dblclick="resetLoginForm">
       <div class="login-avatar">
-        <img src="../../../public/img/avatar.png" alt="">
+        <img src="../../../public/img/avatar.png" alt="头像">
       </div>
-      <!-- 登录表单区域-->
+      <!-- 登录表单的区域-->
       <div class="login-content">
         <div class="login-title">小马物业后台管理系统</div>
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" class="login-form">
@@ -43,11 +43,11 @@
         loginFormRules: {
           username: [
             { required: true, message: '请输入登录账号!~', trigger: 'blur'},
-            { min: 5, max: 20, message: '长度在5 ~ 20个字符之间!~',trigger: 'blur'}
+            { min: 6, max: 20, message: '长度在6 ~ 20个字符之间!~',trigger: 'blur'}
           ],
           password: [
             { required: true, message: '请输入登录密码!~', trigger: 'blur'},
-            { min: 5, max: 20, message: '长度在8 ~ 32个字符之间!~',trigger: 'blur'}
+            { min: 6, max: 32, message: '长度在6 ~ 32个字符之间!~',trigger: 'blur'}
           ],
         },
       }

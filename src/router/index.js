@@ -1,3 +1,4 @@
+// 路由总配置页
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import login from './login'
