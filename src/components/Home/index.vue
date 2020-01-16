@@ -1,3 +1,4 @@
+<!-- 首页页面 -->
 <template>
   <div class="box">
     <div class="home-top">

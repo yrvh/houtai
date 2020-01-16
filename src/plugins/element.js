@@ -4,7 +4,7 @@ import { Button, Form, FormItem, Input,
         Main, Menu, Submenu, MenuItemGroup,
         MenuItem, Card, Row, Col, Table,
         TableColumn, Switch, Tooltip, Pagination,
-        Dialog, DatePicker} from 'element-ui'
+        Dialog, DatePicker, Select, Option,OptionGroup} from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Form)
@@ -26,6 +26,9 @@ Vue.use(TableColumn)
 Vue.use(Pagination)
 Vue.use(Dialog)
 Vue.use(DatePicker)
+Vue.use(Select)
+Vue.use(Option)
+Vue.use(OptionGroup)
 
 
 

@@ -14,6 +14,7 @@ export default {
   component: () => import('@/views/Xiaoma'),
   children: [
     {path: 'home', component: () => import('@/components/Home')},
+    {path: 'merchant', component: () => import('@/components/Merchant')},
     count,
     permission,
     payment,
@@ -23,6 +24,6 @@ export default {
     marketing,
     intelligent,
     {path: 'approval1', component: () => import('@/components/Approval/Approval1')},
-    {path: '/*', redirect: 'home'}
+    {path: '/', redirect: 'home'}
   ]
 }

@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './plugins/element.js'
+import Qs2 from 'qs'
 
 Vue.config.productionTip = false;
 
@@ -12,18 +13,21 @@ Vue.component('main-card',Maincard)
 
 // 配置请求
 import axios from 'axios'
-// axios.defaults.baseURL = 'http://16.12.12.10/api'   如果不做跨域可以用这种方式
+//axios.defaults.baseURL = 'http://192.168.2.88:8001/ponyproperty-manager/v2/api-docs'   //  如果不做跨域可以用这种方式
 
-axios.interceptors.request.use( (config) => {   // 携带token访问 需要账号密码验证的api
-  config.headers.Authorization = window.sessionStorage.getItem('token')
-  console.log(config)
-  return config
-})
+
+// 携带token访问 需要账号密码验证的api
+// axios.interceptors.request.use( (config) => {
+//   config.headers.Authorization = window.sessionStorage.getItem('token')
+//   // console.log(config)
+//   return config
+// })
+
 
 Vue.prototype.$axios = axios;
-
 // 模拟后台 mock
 require('./mock');
+
 
 // 自适应
 // function setRem() {

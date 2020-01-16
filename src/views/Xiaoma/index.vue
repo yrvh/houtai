@@ -21,12 +21,18 @@
         <!-- 侧边栏的菜单-->
         <el-menu text-color="#fff" active-text-color="#fff"
                  :collapse="isCollapse" :collapse-transition="false"
-                 router   default-active="/xiaoma/acount1"
-                 :unique-opened="true">
+                 router   default-active="/xiaoma/merchant"
+                 unique-opened>
           <el-menu-item index="/xiaoma/home">
             <template slot="title">
               <i class="iconfont icon-headerAside-home"></i>
               <span>首页</span>
+            </template>
+          </el-menu-item>
+          <el-menu-item index="/xiaoma/merchant">
+            <template slot="title">
+              <i class="iconfont icon-headerAside-home"></i>
+              <span>商户管理</span>
             </template>
           </el-menu-item>
 
@@ -503,7 +509,7 @@
             <el-menu-item index="/xiaoma/permission/account">
               <template slot="title">
                 <i class="iconfont icon-headerAside-count1"></i>
-                <span>账号管理</span>
+                <span>子账号管理</span>
               </template>
             </el-menu-item>
             <el-menu-item index="/xiaoma/permission/role">
@@ -595,6 +601,7 @@
     },
     methods: {
       logout() {
+        // const { data:res } = await this.$axios.get('/ponyproperty-manager/login/logout')
         window.sessionStorage.clear();
         this.$router.push('/login');
       },

@@ -10,7 +10,7 @@ const routes = [
   login,
   xiaoma,
   {
-    path: '/',
+    path: '/*',
     redirect: '/login'
   }
 ];
@@ -21,16 +21,16 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach( (to,from,next)=>{   // 挂载路由导航守卫
-  // to 代表将要访问的路径
-  // from 代表从哪个路径跳转而来
-  // next 是一个函数     next()表示放行   next('/login')表示强制跳转
-  if(to.path === '/login') return next();
-  const tokenStr = window.sessionStorage.getItem('token');
-  console.log(tokenStr);
-  console.log(!tokenStr);
-  if(!tokenStr) return next('/login');
-  next();
-});
+// router.beforeEach( (to,from,next)=>{   // 挂载路由导航守卫
+//   // to 代表将要访问的路径
+//   // from 代表从哪个路径跳转而来
+//   // next 是一个函数     next()表示放行   next('/login')表示强制跳转
+//   if(to.path === '/login') return next();
+//   const tokenStr = window.sessionStorage.getItem('token');
+//   // console.log(tokenStr);
+//   // console.log(!tokenStr);
+//   if(!tokenStr) return next('/login');
+//   next();
+// });
 
 export default router

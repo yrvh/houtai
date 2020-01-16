@@ -1,3 +1,4 @@
+<!-- 数据中心页下的   小区总数-->
 <template>
   <main-card title="小区总数">
     <div slot="content">

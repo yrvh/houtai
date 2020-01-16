@@ -8,8 +8,8 @@
       <div class="login-content">
         <div class="login-title">小马物业后台管理系统</div>
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" class="login-form">
-          <el-form-item prop="username">账号
-            <el-input v-model="loginForm.username"
+          <el-form-item prop="account_name">账号
+            <el-input v-model="loginForm.account_name"
                       placeholder="请输入账号"
                       prefix-icon="iconfont icon-login-account"></el-input>
           </el-form-item>
@@ -32,18 +32,19 @@
 </template>
 
 <script>
+  import Qs from 'qs'
   export default {
     name: "Login",
     data() {
       return {
         loginForm: {
-          username: "",
+          account_name: "",
           password: ""
         },
         loginFormRules: {
-          username: [
+          account_name: [
             { required: true, message: '请输入登录账号!~', trigger: 'blur'},
-            { min: 6, max: 20, message: '长度在6 ~ 20个字符之间!~',trigger: 'blur'}
+            { min: 5, max: 24, message: '长度在5 ~ 24个字符之间!~',trigger: 'blur'}
           ],
           password: [
             { required: true, message: '请输入登录密码!~', trigger: 'blur'},
@@ -59,14 +60,25 @@
       login() {
         this.$refs.loginFormRef.validate( async (valid)=> {
           if(!valid) return
-          const { data:res } =await this.$axios.post("/api/loginInfo",this.loginForm)
-          //const {data: res2} =await this.$axios.post("/api/loginInfo",this.loginForm)  后端接口文档写好后用这个
-          if(res.meta.status !== 200) return this.$message.error('登录失败!~')
+          //const { data:res } = await this.$axios.post('/ponyproperty-manager/login/login',this.loginForm)   // 参数格式是json
+          const {data: res} = await this.$axios({   // 保持参数格式  'Content-Type': 'application/x-www-form-urlencoded'
+            url: '/ponyproperty-manager/login/login',
+            method: 'post',
+            transformRequest: [function (data) {
+              return Qs.stringify(data)
+            }],
+            data: {
+              account_name: this.loginForm.account_name,
+              password: this.loginForm.password
+            }
+          })
+          if(res.msg !== 'OK') return this.$message.error('登录失败!~')
           this.$message.success('登录成功!~')
+
+          console.log("小马的数据:")
           console.log(res)
-          console.log(res.data)
-          window.sessionStorage.setItem('token',99)   // 将token存储在本地
-          this.$router.push('/xiaoma')   // 编程式导航
+          // window.sessionStorage.setItem('token',99)   // 将token存储在本地
+          this.$router.push('/xiaoma/merchant')   // 编程式导航
         })
       },
     },
