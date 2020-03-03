@@ -602,7 +602,7 @@
     methods: {
       logout() {
         // const { data:res } = await this.$axios.get('/ponyproperty-manager/login/logout')
-        window.sessionStorage.clear();
+        window.sessionStorage.clear();   // 清除token, 强制跳转到登录页 
         this.$router.push('/login');
       },
       overChangeColor() {

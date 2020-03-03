@@ -4,7 +4,7 @@ import { Button, Form, FormItem, Input,
         Main, Menu, Submenu, MenuItemGroup,
         MenuItem, Card, Row, Col, Table,
         TableColumn, Switch, Tooltip, Pagination,
-        Dialog, DatePicker, Select, Option,OptionGroup} from 'element-ui'
+        Dialog, DatePicker, Select, Option,OptionGroup } from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Form)
