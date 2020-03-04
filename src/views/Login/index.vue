@@ -1,3 +1,23 @@
+<el-submenu index="2">
+  <template slot="title">
+    <i class="iconfont icon-containerXiaoma-count"></i>
+    <span>小区管理</span>
+  </template>
+  <el-menu-item index="/xiaoma/count/comminuty1">
+    <template slot="title">
+      <i class="iconfont icon-containerXiaoma-count1"></i>
+      <span>小区列表</span>
+    </template>
+  </el-menu-item>
+  <el-menu-item index="/xiaoma/count/comminuty2">
+    <template slot="title">
+      <i class="iconfont icon-containerXiaoma-count2"></i>
+      <span>小区设置</span>
+    </template>
+  </el-menu-item>
+</el-submenu>
+
+
 <template>
   <div class="login-container">
     <div class="login-box" @dblclick="resetLoginForm">

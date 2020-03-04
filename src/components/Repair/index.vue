@@ -1,31 +1,31 @@
-<!-- 公告管理页面 -->
+<!-- 报修管理页面-->
 <template>
-  <main-card title="公告管理">
+  <main-card title="故障报修">
     <div slot="content">
-      <div class="notice-top">
-        <el-input class="notice-input" placeholder="所属年月" v-model="queryInfo.query" clearable @clear="getCommunicateList">
-          <template slot="prepend">款费日期</template>
-        </el-input>
-        <el-input class="notice-input" placeholder="所属年月" v-model="queryInfo.query" clearable @clear="getCommunicateList">
+      <div class="repairs-top">
+        <el-input class="repairs-input" placeholder="所属年月" v-model="queryInfo.query" clearable @clear="getCommunicateList">
           <template slot="prepend">款费日期</template>
         </el-input>
         <el-date-picker
-            class="notice-date-picker"
-            v-model="dateStr"
-            type="daterange"
-            align="right"
-            unlink-panels
-            range-separator="~"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            :picker-options="pickerOptions2">
+                class="repairs-date-picker"
+                v-model="dateStr"
+                type="daterange"
+                align="right"
+                unlink-panels
+                range-separator="~"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                :picker-options="pickerOptions2">
         </el-date-picker>
-        <el-button type="primary" class="notice-search" @click="getCommunicateList"><i class="iconfont icon-search"></i>搜索</el-button>
-        <el-button type="danger" class="notice-clear" @click="getCommunicateList">清空</el-button>
-      </div>
-      <div>
-        <el-button class="notice-add" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>新建公告</el-button>
-        <el-button class="notice-add" @click="addDialogVisible = true"><i class="iconfont icon-refresh"></i>刷新</el-button>
+        <el-input class="repairs-input" placeholder="所属年月" v-model="queryInfo.query" clearable @clear="getCommunicateList">
+          <template slot="prepend">款费日期</template>
+        </el-input>
+        <el-input class="repairs-input" placeholder="所属年月" v-model="queryInfo.query" clearable @clear="getCommunicateList">
+          <template slot="prepend">款费日期</template>
+        </el-input>
+
+        <el-button type="primary" class="repairs-search" @click="getCommunicateList"><i class="iconfont icon-search"></i>搜索</el-button>
+        <el-button type="danger" class="repairs-clear" @click="getCommunicateList">清空</el-button>
       </div>
 
       <!--   小区列表区, 数据展示   -->
@@ -47,7 +47,7 @@
 <script>
 
   export default {
-    name: "Notice",
+    name: "Repair",
     components:{},
     data() {
       // 自定义校验规则
@@ -195,11 +195,10 @@
 </script>
 
 <style scoped>
-  .notice-top { height: 92px; display: flex; align-items: center; border-bottom: 1px solid #eee;}
-  .notice-input { width: 250px; margin-right: 20px;}
-  .notice-search { width: 85px; color: #fff; margin: 0 20px; }
-  .notice-date-picker { }
-  .notice-clear { width: 85px; color: #fff;}
+  .repairs-top { height: 150px; display: flex; align-items: center; border-bottom: 1px solid #eee; flex-wrap: wrap;}
+  .repairs-input { width: 250px; margin-right: 20px;}
+  .repairs-search { width: 85px; color: #fff; margin: 0 20px; }
+  .repairs-date-picker { }
+  .repairs-clear { width: 85px; color: #fff;}
 
-  .notice-add { background-color: #06D673; color: #fff; margin: 20px 30px 0 0;}
 </style>
