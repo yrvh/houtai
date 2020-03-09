@@ -98,7 +98,7 @@
           console.log("小马的数据:")
           console.log(res)
           // window.sessionStorage.setItem('token',99)   // 将token存储在本地
-          this.$router.push('/xiaoma/merchant')   // 编程式导航
+          this.$router.push('/xiaoma/home')   // 编程式导航
         })
       },
     },

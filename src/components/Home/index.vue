@@ -38,7 +38,7 @@
 
 <script>
 
-  import Homecard from '@/components/Homecard'
+  import Homecard from '@/components/Common/Homecard'
 
   export default {
     name: "Home",

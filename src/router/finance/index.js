@@ -5,6 +5,6 @@ export default {
   children: [
     {path: 'finance1', component: () => import('@/components/Finance/Finance1')},
     {path: 'finance2', component: () => import('@/components/Finance/Finance2')},
-    {path: '/', redirect: 'list'}
+    {path: '/', redirect: 'finance1'}
   ]
 }

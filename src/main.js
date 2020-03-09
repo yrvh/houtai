@@ -8,8 +8,11 @@ import Qs2 from 'qs'
 Vue.config.productionTip = false;
 
 // 注册全局组件Maincard
-import Maincard from '@/components/Maincard'
+import Maincard from '@/components/Common/Maincard'
+import Maincard2 from '@/components/Common/Maincard2'
 Vue.component('main-card',Maincard)
+Vue.component('main-card2',Maincard2)
+
 
 // 配置请求
 import axios from 'axios'

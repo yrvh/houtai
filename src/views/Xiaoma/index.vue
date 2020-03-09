@@ -135,13 +135,13 @@
             <i class="iconfont icon-containerXiaoma-count"></i>
             <span>财务报表</span>
           </template>
-          <el-menu-item index="/xiaoma/finace/finace1">
+          <el-menu-item index="/xiaoma/finance/finance1">
             <template slot="title">
               <i class="iconfont icon-containerXiaoma-count1"></i>
               <span>报表1</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/finace/finace2">
+          <el-menu-item index="/xiaoma/finance/finance2">
             <template slot="title">
               <i class="iconfont icon-containerXiaoma-count2"></i>
               <span>报表2</span>
@@ -149,31 +149,37 @@
           </el-menu-item>
         </el-submenu>
 
-        <el-submenu index="11">
-          <template slot="title">
-            <i class="iconfont icon-containerXiaoma-count"></i>
-            <span>会员用户</span>
-          </template>
-          <el-menu-item index="/xiaoma/vip/vip1">
+          <el-menu-item index="/xiaoma/vip">
             <template slot="title">
               <i class="iconfont icon-containerXiaoma-count1"></i>
-              <span>会员用户1</span>
+              <span>会员用户</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/vip/vip2">
-            <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count2"></i>
-              <span>会员用户2</span>
-            </template>
-          </el-menu-item>
-        </el-submenu>
 
-        <el-menu-item index="/xiaoma/permis">
-          <template slot="title">
-            <i class="iconfont icon-containerXiaoma-count1"></i>
-            <span>权限管理</span>
-          </template>
+        <el-submenu index="12">
+        <template slot="title">
+        <i class="iconfont icon-containerXiaoma-count"></i>
+        <span>权限管理</span>
+        </template>
+        <el-menu-item index="/xiaoma/permission/account">
+        <template slot="title">
+        <i class="iconfont icon-containerXiaoma-count1"></i>
+        <span>子账号管理</span>
+        </template>
         </el-menu-item>
+        <el-menu-item index="/xiaoma/permission/role">
+        <template slot="title">
+        <i class="iconfont icon-containerXiaoma-count2"></i>
+        <span>角色管理</span>
+        </template>
+        </el-menu-item>
+        <el-menu-item index="/xiaoma/permission/resource">
+        <template slot="title">
+        <i class="iconfont icon-containerXiaoma-count2"></i>
+        <span>资源管理</span>
+        </template>
+        </el-menu-item>
+        </el-submenu>
 
       </el-menu>
     </el-aside>
@@ -268,14 +274,15 @@
 
   .headerMain { width: 100%; height: 100%;}
   .el-header { height: 76px; width: 100%; border-bottom: 1px solid #eee; background-color: #FFF; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;}
-  .header-left { height: 20px; color: #333; line-height: 20px;}
-  .header-left i {margin-right: 30px; cursor: pointer;}
-  .header-right {height: 20px; }
-  .header-menu { height: 100%; color: #ccc; line-height: 20px; float: left;}
-  .header-menu i {margin-left: 30px; cursor: pointer;}
-  .header-admin { height: 100%; margin-left:20px; float: right; cursor: pointer;}
+  .header-left { color: #333; line-height: 38px; }
+  .header-left i {margin-right: 30px; cursor: pointer; font-size: 22px;}
+
+  /*.header-right {background-color: crimson; }*/
+  .header-menu { color: #ccc; line-height: 38px; float: left;}
+  .header-menu i {margin-left: 30px; cursor: pointer; font-size: 20px;}
+  .header-admin { line-height: 38px; margin-left:20px; float: right; cursor: pointer;}
   .header-admin i{ font-size: 20px; color: #ccc; margin: 0 0 0 5px;}
-  .header-admin span{ color: #999; margin-left: 8px;}
+  .header-admin span{ color: #999; margin-left: 10px;}
 
   .el-main { background-color: #eee; padding: 20px; }
 </style>

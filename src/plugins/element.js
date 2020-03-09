@@ -1,10 +1,10 @@
 import Vue from 'vue'
-import { Button, Form, FormItem, Input,
-        Message, Container, Header, Aside,
-        Main, Menu, Submenu, MenuItemGroup,
+import { Button, Form, FormItem, Input, Container,
+        Header, Aside, Main, Menu, Submenu, MenuItemGroup,
         MenuItem, Card, Row, Col, Table,
         TableColumn, Switch, Tooltip, Pagination,
-        Dialog, DatePicker, Select, Option,OptionGroup } from 'element-ui'
+        Dialog, DatePicker, Select, Option,OptionGroup,
+        Breadcrumb, BreadcrumbItem, Message, MessageBox} from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Form)
@@ -29,10 +29,13 @@ Vue.use(DatePicker)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(OptionGroup)
+Vue.use(Breadcrumb)
+Vue.use(BreadcrumbItem)
 
 
 
-Vue.prototype.$message = Message
+Vue.prototype.$message = Message   // 为vue原型挂载message
+Vue.prototype.$confirm = MessageBox.confirm // 为vue原型挂载message
 
 
 

@@ -5,6 +5,6 @@ export default {
   children: [
     {path: 'deal1', component: () => import('@/components/Deal/Deal1')},
     {path: 'deal2', component: () => import('@/components/Deal/Deal2')},
-    {path: '/', redirect: 'list'}
+    {path: '/', redirect: 'deal1'}
   ]
 }

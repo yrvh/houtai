@@ -1,67 +1,15 @@
-<!-- 报修管理页面-->
+<!-- 小区管理下的   小区列表-->
 <template>
-  <main-card2 title1="报修管理">
+  <main-card2 title1="小区管理" title2="小区列表">
     <div slot="content">
-      <div class="repairs-top">
-        <el-row :gutter="8">
-          <el-col :span="7">
-            <el-row :gutter="2">
-              <el-col :span="5"><span>小区名称</span></el-col>
-              <el-col :span="18">
-                <el-select v-model="value" allow-create filterable clearable placeholder="全部小区">
-                  <el-option-group
-                          v-for="group in groups"
-                          :key="group.label"
-                          :label="group.label">
-                    <el-option
-                            v-for="item in group.options"
-                            :key="item.communityKey"
-                            :label="item.label"
-                            :value="item.communityKey">
-                    </el-option>
-                  </el-option-group>
-                </el-select>
-              </el-col>
-            </el-row>
-          </el-col>
-          <el-col :span="7">
-            <el-row :gutter="4">
-              <el-col :span="5.5"><span>报修时间</span></el-col>
-              <el-col :span="6">
-                <el-date-picker
-                        v-model="dateValue"
-                        type="date"
-                        placeholder="选择日期">
-                </el-date-picker>
-              </el-col>
-            </el-row>
-          </el-col>
-          <el-col :span="5">
-            <el-row :gutter="4">
-              <el-col :span="5.5"><span>报修人</span></el-col>
-              <el-col :span="15">
-                <el-input
-                        placeholder="请输入姓名"
-                        v-model="manValue"
-                        clearable>
-                </el-input>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="2">
-            <el-button type="danger" class="repair-search repair-button" @click="getCommunicateList">查询</el-button>
-          </el-col>
-          <el-col :span="2">
-            <el-button type="info" class="repair-clear repair-button" @click="getCommunicateList">重置</el-button>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="1"><span>报修类型</span></el-col>
-          <el-col :span="4"></el-col>
-          <el-col :span="1"><span>小区名称</span></el-col>
-          <el-col :span="4"></el-col>
-        </el-row>
+      <el-row>
+        <el-col></el-col>
+      </el-row>
+      <div class="list-communityName">
+        <el-input class="list-input" placeholder="请输入小区名称" v-model="queryInfo.query" clearable @clear="getCommunicateList"></el-input>
+        <el-button type="danger" class="list-search" @click="getCommunicateList">查询</el-button>
+        <el-button type="info" class="list-search" @click="resetCommunicateList">重置</el-button>
+        <el-button class="list-add" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>添加小区</el-button>
       </div>
 
       <!--   小区列表区, 数据展示   -->
@@ -72,18 +20,80 @@
         <el-table-column label="账号" prop="account"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" plain @click="showEditDialog(scope.row.id)">修改</el-button>
+            <el-button type="primary" plain size="mini" @click="showEditDialog(scope.row)">编辑</el-button>
+            <el-button type="danger" plain size="mini" @click="removeCommunicate(scope.row.id)" >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
+
+      <!-- 分页区域 -->
+      <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="queryInfo.pagenum"
+              :page-sizes="[5, 8, 15, 20, 30]"
+              :page-size="queryInfo.pagesize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="total">
+      </el-pagination>
     </div>
+
+    <!--  这是添加小区的 对话框  -->
+    <el-dialog title="添加小区" :visible.sync="addDialogVisible" width="40%" @close="addDialogClosed">
+
+      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="80px">
+        <el-form-item label="小区名称" prop="name">
+          <el-input v-model="addForm.name"></el-input>
+        </el-form-item>
+        <el-form-item label="地址" prop="address">
+          <el-input v-model="addForm.address"></el-input>
+        </el-form-item>
+        <el-form-item label="账号" prop="account">
+          <el-input v-model="addForm.account"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="addForm.password" type="password"></el-input>
+        </el-form-item>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addDialogVisible = false">取 消</el-button>
+        <el-button @click="addComm" type="primary">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <!--  修改小区的 对话框 -->
+    <el-dialog title="修改小区信息" :visible.sync="editDialogVisible" width="40%" @close="editDialogClosed">
+
+      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="80px">
+        <el-form-item label="小区名称">
+          <el-input v-model="editForm.name" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="地址" prop="address">
+          <el-input v-model="editForm.address"></el-input>
+        </el-form-item>
+        <el-form-item label="账号" prop="account">
+          <el-input v-model="editForm.account"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="editForm.password" type="password"></el-input>
+        </el-form-item>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="editDialogVisible = false">取 消</el-button>
+        <el-button @click="editComm" type="primary">确 定</el-button>
+      </span>
+    </el-dialog>
   </main-card2>
+
+
 </template>
 
 <script>
 
   export default {
-    name: "Repair",
+    name: "List",
     components:{},
     data() {
       // 自定义校验规则
@@ -94,48 +104,6 @@
       }
 
       return {
-        value: '',   //绑定当前被选中的小区
-        groups: [   // 物业分组数据
-          {label: '--同盛物业--',
-            options: [{
-              communityKey: '选项1',
-              label: '银河产业城'
-            }, {
-              communityKey: '选项2',
-              label: '恒大名都'
-            }, {
-              communityKey: '选项3',
-              label: '大度金沙湾'
-            }, {
-              communityKey: '选项4',
-              label: '三千海'
-            }, {
-              communityKey: '选项5',
-              label: '碧桂园'
-            }]
-          },
-          {label: '--小海物业--',
-            options: [{
-              communityKey: '选项6',
-              label: '大山花园'
-            }, {
-              communityKey: '选项7',
-              label: '世纪城'
-            }, {
-              communityKey: '选项8',
-              label: '文邦国际'
-            }, {
-              communityKey: '选项9',
-              label: '翰林苑'
-            }, {
-              communityKey: '选项10',
-              label: '桐洋新城'
-            }]
-          }
-        ],
-        dateValue: '',   // 报修日期
-        manValue: '',   // 报修人
-        //================================================================
         queryInfo: {   // 获取小区列表时 传的参数对象
           query: '',   // 查询参数
           pagenum: 1,   // 当前页码
@@ -144,13 +112,13 @@
         communicateList: [],   // 小区列表
         total: 0,   // 小区总数据条数
         addDialogVisible: false,   // 控制添加小区的显示与隐藏
-        addForm: {
+        addForm: {   // 添加小区时的数据对象
           name: '',
           address: '',
           account: '',
           password: ''
         },
-        addFormRules: {
+        addFormRules: {   // 添加小区时的规则校验
           name: [
             {required: true, message: '请输入小区名字!~', trigger: 'blur'}
           ],
@@ -167,7 +135,7 @@
             { min: 8, max: 32, message: '长度在8 ~ 32个字符之间!~',trigger: 'blur'}
           ]
         },
-        editFormRules: {
+        editFormRules: {   // 修改小区时的规则校验
           address: [
             {required: true, message: '请输入小区地址!~', trigger: 'blur'}
           ],
@@ -181,8 +149,8 @@
             { min: 8, max: 32, message: '长度在8 ~ 32个字符之间!~',trigger: 'blur'}
           ]
         },
-        editDialogVisible: false,
-        editForm: {}
+        editDialogVisible: false,   // 修改小区对话框的显示与隐藏
+        editForm: {}   // 修改小区对话框的数据对象
       }
     },
     created() {
@@ -270,9 +238,9 @@
 </script>
 
 <style scoped>
-  .repairs-top { height: 150px;  border-bottom: 1px solid #eee; }
-  .el-row .el-col { line-height: 38px;}
-  .el-row span { background-color: crimson; font-weight: 600; font-size: 14px;}
-  .repair-button { width: 70px; color: #fff; }
-  .repair-search { margin-left: 10px;}
+  .list-communityName { position: relative; display: flex; align-items: center; }
+  .list-input { width: 300px; }
+  .list-search { width: 80px; color: #fff; margin-left: 9px;}
+  .list-add { position: absolute; right: 0; background-color: #2C68F7; color: #fff;}
+
 </style>

@@ -4,7 +4,7 @@ import datas from '../datas'
 import prepay from '../prepay'
 import deal from '../deal'
 import finance from '../finance'
-import permis from '../permis'
+import permission from '../permission'
 
 
 
@@ -13,8 +13,8 @@ export default {
   path : '/xiaoma',
   component: () => import('@/views/Xiaoma'),
   children: [
-    {path: 'home', component: () => import('@/components/Home')},
-    {path : 'community', component: () => import('@/components/Swipers')},
+    {path : 'home', component: () => import('@/components/Home')},
+    {path : 'swipers', component: () => import('@/components/Swipers')},
     {path : 'notice', component: () => import('@/components/Notice')},
     {path : 'bill', component: () => import('@/components/Bill')},
     {path : 'repair', component: () => import('@/components/Repair')},
@@ -24,7 +24,7 @@ export default {
     prepay,
     deal,
     finance,
-    permis,
+    permission,
 
     {path: '/', redirect: 'home'}
   ]
