@@ -9,7 +9,7 @@
         <el-input class="list-input" placeholder="请输入小区名称" v-model="queryInfo.query" clearable @clear="getCommunicateList"></el-input>
         <el-button type="danger" class="list-search" @click="getCommunicateList">查询</el-button>
         <el-button type="info" class="list-search" @click="resetCommunicateList">重置</el-button>
-        <el-button class="list-add" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>添加小区</el-button>
+        <el-button class="list-add button-primary" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>添加小区</el-button>
       </div>
 
       <!--   小区列表区, 数据展示   -->
@@ -57,8 +57,8 @@
       </el-form>
 
       <span slot="footer" class="dialog-footer">
-        <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button @click="addComm" type="primary">确 定</el-button>
+        <el-button class="button-info"  @click="addDialogVisible = false">取 消</el-button>
+        <el-button class="button-primary" @click="addComm" type="primary">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -81,8 +81,8 @@
       </el-form>
 
       <span slot="footer" class="dialog-footer">
-        <el-button @click="editDialogVisible = false">取 消</el-button>
-        <el-button @click="editComm" type="primary">确 定</el-button>
+        <el-button class="button-info" @click="editDialogVisible = false">取 消</el-button>
+        <el-button class="button-primary" @click="editComm" type="primary">确 定</el-button>
       </span>
     </el-dialog>
   </main-card2>
@@ -181,8 +181,6 @@
         this.queryInfo.pagenum = newPage
         this.getCommunicateList()
       },
-
-
       addDialogClosed() {   // 监听对话框关闭事件
         this.$refs.addFormRef.resetFields()
       },
@@ -222,13 +220,15 @@
         // 弹框询问用户是否确认删除
         const confirmResult = await this.$confirm('此操作将永久删除该小区, 是否继续?','提示',{
           confirmButtonText: '确定',
+          confirmButtonClass: 'button-primary',
           cancelButtonText: '取消',
+          cancelButtonClass: 'button-info',
           type: 'warning'
         }).catch( err => {return err})
         if(confirmResult !== 'confirm'){
           return this.$message.info('已取消了删除!~~')
         }
-        // this.$axios.delete('')   // 用户确认删除???
+        // this.$axios.delete('')   // 用户确认删除,发起ajax请求???
         // if!==200 删除失败
         // this.$message.success('删除小区成功小区成功')
         // this.getCommunicateList()   // 重新获取用户的列表
@@ -241,6 +241,6 @@
   .list-communityName { position: relative; display: flex; align-items: center; }
   .list-input { width: 300px; }
   .list-search { width: 80px; color: #fff; margin-left: 9px;}
-  .list-add { position: absolute; right: 0; background-color: #2C68F7; color: #fff;}
+  .list-add { position: absolute; right: 0; }
 
 </style>

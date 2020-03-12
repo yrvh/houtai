@@ -1,6 +1,8 @@
-<!-- 账单管理页面-->
+<!-- 账单管理页面 -->
 <template>
-  <div> 账单管理页面</div>
+  <keep-alive>
+    <router-view/>
+  </keep-alive>
 </template>
 
 <script>

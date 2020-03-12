@@ -78,12 +78,30 @@
           </template>
         </el-menu-item>
 
-        <el-menu-item index="/xiaoma/bill">
+        <el-submenu index="6">
           <template slot="title">
-            <i class="iconfont icon-containerXiaoma-count1"></i>
+            <i class="iconfont icon-containerXiaoma-count"></i>
             <span>账单管理</span>
           </template>
-        </el-menu-item>
+          <el-menu-item index="/xiaoma/bill/bills">
+            <template slot="title">
+              <i class="iconfont icon-containerXiaoma-count1"></i>
+              <span>账单列表</span>
+            </template>
+          </el-menu-item>
+          <el-menu-item index="/xiaoma/bill/collection">
+            <template slot="title">
+              <i class="iconfont icon-containerXiaoma-count1"></i>
+              <span>催收单</span>
+            </template>
+          </el-menu-item>
+          <el-menu-item index="/xiaoma/bill/check">
+            <template slot="title">
+              <i class="iconfont icon-containerXiaoma-count1"></i>
+              <span>账单审核</span>
+            </template>
+          </el-menu-item>
+        </el-submenu>
 
         <el-submenu index="7">
           <template slot="title">
@@ -109,16 +127,16 @@
             <i class="iconfont icon-containerXiaoma-count"></i>
             <span>交易管理</span>
           </template>
-          <el-menu-item index="/xiaoma/deal/deal1">
+          <el-menu-item index="/xiaoma/deal/dealpayment">
             <template slot="title">
               <i class="iconfont icon-containerXiaoma-count1"></i>
-              <span>交易管理1</span>
+              <span>后台缴费</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/deal/deal2">
+          <el-menu-item index="/xiaoma/deal/deallist">
             <template slot="title">
               <i class="iconfont icon-containerXiaoma-count2"></i>
-              <span>交易管理2</span>
+              <span>交易列表</span>
             </template>
           </el-menu-item>
         </el-submenu>
@@ -149,36 +167,42 @@
           </el-menu-item>
         </el-submenu>
 
-          <el-menu-item index="/xiaoma/vip">
+        <el-submenu index="11">
+          <template slot="title">
+            <i class="iconfont icon-containerXiaoma-count"></i>
+            <span>会员用户</span>
+          </template>
+          <el-menu-item index="/xiaoma/vip/userinfo">
             <template slot="title">
               <i class="iconfont icon-containerXiaoma-count1"></i>
-              <span>会员用户</span>
+              <span>用户信息</span>
             </template>
           </el-menu-item>
+          <el-menu-item index="/xiaoma/vip/bindinfo">
+            <template slot="title">
+              <i class="iconfont icon-containerXiaoma-count2"></i>
+              <span>绑定信息</span>
+            </template>
+          </el-menu-item>
+        </el-submenu>
 
         <el-submenu index="12">
-        <template slot="title">
-        <i class="iconfont icon-containerXiaoma-count"></i>
-        <span>权限管理</span>
-        </template>
-        <el-menu-item index="/xiaoma/permission/account">
-        <template slot="title">
-        <i class="iconfont icon-containerXiaoma-count1"></i>
-        <span>子账号管理</span>
-        </template>
-        </el-menu-item>
-        <el-menu-item index="/xiaoma/permission/role">
-        <template slot="title">
-        <i class="iconfont icon-containerXiaoma-count2"></i>
-        <span>角色管理</span>
-        </template>
-        </el-menu-item>
-        <el-menu-item index="/xiaoma/permission/resource">
-        <template slot="title">
-        <i class="iconfont icon-containerXiaoma-count2"></i>
-        <span>资源管理</span>
-        </template>
-        </el-menu-item>
+          <template slot="title">
+            <i class="iconfont icon-containerXiaoma-count"></i>
+            <span>权限管理</span>
+          </template>
+          <el-menu-item index="/xiaoma/permission/account">
+            <template slot="title">
+              <i class="iconfont icon-containerXiaoma-count1"></i>
+              <span>账号管理</span>
+            </template>
+          </el-menu-item>
+          <el-menu-item index="/xiaoma/permission/role">
+            <template slot="title">
+              <i class="iconfont icon-containerXiaoma-count2"></i>
+              <span>角色管理</span>
+            </template>
+          </el-menu-item>
         </el-submenu>
 
       </el-menu>

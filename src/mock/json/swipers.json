@@ -1,0 +1,28 @@
+{
+  "result": "success",
+  "data": {
+    "pagenum": 1,
+    "total": 3,
+    "swipers": [
+      {"id": "01",
+        "name": "轮播图1",
+        "status": true,
+        "action": "修改"
+      },
+      {"id": "02",
+        "name": "轮播图2",
+        "status": true,
+        "action": "修改"
+      },
+      {"id": "03",
+        "name": "轮播图3",
+        "status": false,
+        "action": "修改"
+      }
+    ]
+  },
+  "meta": {
+    "msg": "获得成功",
+    "status": 200
+  }
+}

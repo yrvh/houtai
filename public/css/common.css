@@ -11,3 +11,11 @@ body{ font-size: 16px;}
 
 
 .iconfont { margin-right: 9px;}
+.active-font {display: inline-block; color: #235FED; cursor: pointer;}
+.active-font:hover { text-decoration: underline; }
+
+.button-primary { background-color: #235FED !important; color: #fff !important;}
+.button-primary:hover { background-color: #4A77FF !important;color: #fff !important;}
+
+.button-info { background-color: #999999 !important; color: #fff !important;}
+.button-info:hover { background-color: #bbbbbb !important; color: #fff !important;}

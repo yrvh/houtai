@@ -4,7 +4,8 @@ import { Button, Form, FormItem, Input, Container,
         MenuItem, Card, Row, Col, Table,
         TableColumn, Switch, Tooltip, Pagination,
         Dialog, DatePicker, Select, Option,OptionGroup,
-        Breadcrumb, BreadcrumbItem, Message, MessageBox} from 'element-ui'
+        Breadcrumb, BreadcrumbItem, Message, MessageBox,Badge,
+        Radio,Upload} from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Form)
@@ -31,6 +32,10 @@ Vue.use(Option)
 Vue.use(OptionGroup)
 Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
+Vue.use(Badge)
+Vue.use(Switch)
+Vue.use(Radio)
+Vue.use(Upload)
 
 
 

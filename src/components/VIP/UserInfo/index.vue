@@ -1,6 +1,6 @@
-<!-- 权限管理下的  账号管理页面-->
+<!-- 会员用户下的  用户信息页面-->
 <template>
-  <main-card2 title1="权限管理" title2="账号管理">
+  <main-card2 title1="会员用户" title2="用户信息">
     <div slot="content">
       <div class="account-top">
         <el-row :gutter="8">
@@ -25,31 +25,51 @@
             </el-row>
           </el-col>
 
-          <el-col :span="5">
-            <el-row :gutter="4">
-              <el-col :span="5.5"><span>姓名</span></el-col>
-              <el-col :span="15">
-                <el-input
-                    placeholder="请输入姓名"
-                    v-model="manValue"
-                    clearable>
-                </el-input>
+          <el-col :span="8">
+            <el-row :gutter="10">
+              <el-col :span="4.5"><span>房间号</span></el-col>
+              <el-col :span="6">
+                <el-select v-model="value" allow-create filterable clearable placeholder="楼号">
+                  <el-option
+                      v-for="item in repairTypeOptions"
+                      :key="item.repairKey"
+                      :label="item.label"
+                      :value="item.repairKey">
+                  </el-option>
+                </el-select>
+              </el-col>
+              <el-col :span="6">
+                <el-select v-model="value" allow-create filterable clearable placeholder="单元">
+                  <el-option
+                      v-for="item in repairTypeOptions"
+                      :key="item.repairKey"
+                      :label="item.label"
+                      :value="item.repairKey">
+                  </el-option>
+                </el-select>
+              </el-col>
+              <el-col :span="6">
+                <el-select v-model="value" allow-create filterable clearable placeholder="房间">
+                  <el-option
+                      v-for="item in repairTypeOptions"
+                      :key="item.repairKey"
+                      :label="item.label"
+                      :value="item.repairKey">
+                  </el-option>
+                </el-select>
               </el-col>
             </el-row>
           </el-col>
 
-          <el-col :span="6">
-            <el-row :gutter="2">
-              <el-col :span="4.5"><span>角色</span></el-col>
-              <el-col :span="18">
-                <el-select v-model="value" allow-create filterable clearable placeholder="选择角色">
-                  <el-option
-                      v-for="item in accountTypeOptions"
-                      :key="item.accountKey"
-                      :label="item.label"
-                      :value="item.accountKey">
-                  </el-option>
-                </el-select>
+          <el-col :span="5">
+            <el-row :gutter="4">
+              <el-col :span="5.5"><span>业主姓名</span></el-col>
+              <el-col :span="17">
+                <el-input
+                    placeholder="请输入业主姓名"
+                    v-model="manValue"
+                    clearable>
+                </el-input>
               </el-col>
             </el-row>
           </el-col>
@@ -70,10 +90,12 @@
       <!--   账号列表展示区   -->
       <el-table :data="accountList" stripe :header-cell-style="getRowClass">
         <el-table-column label="序号" type="index"></el-table-column>
-        <el-table-column label="账户名" prop="account_name"></el-table-column>
-        <el-table-column label="密码" prop="account_password"></el-table-column>
-        <el-table-column label="角色" prop="role_name"></el-table-column>
-        <el-table-column label="创建时间" prop="ctime"></el-table-column>
+        <el-table-column label="用户名" prop="account_name"></el-table-column>
+        <el-table-column label="姓名" prop="account_password"></el-table-column>
+        <el-table-column label="身份" prop="role_name"></el-table-column>
+        <el-table-column label="房间号" prop="ctime"></el-table-column>
+        <el-table-column label="手机号" prop="ctime"></el-table-column>
+        <el-table-column label="注册时间" prop="ctime"></el-table-column>
         <el-table-column label="操作" min-width="120px">
           <template slot-scope="scope">
             <click-span @click="showEditDialog(scope.row.id)" content1="详情"></click-span>
@@ -177,7 +199,7 @@
   import Qs from 'qs'
 
   export default {
-    name: "Account",
+    name: "UserInfo",
     components:{},
     data() {
       // 自定义手机号校验规则

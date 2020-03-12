@@ -10,14 +10,14 @@
               <el-col :span="18">
                 <el-select v-model="value" allow-create filterable clearable placeholder="全部小区">
                   <el-option-group
-                          v-for="group in merchantGroups"
-                          :key="group.label"
-                          :label="group.label">
+                      v-for="group in merchantGroups"
+                      :key="group.label"
+                      :label="group.label">
                     <el-option
-                            v-for="item in group.options"
-                            :key="item.communityKey"
-                            :label="item.label"
-                            :value="item.communityKey">
+                        v-for="item in group.options"
+                        :key="item.communityKey"
+                        :label="item.label"
+                        :value="item.communityKey">
                     </el-option>
                   </el-option-group>
                 </el-select>
@@ -29,9 +29,9 @@
               <el-col :span="5.5"><span>报修时间</span></el-col>
               <el-col :span="6">
                 <el-date-picker
-                        v-model="dateValue"
-                        type="date"
-                        placeholder="选择日期">
+                    v-model="dateValue"
+                    type="date"
+                    placeholder="选择日期">
                 </el-date-picker>
               </el-col>
             </el-row>
@@ -41,9 +41,9 @@
               <el-col :span="5.5"><span>报修人</span></el-col>
               <el-col :span="15">
                 <el-input
-                        placeholder="请输入姓名"
-                        v-model="manValue"
-                        clearable>
+                    placeholder="请输入姓名"
+                    v-model="manValue"
+                    clearable>
                 </el-input>
               </el-col>
             </el-row>
@@ -65,10 +65,10 @@
               <el-col :span="18">
                 <el-select v-model="value" allow-create filterable clearable placeholder="请选择类型">
                   <el-option
-                          v-for="item in repairTypeOptions"
-                          :key="item.repairKey"
-                          :label="item.label"
-                          :value="item.repairKey">
+                      v-for="item in repairTypeOptions"
+                      :key="item.repairKey"
+                      :label="item.label"
+                      :value="item.repairKey">
                   </el-option>
                 </el-select>
               </el-col>

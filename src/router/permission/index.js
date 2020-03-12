@@ -4,7 +4,6 @@ export default {
   component: () => import('@/components/Permission'),
   children: [
     {path: 'account', component: () => import('@/components/Permission/Account')},
-    {path: 'resource', component: () => import('@/components/Permission/Resource')},
     {path: 'role', component: () => import('@/components/Permission/Role')},
     {path: '/', redirect: 'account'}
   ]
