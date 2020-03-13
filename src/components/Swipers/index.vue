@@ -12,12 +12,12 @@
         <el-table-column label="轮播图" prop="name"></el-table-column>
         <el-table-column label="状态" min-width="120px">
           <template slot-scope="scope">
-            <span @click="showSwipers(scope.row)" :class="[scope.row.status? 'font-show':'font-hidden', 'active-font']">显示</span>
+            <span @click="showSwipers(scope.row)" :class="[scope.row.status? 'font-success':'font-info', 'active-font']">显示</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" min-width="120px">
           <template slot-scope="scope">
-            <span @click="removeSwipers(scope.row.id)" class="active-font">删除</span>
+            <span @click="removeSwipers(scope.row.id)" class="active-font font-warning">删除</span>
           </template>
         </el-table-column>
       </el-table>
@@ -210,8 +210,6 @@
 
 <style scoped>
   .swipers-add{ margin-top: 20px;}
-  .font-show { color: #25D9BE; }
-  .font-hidden { color: #999999; }
   .sweipers-add-dialog { font-weight: 600;}
   .dialog-footer { display: flex; justify-content: center;}
 </style>

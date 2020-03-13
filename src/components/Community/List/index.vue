@@ -7,8 +7,8 @@
       </el-row>
       <div class="list-communityName">
         <el-input class="list-input" placeholder="请输入小区名称" v-model="queryInfo.query" clearable @clear="getCommunicateList"></el-input>
-        <el-button type="danger" class="list-search" @click="getCommunicateList">查询</el-button>
-        <el-button type="info" class="list-search" @click="resetCommunicateList">重置</el-button>
+        <el-button class="button-warning list-search" @click="getCommunicateList">查询</el-button>
+        <el-button class="button-info list-search" @click="resetCommunicateList">重置</el-button>
         <el-button class="list-add button-primary" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>添加小区</el-button>
       </div>
 
@@ -20,8 +20,8 @@
         <el-table-column label="账号" prop="account"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" plain size="mini" @click="showEditDialog(scope.row)">编辑</el-button>
-            <el-button type="danger" plain size="mini" @click="removeCommunicate(scope.row.id)" >删除</el-button>
+            <span @click="showEditDialog(scope.row)" class="active-font font-primary">编辑</span>
+            <span @click="removeCommunicate(scope.row.id)"  class="active-font font-warning">删除</span>
           </template>
         </el-table-column>
       </el-table>

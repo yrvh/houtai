@@ -74,6 +74,7 @@
               </el-col>
             </el-row>
           </el-col>
+
           <el-col :span="10">
             <el-row :gutter="18">
               <el-col :span="4.5"><span>房间号</span></el-col>
@@ -109,6 +110,7 @@
               </el-col>
             </el-row>
           </el-col>
+
         </el-row>
 
         <div class="repair-nav">
