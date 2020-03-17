@@ -1,14 +1,13 @@
-<!-- 帐单管理下的  催收单页面 -->
+<!-- 权限管理 下的权限管理页面 -->
 <template>
-  <main-card2 title1="帐单管理" title2="催收单">
+  <main-card2 title1="权限管理" title2="权限管理">
     <div slot="content">
-      <div class="collection-top">
+      <div class="permis-top">
         <el-row :gutter="6">
-
-          <el-col :span="5">
+          <el-col :span="6">
             <el-row :gutter="2">
-              <el-col :span="7"><span>小区名称</span></el-col>
-              <el-col :span="16">
+              <el-col :span="4.5"><span>小区名称</span></el-col>
+              <el-col :span="18">
                 <el-select v-model="queryInfo.community" allow-create filterable clearable placeholder="全部小区">
                   <el-option
                       v-for="item in comm_options"
@@ -21,88 +20,60 @@
             </el-row>
           </el-col>
 
-          <el-col :span="9">
-            <el-row :gutter="18"  >
-              <el-col :span="4.5"><span>房间号</span></el-col>
-              <el-col :span="6">
-                <el-select v-model="queryInfo.collection_build" allow-create filterable clearable placeholder="楼号">
-                  <el-option
-                      v-for="item in build_options"
-                      :key="item.build_key"
-                      :label="item.label"
-                      :value="item.build_key">
-                  </el-option>
-                </el-select>
-              </el-col>
-              <el-col :span="7">
-                <el-select v-model="queryInfo.collection_unit" allow-create filterable clearable placeholder="单元">
-                  <el-option
-                      v-for="item in unit_options"
-                      :key="item.unit_key"
-                      :label="item.label"
-                      :value="item.unit_key">
-                  </el-option>
-                </el-select>
-              </el-col>
-              <el-col :span="6">
-                <el-select v-model="queryInfo.collection_house" allow-create filterable clearable placeholder="房间">
-                  <el-option
-                      v-for="item in house_options"
-                      :key="item.house_key"
-                      :label="item.label"
-                      :value="item.house_key">
-                  </el-option>
-                </el-select>
-              </el-col>
-            </el-row>
-          </el-col>
-
           <el-col :span="5">
-            <el-row :gutter="4">
-              <el-col :span="5.5"><span>缴费档期</span></el-col>
-              <el-col :span="16">
+            <el-row :gutter="4" >
+              <el-col :span="5.5"><span>标题</span></el-col>
+              <el-col :span="18">
                 <el-input
-                    placeholder="请输入缴费档期"
-                    v-model="queryInfo.collection_stage"
+                    placeholder="请输入公告标题"
+                    v-model="queryInfo.permis_title"
                     clearable>
                 </el-input>
               </el-col>
             </el-row>
           </el-col>
 
-          <el-col :span="2">
-            <el-button type="danger" class="button-warning" @click="getCollectionList">查询</el-button>
-          </el-col>
-          <el-col :span="2">
-            <el-button type="info" class="button-info" @click="resetCollectionList(queryInfo)">重置</el-button>
+          <el-col :span="7">
+            <el-row :gutter="4" >
+              <el-col :span="5.5"><span>发布时间</span></el-col>
+              <el-col :span="6">
+                <el-date-picker
+                    v-model="queryInfo.permis_date"
+                    type="date"
+                    placeholder="选择日期">
+                </el-date-picker>
+              </el-col>
+            </el-row>
           </el-col>
 
+          <el-col :span="2">
+            <el-button type="danger" class="button-warning permis-button" @click="getpermisList">查询</el-button>
+          </el-col>
+          <el-col :span="2">
+            <el-button type="info" class="button-info permis-button" @click="resetPermisList(queryInfo)">重置</el-button>
+          </el-col>
         </el-row>
+        <div class="second-line">
+          <el-button class="button-primary" size="small" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>新建账号</el-button>
+        </div>
       </div>
 
 
-      <!--   催收单列表展示区   -->
-      <el-table :data="collection_list" stripe :header-cell-style="getRowClass">
+      <!--   账号列表展示区   -->
+      <el-table :data="permis_list" stripe :header-cell-style="getRowClass">
         <el-table-column label="序号" type="index"></el-table-column>
-        <el-table-column label="房间号" prop="account"></el-table-column>
-        <el-table-column label="用户名" prop="name"></el-table-column>
-        <el-table-column label="流水号" prop="account"></el-table-column>
-        <el-table-column label="缴费档期" prop="address"></el-table-column>
-        <el-table-column label="总额" prop="name"></el-table-column>
-        <el-table-column label="状态" prop="name"></el-table-column>
-        <el-table-column label="备注" prop="name"></el-table-column>
+        <el-table-column label="账户名" prop="name"></el-table-column>
+        <el-table-column label="密码" prop="address"></el-table-column>
+        <el-table-column label="角色" prop="address"></el-table-column>
+        <el-table-column label="创建时间" prop="address"></el-table-column>
         <el-table-column label="操作" min-width="100px">
           <template slot-scope="scope">
-            <span @click="showDetailDialog(scope.row.id)" class="active-font font-primary">详情?</span>
+            <span @click="showEditDialog(scope.row.id)" class="active-font font-success">详情</span>
+            <span @click="showEditDialog(scope.row.id)" class="active-font font-primary">修改</span>
+            <span @click="showEditDialog(scope.row.id)" class="active-font font-warning">删除</span>
           </template>
         </el-table-column>
       </el-table>
-
-      <!--   底部 生成 打印 催收单   -->
-      <div class="collection-bottom second-line">
-        <el-button class="button-primary" size="small" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>生成催收单</el-button>
-        <el-button class="button-primary" size="medium" @click="addDialogVisible = true">打印催收单</el-button>
-      </div>
 
       <!-- 分页区域 -->
       <el-pagination
@@ -112,19 +83,19 @@
           :page-sizes="[5, 8, 15, 20, 30]"
           :page-size="queryInfo.pagesize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="collection_total">
+          :total="permis_total">
       </el-pagination>
     </div>
 
-    <!--  这是添加催收单的 对话框  -->
-    <el-dialog title="添加催收单公司" :visible.sync="addDialogVisible" width="40%" @close="addDialogClosed">
+    <!--  这是添加公告的 对话框  -->
+    <el-dialog title="添加公告公司" :visible.sync="addDialogVisible" width="40%" @close="addDialogClosed">
 
       <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="90px">
-        <el-form-item label="催收单名称" prop="collection_name">
-          <el-input v-model="addForm.collection_name"></el-input>
+        <el-form-item label="公告名称" prop="permis_name">
+          <el-input v-model="addForm.permis_name"></el-input>
         </el-form-item>
-        <el-form-item label="商户ID" prop="collection_id">
-          <el-input v-model="addForm.collection_id"></el-input>
+        <el-form-item label="商户ID" prop="permis_id">
+          <el-input v-model="addForm.permis_id"></el-input>
         </el-form-item>
         <el-form-item label="联系人" prop="concat_name">
           <el-input v-model="addForm.concat_name"></el-input>
@@ -136,19 +107,19 @@
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button @click="addCollection" type="primary">确 定</el-button>
+        <el-button @click="addpermis" type="primary">确 定</el-button>
       </span>
     </el-dialog>
 
-    <!--  修改催收单的 对话框 -->
-    <el-dialog title="修改催收单信息" :visible.sync="editDialogVisible" width="40%" @close="editDialogClosed">
+    <!--  修改公告的 对话框 -->
+    <el-dialog title="修改公告信息" :visible.sync="editDialogVisible" width="40%" @close="editDialogClosed">
 
       <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="80px">
-        <el-form-item label="催收单名称">
-          <el-input v-model="editForm.collection_name" disabled></el-input>
+        <el-form-item label="公告名称">
+          <el-input v-model="editForm.permis_name" disabled></el-input>
         </el-form-item>
         <el-form-item label="商户ID">
-          <el-input v-model="editForm.collection_id" disabled></el-input>
+          <el-input v-model="editForm.permis_id" disabled></el-input>
         </el-form-item>
         <el-form-item label="联系人" prop="concat_name">
           <el-input v-model="editForm.concat_name"></el-input>
@@ -160,22 +131,22 @@
 
       <span slot="footer" class="editDialog-footer">
         <el-button @click="editDialogVisible = false" type="primary" plain class="editDialog-footer-cancel">取 消</el-button>
-        <el-button @click="editCollection" type="primary" class="editDialog-footer-sure">确 定</el-button>
-        <el-button @click="delCollection" type="danger" plain class="editDialog-footer-del">删 除</el-button>
+        <el-button @click="editpermis" type="primary" class="editDialog-footer-sure">确 定</el-button>
+        <el-button @click="delpermis" type="danger" plain class="editDialog-footer-del">删 除</el-button>
       </span>
     </el-dialog>
 
-    <!--   注册催收单的对话框 -->
-    <el-dialog title="注册催收单" :visible.sync="regDialogVisible" width="40%" @close="regDialogClosed">
+    <!--   注册账号的对话框 -->
+    <el-dialog title="注册账号" :visible.sync="regDialogVisible" width="40%" @close="regDialogClosed">
 
       <el-form :model="regForm" :rules="regFormRules" ref="regFormRef" label-width="90px">
         <el-form-item label="商户ID">
-          <el-input v-model="regForm.collection_id" disabled></el-input>
+          <el-input v-model="regForm.permis_id" disabled></el-input>
         </el-form-item>
-        <el-form-item label="商户催收单" prop="collection_name">
-          <el-input v-model="regForm.collection_name"></el-input>
+        <el-form-item label="商户账号" prop="permis_name">
+          <el-input v-model="regForm.permis_name"></el-input>
         </el-form-item>
-        <el-form-item label="催收单密码" prop="password">
+        <el-form-item label="账号密码" prop="password">
           <el-input v-model="regForm.password"></el-input>
         </el-form-item>
         <el-form-item label="联系电话" prop="phone">
@@ -188,7 +159,7 @@
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="regDialogVisible = false">取 消</el-button>
-        <el-button @click="regcollection" type="primary">确 定</el-button>
+        <el-button @click="regpermis" type="primary">确 定</el-button>
       </span>
     </el-dialog>
   </main-card2>
@@ -198,7 +169,7 @@
   import Qs from 'qs'
 
   export default {
-    name: "Collection",
+    name: "permis",
     components:{},
     data() {
       // 自定义手机号校验规则
@@ -214,13 +185,11 @@
         cb(new Error('请输入合法的邮箱!~'))
       }
       return {
-        queryInfo: {   // 获取催收单列表时 传的参数对象
+        queryInfo: {   // 获取房间信息时 传的参数对象
           query: '',   // 查询参数,
           community: '',   // 查询参数,小区
-          collection_build: '',   // 查询参数,楼号
-          collection_unit: '',   // 查询参数,单元号
-          collection_house: '',   // 查询参数,房间号
-          collection_stage: '',   // 查询参数,缴费档期
+          permis_title: '',   // 查询参数,公告标题
+          permis_date: '',   // 查询参数,发公告时间
           pagenum: 1,   // 当前页码
           pagesize: 2,   // 当前每页显示多少条数据
         },
@@ -235,55 +204,25 @@
           comm_key: '选项3',
           label: '三小区'
         }],
-        build_options:  [{   // 楼号数据下拉菜单列表
-          build_key: '楼1',
-          label: '1号楼'
-        }, {
-          build_key: '楼2',
-          label: '1号楼'
-        }, {
-          build_key: '楼3',
-          label: '1号楼'
-        }],
-        unit_options:  [{   // 单元号数据下拉菜单列表
-          unit_key: '单元1',
-          label: '一单元'
-        }, {
-          unit_key: '单元2',
-          label: '二单元'
-        }, {
-          unit_key: '单元3',
-          label: '三单元'
-        }],
-        house_options:  [{   // 房间数据下拉菜单列表
-          house_key: '房间1',
-          label: '301'
-        }, {
-          house_key: '房间2',
-          label: '302'
-        }, {
-          house_key: '房间3',
-          label: '303'
-        }],
-        collection_list: [],   // 存储请求回来的 催收单列表
-        collection_total: 0,   // 催收单列表的总数
+        permis_list: [],   // 存储请求回来的 公告列表
+        permis_total: 0,   // 商户列表的总数
         //============================================================================================
 
 
-        addDialogVisible: false,   // 该属性控制 添加催收单这个对话框的显隐
+        addDialogVisible: false,   // 该属性控制 添加公告这个对话框的显隐
         addForm: {
-          collection_name: '',
-          collection_id: '',
+          permis_name: '',
+          permis_id: '',
           concat_name: '',
           concat_phone: ''
         },
-        addFormRules: {   // 添加催收单时的 格式校验
-          collection_name: [
-            {required: true, message: '请输入催收单名字!~', trigger: 'blur'},
+        addFormRules: {   // 添加公告时的 格式校验
+          permis_name: [
+            {required: true, message: '请输入公告名字!~', trigger: 'blur'},
             { min: 2, max: 15, message: '长度在2 ~ 15个字符之间!~',trigger: 'blur'}
           ],
-          collection_id: [
-            {required: true, message: '请输入催收单appID!~', trigger: 'blur'},
+          permis_id: [
+            {required: true, message: '请输入公告appID!~', trigger: 'blur'},
             { min: 2, max: 32, message: '长度在2 ~ 32个字符之间!~',trigger: 'blur'}
           ],
           concat_name: [
@@ -297,7 +236,7 @@
           ]
         },
 
-        editFormRules: {   //修改催收单时的格式校验
+        editFormRules: {   //修改公告时的格式校验
           concat_name: [
             { required: false, message: '请输入联系人!~', trigger: 'blur'},
             { min: 2, max: 15, message: '长度在2 ~ 15个字符之间!~',trigger: 'blur'}
@@ -308,25 +247,25 @@
           ]
         },
         editDialogVisible: false,   // 控制修改 对话框的显隐
-        editForm: { },   // 修改催收单时,用于接收 将要修改的催收单的信息
+        editForm: { },   // 修改公告时,用于接收 将要修改的公告的信息
 
 
-        regForm: {   // 注册催收单时, 用于存储注册表的数据
-          collection_id: '',
-          collection_name: '',
+        regForm: {   // 注册账号时, 用于存储注册表的数据
+          permis_id: '',
+          permis_name: '',
           password: '',
           phone: '',
           email: '',
-          type: this.collection_id==''? 3:2,
+          type: this.permis_id==''? 3:2,
           grade: 1,
         },
-        regFormRules: {   // 注册催收单时的 格式校验
-          collection_name: [
-            {required: true, message: '请输入催收单名字!~', trigger: 'blur'},
+        regFormRules: {   // 注册账号时的 格式校验
+          permis_name: [
+            {required: true, message: '请输入公告名字!~', trigger: 'blur'},
             { min: 2, max: 30, message: '长度在2 ~ 30个字符之间!~',trigger: 'blur'}
           ],
           password: [
-            {required: true, message: '请输入催收单密码!~', trigger: 'blur'},
+            {required: true, message: '请输入公告密码!~', trigger: 'blur'},
             { min: 2, max: 32, message: '长度在2 ~ 32个字符之间!~',trigger: 'blur'}
           ],
           phone: [
@@ -344,20 +283,20 @@
       }
     },
     created() {   // 生命周期函数, 用于初始化页面
-      this.getCollectionList()   // 调用该函数初始化催收单的列表区域
+      this.getpermisList()   // 调用该函数初始化公告的列表区域
     },
 
 
     methods: {
-      async getCollectionList() {   //获取催收单列表
+      async getpermisList() {   //获取公告列表
         const { data: res } =await this.$axios.get('/api/communicate')   //,{ params: this.queryInfo}
-        if(res.meta.status !==200) return this.$message.error('获取催收单列表失败!~')
-        this.collection_list = res.data.communicates
-        this.collection_total = res.data.total
+        if(res.meta.status !==200) return this.$message.error('获取小区列表失败!~')
+        this.permis_list = res.data.communicates
+        this.permis_total = res.data.total
       },
-      resetCollectionList(obj){   // 点击重置按钮时触发的事件
-        this.clearObj(obj)   // 调用全局函数清空,对象
-        this.getCollectionList()
+      resetPermisList(obj){   // 点击重置按钮时触发的事件
+        this.clearObj(obj)   // 调用全局函数清空对象
+        this.getpermisList()
       },
       getRowClass({ row, column, rowIndex, columnIndex }) {   // 设置table第一行的背景色
         if(rowIndex == 0) {
@@ -367,21 +306,21 @@
       },
       handleSizeChange(newSize) {   // 分页显示: 监听pagesize改变的函数
         this.queryInfo.pagesize = newSize
-        this.getCollectionList()
+        this.getpermisList()
       },
       handleCurrentChange(newPage) {   // 分页显示: 监听页码值改变的函数
         this.queryInfo.pagenum = newPage
-        this.getCollectionList()
+        this.getpermisList()
       },
       addDialogClosed() {   // 监听添加商户的对话框关闭时触发的事件
         this.$refs.addFormRef.resetFields()
       },
-      addCollection() {   // 点击确定按钮, 添加新催收单
+      addpermis() {   // 点击确定按钮, 添加新公告
         this.$refs.addFormRef.validate(async (valid) => {
           if(!valid) return
-          // 如果校验成功,, 可以发起网络请求. 来添加催收单
+          // 如果校验成功,, 可以发起网络请求. 来添加公告
           const {data:res} = await this.$axios({
-            url:'/ponyproperty-manager/collection/addCollection',
+            url:'/ponyproperty-manager/permis/addpermis',
             method: 'post',
             transformRequest: [function (data) {
               return Qs.stringify(data)
@@ -389,14 +328,14 @@
             data: {
               concat_name: this.addForm.concat_name,
               concat_phone: this.addForm.concat_phone,
-              collection_id: this.addForm.collection_id,
-              collection_name: this.addForm.collection_name
+              permis_id: this.addForm.permis_id,
+              permis_name: this.addForm.permis_name
             }
           })
-          if(res.msg!=='OK') return this.$message.error('添加催收单失败!~')
-          this.$message.success('添加催收单成功!~')
+          if(res.msg!=='OK') return this.$message.error('添加公告失败!~')
+          this.$message.success('添加公告成功!~')
           this.addDialogVisible = false   // 隐藏对话框
-          this.getCollectionList()   // 重新请求最新数据, 重新渲染页面
+          this.getpermisList()   // 重新请求最新数据, 重新渲染页面
           console.log(res)
         })
       },
@@ -409,14 +348,14 @@
       editDialogClosed() {   // 监听对话框关闭事件
         this.$refs.editFormRef.resetFields()
       },
-      editCollection() {   // 点击确定按钮, 修改催收单
+      editpermis() {   // 点击确定按钮, 修改公告
         this.$refs.editFormRef.validate(async (valid) => {
           if (!valid) return
           console.log('修改后的editForm',this.editForm)
           console.log(this.editForm.concat_phone)
-          console.log(this.editForm.collection_id)
+          console.log(this.editForm.permis_id)
           const {data:res} =await this.$axios({
-            url:'/ponyproperty-manager/collection/updatecollection',
+            url:'/ponyproperty-manager/permis/updatepermis',
             method: 'post',
             transformRequest: [function (data) {
               return Qs.stringify(data)
@@ -424,39 +363,39 @@
             data: {
               concat_name: this.editForm.concat_name,
               concat_phone: this.editForm.concat_phone,
-              collection_id: this.editForm.collection_id,
-              collection_name: this.editForm.collection_name
+              permis_id: this.editForm.permis_id,
+              permis_name: this.editForm.permis_name
             }
           })
           if(res.msg !=='OK') return this.$message.error('修改商户信息失败!~')
           this.editDialogVisible = false
-          this.getCollectionList()   // 重新请求最新数据, 重新渲染页面
+          this.getpermisList()   // 重新请求最新数据, 重新渲染页面
           this.$message.success('修改商户信息成功!~')
         })
       },
-      async delCollection() {   // 删除一条商户, 触发的函数
+      async delpermis() {   // 删除一条商户, 触发的函数
         const {data:res} =await this.$axios({
-          url:'/ponyproperty-manager/collection/deletecollection',
+          url:'/ponyproperty-manager/permis/deletepermis',
           method: 'post',
           transformRequest: [function (data) {
             return Qs.stringify(data)
           }],
-          data: { collection_id: this.editForm.collection_id }
+          data: { permis_id: this.editForm.permis_id }
         })
         if(res.msg !=='OK') return this.$message.error('删除商户信息失败!~')
         this.editDialogVisible = false
-        this.getCollectionList()   // 重新请求最新数据, 重新渲染页面
+        this.getpermisList()   // 重新请求最新数据, 重新渲染页面
         this.$message.success('删除键商户信息成功!~')
       },
 
-      showRegDialog(id) {   // 点击创建催收单, 展示注册页对话框
-        this.regForm.collection_id = id
+      showRegDialog(id) {   // 点击创建账号, 展示注册页对话框
+        this.regForm.permis_id = id
         this.regDialogVisible = true
       },
       regDialogClosed() {   // 监听对话框关闭事件
         this.$refs.regFormRef.resetFields()
       },
-      regcollection() {   // 点击确定按钮, 注册催收单
+      regpermis() {   // 点击确定按钮, 注册账号
         this.$refs.regFormRef.validate(async (valid) => {
           if (!valid) return
           console.log(this.regForm.type)
@@ -467,8 +406,8 @@
               return Qs.stringify(data)
             }],
             data: {
-              collection_id: this.regForm.collection_id,
-              collection_name: this.regForm.collection_name,
+              permis_id: this.regForm.permis_id,
+              permis_name: this.regForm.permis_name,
               password: this.regForm.password,
               phone: this.regForm.phone,
               email: this.regForm.email,
@@ -476,14 +415,11 @@
               grade: this.regForm.grade,
             }
           })
-          if(res.msg !=='OK') return this.$message.error('注册催收单失败!~')
+          if(res.msg !=='OK') return this.$message.error('注册账号失败!~')
           this.regDialogVisible = false
-          this.getCollectionList()   // 重新请求最新数据, 重新渲染页面
-          this.$message.success('注册催收单成功!~')
+          this.getpermisList()   // 重新请求最新数据, 重新渲染页面
+          this.$message.success('注册账号成功!~')
         })
-      },
-      showDetailDialog() {   // 点击详情时的,处理函数
-        console.log('点击了详情')
       }
 
     }
@@ -498,5 +434,5 @@
 
   .el-row .el-col { line-height: 38px;}
   .el-row span { font-weight: 600; font-size: 14px;}
-  .collection-bottom { display: flex; justify-content: flex-end; }
+  .permis-button { width: 70px; }
 </style>

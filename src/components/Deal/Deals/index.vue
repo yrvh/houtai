@@ -1,8 +1,8 @@
-<!-- 交易管理下的 后台缴费页面 -->
+<!-- 交易管理下的 交易列表页面 -->
 <template>
-  <main-card2 title1="交易管理" title2="后台缴费">
+  <main-card2 title1="交易管理" title2="交易列表">
     <div slot="content">
-      <div class="payment-top">
+      <div class="deals-top">
         <el-row :gutter="6">
 
           <el-col :span="5">
@@ -25,7 +25,7 @@
             <el-row :gutter="18"  >
               <el-col :span="4.5"><span>房间号</span></el-col>
               <el-col :span="6">
-                <el-select v-model="queryInfo.payment_build" allow-create filterable clearable placeholder="楼号">
+                <el-select v-model="queryInfo.deals_build" allow-create filterable clearable placeholder="楼号">
                   <el-option
                       v-for="item in build_options"
                       :key="item.build_key"
@@ -35,7 +35,7 @@
                 </el-select>
               </el-col>
               <el-col :span="7">
-                <el-select v-model="queryInfo.payment_unit" allow-create filterable clearable placeholder="单元">
+                <el-select v-model="queryInfo.deals_unit" allow-create filterable clearable placeholder="单元">
                   <el-option
                       v-for="item in unit_options"
                       :key="item.unit_key"
@@ -45,7 +45,7 @@
                 </el-select>
               </el-col>
               <el-col :span="6">
-                <el-select v-model="queryInfo.payment_house" allow-create filterable clearable placeholder="房间">
+                <el-select v-model="queryInfo.deals_house" allow-create filterable clearable placeholder="房间">
                   <el-option
                       v-for="item in house_options"
                       :key="item.house_key"
@@ -63,7 +63,7 @@
               <el-col :span="16">
                 <el-input
                     placeholder="请输入姓名"
-                    v-model="queryInfo.payment_owner"
+                    v-model="queryInfo.deals_owner"
                     clearable>
                 </el-input>
               </el-col>
@@ -76,7 +76,7 @@
               <el-col :span="16">
                 <el-input
                     placeholder="请输入流水号"
-                    v-model="queryInfo.payment_water"
+                    v-model="queryInfo.deals_water"
                     clearable>
                 </el-input>
               </el-col>
@@ -92,7 +92,7 @@
               <el-col :span="16">
                 <el-input
                     placeholder="请输入联系电话"
-                    v-model="queryInfo.payment_tel"
+                    v-model="queryInfo.deals_tel"
                     clearable>
                 </el-input>
               </el-col>
@@ -105,7 +105,7 @@
               <el-col :span="16">
                 <el-input
                     placeholder="请输入缴费状态"
-                    v-model="queryInfo.payment_paystatus"
+                    v-model="queryInfo.deals_paystatus"
                     clearable>
                 </el-input>
               </el-col>
@@ -118,7 +118,7 @@
               <el-col :span="16">
                 <el-input
                     placeholder="请输入逾期状态"
-                    v-model="queryInfo.payment_overdue"
+                    v-model="queryInfo.deals_overdue"
                     clearable>
                 </el-input>
               </el-col>
@@ -131,7 +131,7 @@
               <el-col :span="16">
                 <el-input
                     placeholder="请输入缴费档期"
-                    v-model="queryInfo.payment_stage"
+                    v-model="queryInfo.deals_stage"
                     clearable>
                 </el-input>
               </el-col>
@@ -146,7 +146,7 @@
               <el-col :span="5.5"><span>缴费时间</span></el-col>
               <el-col :span="6">
                 <el-date-picker
-                    v-model="queryInfo.payment_date"
+                    v-model="queryInfo.deals_date"
                     type="date"
                     placeholder="选择日期">
                 </el-date-picker>
@@ -155,10 +155,10 @@
           </el-col>
 
           <el-col :span="2">
-            <el-button type="danger" class="button-warning" @click="getPaymentList">查询</el-button>
+            <el-button type="danger" class="button-warning" @click="getDealsList">查询</el-button>
           </el-col>
           <el-col :span="2">
-            <el-button type="info" class="button-info" @click="resetPaymentList(queryInfo)">重置</el-button>
+            <el-button type="info" class="button-info" @click="resetDealsList(query)">重置</el-button>
           </el-col>
 
         </el-row>
@@ -175,8 +175,8 @@
       </div>
 
 
-      <!--   后台缴费展示区   -->
-      <el-table :data="payment_list" stripe :header-cell-style="getRowClass">
+      <!--   交易列表展示区   -->
+      <el-table :data="deals_list" stripe :header-cell-style="getRowClass">
         <el-table-column label="序号" type="index"></el-table-column>
         <el-table-column label="房间号" prop="account"></el-table-column>
         <el-table-column label="用户名" prop="name"></el-table-column>
@@ -188,11 +188,10 @@
         <el-table-column label="总额" prop="name"></el-table-column>
         <el-table-column label="状态" prop="name"></el-table-column>
         <el-table-column label="备注" prop="name"></el-table-column>
-        <el-table-column label="操作" min-width="150px">
+        <el-table-column label="操作" min-width="100px">
           <template slot-scope="scope">
-            <span @click="showEditDialog(scope.row)" class="active-font font-primary">修改</span>
-            <span @click="showEditDialog(scope.row.id)" class="active-font font-success">收据?</span>
-            <span @click="showEditDialog(scope.row.id)" class="active-font font-warning">催收单?</span>
+            <span @click="showEditDialog(scope.row.id)" class="active-font font-primary">详情</span>
+            <span @click="showEditDialog(scope.row.id)" class="active-font font-warning">收据</span>
           </template>
         </el-table-column>
       </el-table>
@@ -205,19 +204,19 @@
           :page-sizes="[5, 8, 15, 20, 30]"
           :page-size="queryInfo.pagesize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="payment_total">
+          :total="deals_total">
       </el-pagination>
     </div>
 
-    <!--  这是添加缴费的 对话框  -->
-    <el-dialog title="添加缴费公司" :visible.sync="addDialogVisible" width="40%" @close="addDialogClosed">
+    <!--  这是添加账单的 对话框  -->
+    <el-dialog title="添加账单公司" :visible.sync="addDialogVisible" width="40%" @close="addDialogClosed">
 
       <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="90px">
-        <el-form-item label="缴费名称" prop="payment_name">
-          <el-input v-model="addForm.payment_name"></el-input>
+        <el-form-item label="账单名称" prop="deals_name">
+          <el-input v-model="addForm.deals_name"></el-input>
         </el-form-item>
-        <el-form-item label="商户ID" prop="payment_id">
-          <el-input v-model="addForm.payment_id"></el-input>
+        <el-form-item label="商户ID" prop="deals_id">
+          <el-input v-model="addForm.deals_id"></el-input>
         </el-form-item>
         <el-form-item label="联系人" prop="concat_name">
           <el-input v-model="addForm.concat_name"></el-input>
@@ -229,19 +228,19 @@
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button @click="addPayment" type="primary">确 定</el-button>
+        <el-button @click="adddeals" type="primary">确 定</el-button>
       </span>
     </el-dialog>
 
-    <!--  修改缴费的 对话框 -->
-    <el-dialog title="修改缴费信息" :visible.sync="editDialogVisible" width="40%" @close="editDialogClosed">
+    <!--  修改账单的 对话框 -->
+    <el-dialog title="修改账单信息" :visible.sync="editDialogVisible" width="40%" @close="editDialogClosed">
 
       <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="80px">
-        <el-form-item label="缴费名称">
-          <el-input v-model="editForm.payment_name" disabled></el-input>
+        <el-form-item label="账单名称">
+          <el-input v-model="editForm.deals_name" disabled></el-input>
         </el-form-item>
         <el-form-item label="商户ID">
-          <el-input v-model="editForm.payment_id" disabled></el-input>
+          <el-input v-model="editForm.deals_id" disabled></el-input>
         </el-form-item>
         <el-form-item label="联系人" prop="concat_name">
           <el-input v-model="editForm.concat_name"></el-input>
@@ -251,13 +250,39 @@
         </el-form-item>
       </el-form>
 
-      <span slot="footer" class="dialog-footer">
-        <el-button class="button-primary" @click="editPayment">确 定</el-button>
-        <el-button class="button-info" @click="editDialogVisible = false">取 消</el-button>
+      <span slot="footer" class="editDialog-footer">
+        <el-button @click="editDialogVisible = false" type="primary" plain class="editDialog-footer-cancel">取 消</el-button>
+        <el-button @click="editdeals" type="primary" class="editDialog-footer-sure">确 定</el-button>
+        <el-button @click="deldeals" type="danger" plain class="editDialog-footer-del">删 除</el-button>
       </span>
     </el-dialog>
 
+    <!--   注册账单的对话框 -->
+    <el-dialog title="注册账单" :visible.sync="regDialogVisible" width="40%" @close="regDialogClosed">
 
+      <el-form :model="regForm" :rules="regFormRules" ref="regFormRef" label-width="90px">
+        <el-form-item label="商户ID">
+          <el-input v-model="regForm.deals_id" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="商户账单" prop="deals_name">
+          <el-input v-model="regForm.deals_name"></el-input>
+        </el-form-item>
+        <el-form-item label="账单密码" prop="password">
+          <el-input v-model="regForm.password"></el-input>
+        </el-form-item>
+        <el-form-item label="联系电话" prop="phone">
+          <el-input v-model="regForm.phone" ></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱地址" prop="email">
+          <el-input v-model="regForm.email"></el-input>
+        </el-form-item>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="regDialogVisible = false">取 消</el-button>
+        <el-button @click="regdeals" type="primary">确 定</el-button>
+      </span>
+    </el-dialog>
   </main-card2>
 </template>
 
@@ -265,7 +290,7 @@
   import Qs from 'qs'
 
   export default {
-    name: "payment",
+    name: "deals",
     components:{},
     data() {
       // 自定义手机号校验规则
@@ -281,19 +306,19 @@
         cb(new Error('请输入合法的邮箱!~'))
       }
       return {
-        queryInfo: {   // 获取后台缴费时 传的参数对象
+        queryInfo: {   // 获取交易列表时 传的参数对象
           query: '',   // 查询参数,
           community: '',   // 查询参数,小区
-          payment_build: '',   // 查询参数,楼号
-          payment_unit: '',   // 查询参数,单元号
-          payment_house: '',   // 查询参数,房间号
-          payment_owner: '',   // 查询参数,业主姓名
-          payment_water: '',   // 查询参数,流水号
-          payment_tel: '',   // 查询参数,联系电话
-          payment_paystatus: '',   // 查询参数,缴费状态
-          payment_overdue: '',   // 查询参数,逾期状态
-          payment_stage: '',   // 查询参数,缴费档期
-          payment_date: '',   // 查询参数,缴费时间
+          deals_build: '',   // 查询参数,楼号
+          deals_unit: '',   // 查询参数,单元号
+          deals_house: '',   // 查询参数,房间号
+          deals_owner: '',   // 查询参数,业主姓名
+          deals_water: '',   // 查询参数,流水号
+          deals_tel: '',   // 查询参数,联系电话
+          deals_paystatus: '',   // 查询参数,缴费状态
+          deals_overdue: '',   // 查询参数,逾期状态
+          deals_stage: '',   // 查询参数,缴费档期
+          deals_date: '',   // 查询参数,缴费时间
           pagenum: 1,   // 当前页码
           pagesize: 2,   // 当前每页显示多少条数据
         },
@@ -338,23 +363,25 @@
           house_key: '房间3',
           label: '303'
         }],
-        payment_list: [],   // 存储请求回来的 后台缴费
-        payment_total: 0,   // 后台缴费的总数
-        //===========================================================================================0
-        addDialogVisible: false,   // 该属性控制 新建缴费这个对话框的显隐
+        deals_list: [],   // 存储请求回来的 交易列表
+        deals_total: 0,   // 交易列表的总数
+        //============================================================================================
+
+
+        addDialogVisible: false,   // 该属性控制 添加账单这个对话框的显隐
         addForm: {
-          payment_name: '',
-          payment_id: '',
+          deals_name: '',
+          deals_id: '',
           concat_name: '',
           concat_phone: ''
         },
-        addFormRules: {   // 添加缴费时的 格式校验
-          payment_name: [
-            {required: true, message: '请输入缴费名字!~', trigger: 'blur'},
+        addFormRules: {   // 添加账单时的 格式校验
+          deals_name: [
+            {required: true, message: '请输入账单名字!~', trigger: 'blur'},
             { min: 2, max: 15, message: '长度在2 ~ 15个字符之间!~',trigger: 'blur'}
           ],
-          payment_id: [
-            {required: true, message: '请输入缴费appID!~', trigger: 'blur'},
+          deals_id: [
+            {required: true, message: '请输入账单appID!~', trigger: 'blur'},
             { min: 2, max: 32, message: '长度在2 ~ 32个字符之间!~',trigger: 'blur'}
           ],
           concat_name: [
@@ -367,8 +394,8 @@
             { validator: checkMobile, trigger: 'blur'}
           ]
         },
-//===========================================================================================1
-        editFormRules: {   //修改缴费时的格式校验
+
+        editFormRules: {   //修改账单时的格式校验
           concat_name: [
             { required: false, message: '请输入联系人!~', trigger: 'blur'},
             { min: 2, max: 15, message: '长度在2 ~ 15个字符之间!~',trigger: 'blur'}
@@ -379,25 +406,25 @@
           ]
         },
         editDialogVisible: false,   // 控制修改 对话框的显隐
-        editForm: { },   // 修改缴费时,用于接收 将要修改的缴费的信息
+        editForm: { },   // 修改账单时,用于接收 将要修改的账单的信息
 
 
-        regForm: {   // 注册缴费时, 用于存储注册表的数据
-          payment_id: '',
-          payment_name: '',
+        regForm: {   // 注册账单时, 用于存储注册表的数据
+          deals_id: '',
+          deals_name: '',
           password: '',
           phone: '',
           email: '',
-          type: this.payment_id==''? 3:2,
+          type: this.deals_id==''? 3:2,
           grade: 1,
         },
-        regFormRules: {   // 注册缴费时的 格式校验
-          payment_name: [
-            {required: true, message: '请输入缴费名字!~', trigger: 'blur'},
+        regFormRules: {   // 注册账单时的 格式校验
+          deals_name: [
+            {required: true, message: '请输入账单名字!~', trigger: 'blur'},
             { min: 2, max: 30, message: '长度在2 ~ 30个字符之间!~',trigger: 'blur'}
           ],
           password: [
-            {required: true, message: '请输入缴费密码!~', trigger: 'blur'},
+            {required: true, message: '请输入账单密码!~', trigger: 'blur'},
             { min: 2, max: 32, message: '长度在2 ~ 32个字符之间!~',trigger: 'blur'}
           ],
           phone: [
@@ -415,20 +442,20 @@
       }
     },
     created() {   // 生命周期函数, 用于初始化页面
-      this.getPaymentList()   // 调用该函数初始化缴费的列表区域
+      this.getDealsList()   // 调用该函数初始化账单的列表区域
     },
 
 
     methods: {
-      async getPaymentList() {   //获取后台缴费
+      async getDealsList() {   //获取交易列表
         const { data: res } =await this.$axios.get('/api/communicate')   //,{ params: this.queryInfo}
-        if(res.meta.status !==200) return this.$message.error('获取后台缴费失败!~')
-        this.payment_list = res.data.communicates
-        this.payment_total = res.data.total
+        if(res.meta.status !==200) return this.$message.error('获取交易列表失败!~')
+        this.deals_list = res.data.communicates
+        this.deals_total = res.data.total
       },
-      resetPaymentList(obj){   // 点击重置按钮时触发的事件
+      resetDealsList(obj){   // 点击重置按钮时触发的事件
         this.clearObj(obj)   // 调用全局函数清空对象
-        this.getPaymentList()
+        this.getDealsList()
       },
       getRowClass({ row, column, rowIndex, columnIndex }) {   // 设置table第一行的背景色
         if(rowIndex == 0) {
@@ -438,21 +465,21 @@
       },
       handleSizeChange(newSize) {   // 分页显示: 监听pagesize改变的函数
         this.queryInfo.pagesize = newSize
-        this.getPaymentList()
+        this.getDealsList()
       },
       handleCurrentChange(newPage) {   // 分页显示: 监听页码值改变的函数
         this.queryInfo.pagenum = newPage
-        this.getPaymentList()
+        this.getDealsList()
       },
       addDialogClosed() {   // 监听添加商户的对话框关闭时触发的事件
         this.$refs.addFormRef.resetFields()
       },
-      addPayment() {   // 点击确定按钮, 添加新缴费
+      adddeals() {   // 点击确定按钮, 添加新账单
         this.$refs.addFormRef.validate(async (valid) => {
           if(!valid) return
-          // 如果校验成功,, 可以发起网络请求. 来添加缴费
+          // 如果校验成功,, 可以发起网络请求. 来添加账单
           const {data:res} = await this.$axios({
-            url:'/ponyproperty-manager/payment/addPayment',
+            url:'/ponyproperty-manager/deals/adddeals',
             method: 'post',
             transformRequest: [function (data) {
               return Qs.stringify(data)
@@ -460,33 +487,34 @@
             data: {
               concat_name: this.addForm.concat_name,
               concat_phone: this.addForm.concat_phone,
-              payment_id: this.addForm.payment_id,
-              payment_name: this.addForm.payment_name
+              deals_id: this.addForm.deals_id,
+              deals_name: this.addForm.deals_name
             }
           })
-          if(res.msg!=='OK') return this.$message.error('添加缴费失败!~')
-          this.$message.success('添加缴费成功!~')
+          if(res.msg!=='OK') return this.$message.error('添加账单失败!~')
+          this.$message.success('添加账单成功!~')
           this.addDialogVisible = false   // 隐藏对话框
-          this.getPaymentList()   // 重新请求最新数据, 重新渲染页面
+          this.getDealsList()   // 重新请求最新数据, 重新渲染页面
           console.log(res)
         })
       },
 
       showEditDialog(row) {   // 点击修改按钮, 展示修改页
         this.editForm = row
+        console.log('row赋值给editForm',this.editForm)
         this.editDialogVisible = true
       },
       editDialogClosed() {   // 监听对话框关闭事件
         this.$refs.editFormRef.resetFields()
       },
-      editPayment() {   // 点击确定按钮, 修改缴费
+      editdeals() {   // 点击确定按钮, 修改账单
         this.$refs.editFormRef.validate(async (valid) => {
           if (!valid) return
           console.log('修改后的editForm',this.editForm)
           console.log(this.editForm.concat_phone)
-          console.log(this.editForm.payment_id)
+          console.log(this.editForm.deals_id)
           const {data:res} =await this.$axios({
-            url:'/ponyproperty-manager/payment/updatepayment',
+            url:'/ponyproperty-manager/deals/updatedeals',
             method: 'post',
             transformRequest: [function (data) {
               return Qs.stringify(data)
@@ -494,39 +522,39 @@
             data: {
               concat_name: this.editForm.concat_name,
               concat_phone: this.editForm.concat_phone,
-              payment_id: this.editForm.payment_id,
-              payment_name: this.editForm.payment_name
+              deals_id: this.editForm.deals_id,
+              deals_name: this.editForm.deals_name
             }
           })
           if(res.msg !=='OK') return this.$message.error('修改商户信息失败!~')
           this.editDialogVisible = false
-          this.getPaymentList()   // 重新请求最新数据, 重新渲染页面
+          this.getDealsList()   // 重新请求最新数据, 重新渲染页面
           this.$message.success('修改商户信息成功!~')
         })
       },
-      async delpayment() {   // 删除一条商户, 触发的函数
+      async deldeals() {   // 删除一条商户, 触发的函数
         const {data:res} =await this.$axios({
-          url:'/ponyproperty-manager/payment/deletepayment',
+          url:'/ponyproperty-manager/deals/deletedeals',
           method: 'post',
           transformRequest: [function (data) {
             return Qs.stringify(data)
           }],
-          data: { payment_id: this.editForm.payment_id }
+          data: { deals_id: this.editForm.deals_id }
         })
         if(res.msg !=='OK') return this.$message.error('删除商户信息失败!~')
         this.editDialogVisible = false
-        this.getPaymentList()   // 重新请求最新数据, 重新渲染页面
+        this.getDealsList()   // 重新请求最新数据, 重新渲染页面
         this.$message.success('删除键商户信息成功!~')
       },
 
-      showRegDialog(id) {   // 点击创建缴费, 展示注册页对话框
-        this.regForm.payment_id = id
+      showRegDialog(id) {   // 点击创建账单, 展示注册页对话框
+        this.regForm.deals_id = id
         this.regDialogVisible = true
       },
       regDialogClosed() {   // 监听对话框关闭事件
         this.$refs.regFormRef.resetFields()
       },
-      regpayment() {   // 点击确定按钮, 注册缴费
+      regdeals() {   // 点击确定按钮, 注册账单
         this.$refs.regFormRef.validate(async (valid) => {
           if (!valid) return
           console.log(this.regForm.type)
@@ -537,8 +565,8 @@
               return Qs.stringify(data)
             }],
             data: {
-              payment_id: this.regForm.payment_id,
-              payment_name: this.regForm.payment_name,
+              deals_id: this.regForm.deals_id,
+              deals_name: this.regForm.deals_name,
               password: this.regForm.password,
               phone: this.regForm.phone,
               email: this.regForm.email,
@@ -546,10 +574,10 @@
               grade: this.regForm.grade,
             }
           })
-          if(res.msg !=='OK') return this.$message.error('注册缴费失败!~')
+          if(res.msg !=='OK') return this.$message.error('注册账单失败!~')
           this.regDialogVisible = false
-          this.getPaymentList()   // 重新请求最新数据, 重新渲染页面
-          this.$message.success('注册缴费成功!~')
+          this.getDealsList()   // 重新请求最新数据, 重新渲染页面
+          this.$message.success('注册账单成功!~')
         })
       }
 

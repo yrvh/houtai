@@ -5,6 +5,8 @@ export default {
   children: [
     {path: 'house', component: () => import('@/components/Datas/House')},
     {path: 'car', component: () => import('@/components/Datas/Car')},
+    {path: 'equipment', component: () => import('@/components/Datas/Equipment')},
+    {path: 'material', component: () => import('@/components/Datas/Material')},
     {path: 'door', component: () => import('@/components/Datas/Door')},
     {path: '/', redirect: 'house'}
   ]

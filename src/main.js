@@ -25,7 +25,16 @@ import axios from 'axios'
 //   return config
 // })
 
+// 自定义全局函数, 用于清空对象
+Vue.prototype.clearObj = function(obj) {
+  for(let k in obj) {
+    if(k!='pagesize' && k!='pagenum'){
+      obj[k] = ''
+    }
+  }
+}
 
+// 引入路由
 Vue.prototype.$axios = axios;
 // 模拟后台 mock
 require('./mock');

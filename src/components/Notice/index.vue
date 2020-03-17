@@ -50,7 +50,7 @@
             <el-button type="danger" class="button-warning notice-button" @click="getNoticeList">查询</el-button>
           </el-col>
           <el-col :span="2">
-            <el-button type="info" class="button-info notice-button" @click="resetNoticeList">重置</el-button>
+            <el-button type="info" class="button-info notice-button" @click="resetNoticeList(queryInfo)">重置</el-button>
           </el-col>
         </el-row>
         <div class="second-line">
@@ -62,21 +62,21 @@
       </div>
 
 
-      <!--   账号列表展示区   -->
+      <!--   公告列表展示区   -->
       <el-table :data="notice_list" stripe :header-cell-style="getRowClass">
         <el-table-column label="序号" type="index"></el-table-column>
         <el-table-column label="标题" prop="name"></el-table-column>
         <el-table-column label="发布时间" prop="address"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <span @click="showEditDialog(scope.row.id)" class="active-font font-primary">置顶</span>
+            <span @click="" class="active-font font-primary">置顶?</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" min-width="100px">
           <template slot-scope="scope">
-            <span @click="showEditDialog(scope.row.id)" class="active-font font-primary">详情</span>
-            <span @click="showRegDialog(scope.row.id)" class="active-font font-success">编辑</span>
-            <span @click="showEditDialog(scope.row.id)" class="active-font font-warning">删除</span>
+            <span @click="showDetailDialog(scope.row.id)" class="active-font font-primary">详情?</span>
+            <span @click="" class="active-font font-success">编辑?</span>
+            <span @click="" class="active-font font-warning">删除?</span>
           </template>
         </el-table-column>
       </el-table>
@@ -113,7 +113,7 @@
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button @click="addnotice" type="primary">确 定</el-button>
+        <el-button @click="addNotice" type="primary">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -138,34 +138,7 @@
       <span slot="footer" class="editDialog-footer">
         <el-button @click="editDialogVisible = false" type="primary" plain class="editDialog-footer-cancel">取 消</el-button>
         <el-button @click="editnotice" type="primary" class="editDialog-footer-sure">确 定</el-button>
-        <el-button @click="delnotice" type="danger" plain class="editDialog-footer-del">删 除</el-button>
-      </span>
-    </el-dialog>
-
-    <!--   注册账号的对话框 -->
-    <el-dialog title="注册账号" :visible.sync="regDialogVisible" width="40%" @close="regDialogClosed">
-
-      <el-form :model="regForm" :rules="regFormRules" ref="regFormRef" label-width="90px">
-        <el-form-item label="商户ID">
-          <el-input v-model="regForm.notice_id" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="商户账号" prop="notice_name">
-          <el-input v-model="regForm.notice_name"></el-input>
-        </el-form-item>
-        <el-form-item label="账号密码" prop="password">
-          <el-input v-model="regForm.password"></el-input>
-        </el-form-item>
-        <el-form-item label="联系电话" prop="phone">
-          <el-input v-model="regForm.phone" ></el-input>
-        </el-form-item>
-        <el-form-item label="邮箱地址" prop="email">
-          <el-input v-model="regForm.email"></el-input>
-        </el-form-item>
-      </el-form>
-
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="regDialogVisible = false">取 消</el-button>
-        <el-button @click="regnotice" type="primary">确 定</el-button>
+        <el-button @click="delNotice" type="danger" plain class="editDialog-footer-del">删 除</el-button>
       </span>
     </el-dialog>
   </main-card2>
@@ -213,8 +186,6 @@
         notice_list: [],   // 存储请求回来的 公告列表
         notice_total: 0,   // 商户列表的总数
         //============================================================================================
-
-
         addDialogVisible: false,   // 该属性控制 添加公告这个对话框的显隐
         addForm: {
           notice_name: '',
@@ -254,38 +225,6 @@
         },
         editDialogVisible: false,   // 控制修改 对话框的显隐
         editForm: { },   // 修改公告时,用于接收 将要修改的公告的信息
-
-
-        regForm: {   // 注册账号时, 用于存储注册表的数据
-          notice_id: '',
-          notice_name: '',
-          password: '',
-          phone: '',
-          email: '',
-          type: this.notice_id==''? 3:2,
-          grade: 1,
-        },
-        regFormRules: {   // 注册账号时的 格式校验
-          notice_name: [
-            {required: true, message: '请输入公告名字!~', trigger: 'blur'},
-            { min: 2, max: 30, message: '长度在2 ~ 30个字符之间!~',trigger: 'blur'}
-          ],
-          password: [
-            {required: true, message: '请输入公告密码!~', trigger: 'blur'},
-            { min: 2, max: 32, message: '长度在2 ~ 32个字符之间!~',trigger: 'blur'}
-          ],
-          phone: [
-            {required: false, message: '请输入联系电话!~', trigger: 'blur'},
-            { validator: checkMobile, trigger: 'blur'}
-          ],
-          email: [
-            { required: false, message: '请输入邮箱地址!~', trigger: 'blur'},
-            { min: 2, max: 50, message: '长度在2 ~ 50个字符之间!~',trigger: 'blur'},
-            { validator: checkEmail, trigger: 'blur'}
-          ]
-        },
-        regDialogVisible: false,   // 控制注册对话框的显隐
-
       }
     },
     created() {   // 生命周期函数, 用于初始化页面
@@ -300,10 +239,8 @@
         this.notice_list = res.data.communicates
         this.notice_total = res.data.total
       },
-      resetNoticeList(){   // 点击重置按钮时触发的事件
-        this.queryInfo.community = ''
-        this.queryInfo.notice_title = ''
-        this.queryInfo.notice_date = ''
+      resetNoticeList(obj){   // 点击重置按钮时触发的事件
+        this.clearObj(obj)   // 调用全局函数清空对象
         this.getNoticeList()
       },
       getRowClass({ row, column, rowIndex, columnIndex }) {   // 设置table第一行的背景色
@@ -323,12 +260,12 @@
       addDialogClosed() {   // 监听添加商户的对话框关闭时触发的事件
         this.$refs.addFormRef.resetFields()
       },
-      addnotice() {   // 点击确定按钮, 添加新公告
+      addNotice() {   // 点击确定按钮, 添加新公告
         this.$refs.addFormRef.validate(async (valid) => {
           if(!valid) return
           // 如果校验成功,, 可以发起网络请求. 来添加公告
           const {data:res} = await this.$axios({
-            url:'/ponyproperty-manager/notice/addnotice',
+            url:'/ponyproperty-manager/notice/addNotice',
             method: 'post',
             transformRequest: [function (data) {
               return Qs.stringify(data)
@@ -381,7 +318,7 @@
           this.$message.success('修改商户信息成功!~')
         })
       },
-      async delnotice() {   // 删除一条商户, 触发的函数
+      async delNotice() {   // 删除一条商户, 触发的函数
         const {data:res} =await this.$axios({
           url:'/ponyproperty-manager/notice/deletenotice',
           method: 'post',
@@ -396,14 +333,14 @@
         this.$message.success('删除键商户信息成功!~')
       },
 
-      showRegDialog(id) {   // 点击创建账号, 展示注册页对话框
+      showRegDialog(id) {   // 点击创建公告, 展示注册页对话框
         this.regForm.notice_id = id
         this.regDialogVisible = true
       },
       regDialogClosed() {   // 监听对话框关闭事件
         this.$refs.regFormRef.resetFields()
       },
-      regnotice() {   // 点击确定按钮, 注册账号
+      regnotice() {   // 点击确定按钮, 注册公告
         this.$refs.regFormRef.validate(async (valid) => {
           if (!valid) return
           console.log(this.regForm.type)
@@ -423,11 +360,14 @@
               grade: this.regForm.grade,
             }
           })
-          if(res.msg !=='OK') return this.$message.error('注册账号失败!~')
+          if(res.msg !=='OK') return this.$message.error('注册公告失败!~')
           this.regDialogVisible = false
           this.getNoticeList()   // 重新请求最新数据, 重新渲染页面
-          this.$message.success('注册账号成功!~')
+          this.$message.success('注册公告成功!~')
         })
+      },
+      showDetailDialog() {   // 点击详情时的,处理函数
+        console.log('点击了详情')
       }
 
     }

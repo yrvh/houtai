@@ -155,10 +155,10 @@
           </el-col>
 
           <el-col :span="2">
-            <el-button type="danger" class="button-warning" @click="getBillsList">查询</el-button>
+            <el-button class="button-warning search-button" @click="getBillsList">查询</el-button>
           </el-col>
           <el-col :span="2">
-            <el-button type="info" class="button-info" @click="resetBillsList">重置</el-button>
+            <el-button class="button-info reset-button" @click="resetBillsList">重置</el-button>
           </el-col>
 
         </el-row>
@@ -189,8 +189,8 @@
         <el-table-column label="备注" prop="name"></el-table-column>
         <el-table-column label="操作" min-width="100px">
           <template slot-scope="scope">
-            <span @click="showEditDialog(scope.row.id)" class="active-font font-primary">详情</span>
-            <span @click="showEditDialog(scope.row.id)" class="active-font font-warning">收据</span>
+            <span @click="showDetailDialog(scope.row.id)" class="active-font font-primary">详情?</span>
+            <span @click="" class="active-font font-warning">收据?</span>
           </template>
         </el-table-column>
       </el-table>
@@ -208,7 +208,7 @@
     </div>
 
     <!--  这是添加账单的 对话框  -->
-    <el-dialog title="添加账单公司" :visible.sync="addDialogVisible" width="40%" @close="addDialogClosed">
+    <el-dialog title="添加账单" :visible.sync="addDialogVisible" width="40%" @close="addDialogClosed">
 
       <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="90px">
         <el-form-item label="账单名称" prop="bills_name">
@@ -227,59 +227,7 @@
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button @click="addbills" type="primary">确 定</el-button>
-      </span>
-    </el-dialog>
-
-    <!--  修改账单的 对话框 -->
-    <el-dialog title="修改账单信息" :visible.sync="editDialogVisible" width="40%" @close="editDialogClosed">
-
-      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="80px">
-        <el-form-item label="账单名称">
-          <el-input v-model="editForm.bills_name" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="商户ID">
-          <el-input v-model="editForm.bills_id" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="联系人" prop="concat_name">
-          <el-input v-model="editForm.concat_name"></el-input>
-        </el-form-item>
-        <el-form-item label="联系电话" prop="concat_phone">
-          <el-input v-model="editForm.concat_phone" ></el-input>
-        </el-form-item>
-      </el-form>
-
-      <span slot="footer" class="editDialog-footer">
-        <el-button @click="editDialogVisible = false" type="primary" plain class="editDialog-footer-cancel">取 消</el-button>
-        <el-button @click="editbills" type="primary" class="editDialog-footer-sure">确 定</el-button>
-        <el-button @click="delbills" type="danger" plain class="editDialog-footer-del">删 除</el-button>
-      </span>
-    </el-dialog>
-
-    <!--   注册账单的对话框 -->
-    <el-dialog title="注册账单" :visible.sync="regDialogVisible" width="40%" @close="regDialogClosed">
-
-      <el-form :model="regForm" :rules="regFormRules" ref="regFormRef" label-width="90px">
-        <el-form-item label="商户ID">
-          <el-input v-model="regForm.bills_id" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="商户账单" prop="bills_name">
-          <el-input v-model="regForm.bills_name"></el-input>
-        </el-form-item>
-        <el-form-item label="账单密码" prop="password">
-          <el-input v-model="regForm.password"></el-input>
-        </el-form-item>
-        <el-form-item label="联系电话" prop="phone">
-          <el-input v-model="regForm.phone" ></el-input>
-        </el-form-item>
-        <el-form-item label="邮箱地址" prop="email">
-          <el-input v-model="regForm.email"></el-input>
-        </el-form-item>
-      </el-form>
-
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="regDialogVisible = false">取 消</el-button>
-        <el-button @click="regbills" type="primary">确 定</el-button>
+        <el-button @click="addBills" type="primary">确 定</el-button>
       </span>
     </el-dialog>
   </main-card2>
@@ -453,7 +401,17 @@
         this.bills_total = res.data.total
       },
       resetBillsList(){   // 点击重置按钮时触发的事件
-        this.queryInfo = ''
+        this.queryInfo.community = ''
+        this.queryInfo.bills_house = ''
+        this.queryInfo.bills_unit = ''
+        this.queryInfo.bills_build = ''
+        this.queryInfo.bills_overdue = ''
+        this.queryInfo.bills_date = ''
+        this.queryInfo.bills_owner = ''
+        this.queryInfo.bills_owner = ''
+        this.queryInfo.bills_paystatus = ''
+        this.queryInfo.bills_water = ''
+        this.queryInfo.bills_tel = ''
         this.getBillsList()
       },
       getRowClass({ row, column, rowIndex, columnIndex }) {   // 设置table第一行的背景色
@@ -473,7 +431,7 @@
       addDialogClosed() {   // 监听添加商户的对话框关闭时触发的事件
         this.$refs.addFormRef.resetFields()
       },
-      addbills() {   // 点击确定按钮, 添加新账单
+      addBills() {   // 点击确定按钮, 添加新账单
         this.$refs.addFormRef.validate(async (valid) => {
           if(!valid) return
           // 如果校验成功,, 可以发起网络请求. 来添加账单
@@ -497,99 +455,14 @@
           console.log(res)
         })
       },
-
-      showEditDialog(row) {   // 点击修改按钮, 展示修改页
-        this.editForm = row
-        console.log('row赋值给editForm',this.editForm)
-        this.editDialogVisible = true
-      },
-      editDialogClosed() {   // 监听对话框关闭事件
-        this.$refs.editFormRef.resetFields()
-      },
-      editbills() {   // 点击确定按钮, 修改账单
-        this.$refs.editFormRef.validate(async (valid) => {
-          if (!valid) return
-          console.log('修改后的editForm',this.editForm)
-          console.log(this.editForm.concat_phone)
-          console.log(this.editForm.bills_id)
-          const {data:res} =await this.$axios({
-            url:'/ponyproperty-manager/bills/updatebills',
-            method: 'post',
-            transformRequest: [function (data) {
-              return Qs.stringify(data)
-            }],
-            data: {
-              concat_name: this.editForm.concat_name,
-              concat_phone: this.editForm.concat_phone,
-              bills_id: this.editForm.bills_id,
-              bills_name: this.editForm.bills_name
-            }
-          })
-          if(res.msg !=='OK') return this.$message.error('修改商户信息失败!~')
-          this.editDialogVisible = false
-          this.getBillsList()   // 重新请求最新数据, 重新渲染页面
-          this.$message.success('修改商户信息成功!~')
-        })
-      },
-      async delbills() {   // 删除一条商户, 触发的函数
-        const {data:res} =await this.$axios({
-          url:'/ponyproperty-manager/bills/deletebills',
-          method: 'post',
-          transformRequest: [function (data) {
-            return Qs.stringify(data)
-          }],
-          data: { bills_id: this.editForm.bills_id }
-        })
-        if(res.msg !=='OK') return this.$message.error('删除商户信息失败!~')
-        this.editDialogVisible = false
-        this.getBillsList()   // 重新请求最新数据, 重新渲染页面
-        this.$message.success('删除键商户信息成功!~')
-      },
-
-      showRegDialog(id) {   // 点击创建账单, 展示注册页对话框
-        this.regForm.bills_id = id
-        this.regDialogVisible = true
-      },
-      regDialogClosed() {   // 监听对话框关闭事件
-        this.$refs.regFormRef.resetFields()
-      },
-      regbills() {   // 点击确定按钮, 注册账单
-        this.$refs.regFormRef.validate(async (valid) => {
-          if (!valid) return
-          console.log(this.regForm.type)
-          const {data:res} =await this.$axios({
-            url:'/ponyproperty-manager/login/register',
-            method: 'post',
-            transformRequest: [function (data) {
-              return Qs.stringify(data)
-            }],
-            data: {
-              bills_id: this.regForm.bills_id,
-              bills_name: this.regForm.bills_name,
-              password: this.regForm.password,
-              phone: this.regForm.phone,
-              email: this.regForm.email,
-              type: this.regForm.type,
-              grade: this.regForm.grade,
-            }
-          })
-          if(res.msg !=='OK') return this.$message.error('注册账单失败!~')
-          this.regDialogVisible = false
-          this.getBillsList()   // 重新请求最新数据, 重新渲染页面
-          this.$message.success('注册账单成功!~')
-        })
+      showDetailDialog() {   // 点击详情时的,处理函数
+        console.log('点击了详情')
       }
-
     }
   }
 </script>
 
 <style scoped>
-  .editDialog-footer { display: flex; justify-content: space-around;}
-  .editDialog-footer-cancel { flex: 3;}
-  .editDialog-footer-sure { flex: 5;}
-  .editDialog-footer-del { flex: 3;}
-
   .el-row .el-col { line-height: 38px;}
   .el-row span { font-weight: 600; font-size: 14px;}
 </style>

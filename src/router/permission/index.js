@@ -5,6 +5,7 @@ export default {
   children: [
     {path: 'account', component: () => import('@/components/Permission/Account')},
     {path: 'role', component: () => import('@/components/Permission/Role')},
+    {path: 'permis', component: () => import('@/components/Permission/Permis')},
     {path: '/', redirect: 'account'}
   ]
 }

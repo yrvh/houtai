@@ -35,7 +35,7 @@
     </div>
 
     <!--  这是添加轮播图的 对话框  -->
-    <el-dialog class="sweipers-add-dialog" title="添加轮播图" :visible.sync="addDialogVisible" width="30%" @close="addDialogClosed">
+    <el-dialog class="dialog-fontweight" title="添加轮播图" :visible.sync="addDialogVisible" width="30%" @close="addDialogClosed">
 
       <el-form :model="addForm" ref="addFormRef" label-width="90px">
         <el-form-item label="排序" >
@@ -67,7 +67,7 @@
       </el-form>
 
       <span slot="footer" class="dialog-footer">
-        <el-button class="button-primary" @click="addSwipers" type="primary">确 定</el-button>
+        <el-button class="button-primary" @click="addSwipers">确 定</el-button>
         <el-button class="button-info" @click="addDialogVisible = false">取 消</el-button>
       </span>
     </el-dialog>
@@ -203,13 +203,12 @@
         // this.$axios.delete('')   // 轮播图显隐,发起ajax请求???
         // if!==200 return this.$message.error('轮播图显隐状态更改失败!~')
         // this.$message.success('轮播图片状态更改成功')
-      },
+      }
     }
   }
 </script>
 
 <style scoped>
   .swipers-add{ margin-top: 20px;}
-  .sweipers-add-dialog { font-weight: 600;}
-  .dialog-footer { display: flex; justify-content: center;}
+
 </style>

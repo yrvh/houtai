@@ -1,6 +1,6 @@
-<!-- 数据管理下的  门禁信息-->
+<!-- 数据管理下的 物料库存页面-->
 <template>
-  <main-card2 title1="数据管理" title2="门禁信息">
+  <main-card2 title1="数据管理" title2="物料库存">
     <div slot="content">
       <div class="house-top">
         <el-row :gutter="8">
@@ -27,9 +27,9 @@
                 <el-select v-model="queryInfo.community" allow-create filterable clearable placeholder="请输入小区名">
                   <el-option
                       v-for="item in comm_options"
-                      :key="item.communityKey"
+                      :key="item.comm_key"
                       :label="item.label"
-                      :value="item.communityKey">
+                      :value="item.comm_key">
                   </el-option>
                 </el-select>
               </el-col>
@@ -112,7 +112,7 @@
 <script>
 
   export default {
-    name: "Door",
+    name: "House",
     components:{},
     data() {
       // 自定义校验规则
@@ -293,5 +293,5 @@
   .el-row .el-col { line-height: 38px;}
   .el-row span { font-weight: 600; font-size: 14px;}
   .house-button { width: 70px; }
-
+  
 </style>

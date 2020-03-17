@@ -63,6 +63,18 @@
               <span>车位信息</span>
             </template>
           </el-menu-item>
+          <el-menu-item index="/xiaoma/datas/equipment">
+            <template slot="title">
+              <i class="iconfont icon-containerXiaoma-count2"></i>
+              <span>公共设备</span>
+            </template>
+          </el-menu-item>
+          <el-menu-item index="/xiaoma/datas/material">
+            <template slot="title">
+              <i class="iconfont icon-containerXiaoma-count2"></i>
+              <span>物料库存</span>
+            </template>
+          </el-menu-item>
           <el-menu-item index="/xiaoma/datas/door">
             <template slot="title">
               <i class="iconfont icon-containerXiaoma-count2"></i>
@@ -133,7 +145,7 @@
               <span>后台缴费</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/deal/deallist">
+          <el-menu-item index="/xiaoma/deal/deals">
             <template slot="title">
               <i class="iconfont icon-containerXiaoma-count2"></i>
               <span>交易列表</span>
@@ -201,6 +213,12 @@
             <template slot="title">
               <i class="iconfont icon-containerXiaoma-count2"></i>
               <span>角色管理</span>
+            </template>
+          </el-menu-item>
+          <el-menu-item index="/xiaoma/permission/permis">
+            <template slot="title">
+              <i class="iconfont icon-containerXiaoma-count2"></i>
+              <span>权限管理</span>
             </template>
           </el-menu-item>
         </el-submenu>
@@ -294,7 +312,7 @@
   .el-menu-item { background-color: #235FED; }
   .el-menu-item.is-active { background-color: #FFF !important; color: #235FED !important; }
   .el-menu-item.is-active i{ color: #235FED !important; }
-  .el-menu-item:hover { font-weight: 600 !important; }
+  .el-menu-item:hover { font-weight: bolder !important; }
 
   .headerMain { width: 100%; height: 100%;}
   .el-header { height: 76px; width: 100%; border-bottom: 1px solid #eee; background-color: #FFF; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;}

@@ -8,7 +8,7 @@
       <div class="list-communityName">
         <el-input class="list-input" placeholder="请输入小区名称" v-model="queryInfo.query" clearable @clear="getCommunicateList"></el-input>
         <el-button class="button-warning list-search" @click="getCommunicateList">查询</el-button>
-        <el-button class="button-info list-search" @click="resetCommunicateList">重置</el-button>
+        <el-button class="button-info list-search" @click="resetCommunicateList(queryInfo)">重置</el-button>
         <el-button class="list-add button-primary" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>添加小区</el-button>
       </div>
 
@@ -163,8 +163,8 @@
         this.communicateList = comm.data.communicates
         this.total = comm.data.total
       },
-      resetCommunicateList(){   // 搜索框点击重置按钮时触发的事件
-        this.queryInfo.query=''
+      resetCommunicateList(obj){   // 搜索框点击重置按钮时触发的事件
+        this.clearObj(obj)   // 调用全局函数清空对象
         this.getCommunicateList()
       },
       getRowClass({ row, column, rowIndex, columnIndex }) {   // 设置table的首行背景颜色

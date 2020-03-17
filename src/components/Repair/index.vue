@@ -4,107 +4,106 @@
     <div slot="content">
       <div class="repairs-top">
         <el-row :gutter="8">
-          <el-col :span="7">
+
+          <el-col :span="5">
             <el-row :gutter="2">
-              <el-col :span="4.5"><span>小区名称</span></el-col>
-              <el-col :span="18">
-                <el-select v-model="value" allow-create filterable clearable placeholder="全部小区">
-                  <el-option-group
-                          v-for="group in merchantGroups"
-                          :key="group.label"
-                          :label="group.label">
-                    <el-option
-                            v-for="item in group.options"
-                            :key="item.communityKey"
-                            :label="item.label"
-                            :value="item.communityKey">
-                    </el-option>
-                  </el-option-group>
+              <el-col :span="7"><span>小区名称</span></el-col>
+              <el-col :span="16">
+                <el-select v-model="queryInfo.community" allow-create filterable clearable placeholder="全部小区">
+                  <el-option
+                      v-for="item in comm_options"
+                      :key="item.comm_key"
+                      :label="item.label"
+                      :value="item.comm_key">
+                  </el-option>
                 </el-select>
               </el-col>
             </el-row>
           </el-col>
-          <el-col :span="7">
+
+
+          <el-col :span="8">
             <el-row :gutter="4">
               <el-col :span="5.5"><span>报修时间</span></el-col>
               <el-col :span="6">
                 <el-date-picker
-                        v-model="dateValue"
-                        type="date"
-                        placeholder="选择日期">
+                    v-model="queryInfo.repair_date"
+                    type="date"
+                    placeholder="选择日期">
                 </el-date-picker>
               </el-col>
             </el-row>
           </el-col>
+
           <el-col :span="5">
             <el-row :gutter="4">
-              <el-col :span="5.5"><span>报修人</span></el-col>
-              <el-col :span="15">
+              <el-col :span="7"><span>报修人</span></el-col>
+              <el-col :span="16">
                 <el-input
-                        placeholder="请输入姓名"
-                        v-model="manValue"
-                        clearable>
+                    placeholder="请输入姓名"
+                    v-model="queryInfo.repair_name"
+                    clearable>
                 </el-input>
               </el-col>
             </el-row>
           </el-col>
 
           <el-col :span="2">
-            <el-button type="danger" class="repair-search repair-button" @click="getCommunicateList">查询</el-button>
+            <el-button class="button-warning search-button" @click="getRepairList">查询</el-button>
           </el-col>
           <el-col :span="2">
-            <el-button type="info" class="repair-clear repair-button" @click="getCommunicateList">重置</el-button>
+            <el-button class="button-info reset-button" @click="resetRepairList(queryInfo)">重置</el-button>
           </el-col>
         </el-row>
 
 
-        <el-row class="repair-row2">
+        <el-row class="second-line">
           <el-col :span="7">
             <el-row :gutter="2">
               <el-col :span="4.5"><span>报修类型</span></el-col>
               <el-col :span="18">
-                <el-select v-model="value" allow-create filterable clearable placeholder="请选择类型">
+                <el-select v-model="queryInfo.repair_type" allow-create filterable clearable placeholder="请选择类型">
                   <el-option
-                          v-for="item in repairTypeOptions"
-                          :key="item.repairKey"
+                          v-for="item in type_options"
+                          :key="item.type_key"
                           :label="item.label"
-                          :value="item.repairKey">
+                          :value="item.type_key">
                   </el-option>
                 </el-select>
               </el-col>
             </el-row>
           </el-col>
 
-          <el-col :span="10">
-            <el-row :gutter="18">
+          <el-col :span="9">
+            <el-row :gutter="18"  >
               <el-col :span="4.5"><span>房间号</span></el-col>
-              <el-col :span="5">
-                <el-select v-model="value" allow-create filterable clearable placeholder="楼号">
+              <el-col :span="6">
+                <el-select v-model="queryInfo.repair_build" allow-create filterable clearable placeholder="楼号">
                   <el-option
-                      v-for="item in repairTypeOptions"
-                      :key="item.repairKey"
+                      v-for="item in build_options"
+                      :key="item.build_key"
                       :label="item.label"
-                      :value="item.repairKey">
+                      :value="item.build_key">
                   </el-option>
                 </el-select>
               </el-col>
-              <el-col :span="5">
-                <el-select v-model="value" allow-create filterable clearable placeholder="单元">
+              <el-col :span="7">
+                <el-select v-model="queryInfo.repair_unit" allow-create filterable clearable placeholder="单元">
                   <el-option
-                      v-for="item in repairTypeOptions"
-                      :key="item.repairKey"
+                      v-for="item in unit_options"
+                      :key="item.unit_key"
                       :label="item.label"
-                      :value="item.repairKey">
+                      :value="item.unit_key">
                   </el-option>
                 </el-select>
               </el-col>
-              <el-col :span="5">
-                <el-select v-model="value" allow-create filterable clearable placeholder="房间">
+              <el-col :span="6">
+                <el-select v-model="queryInfo.repair_house" allow-create filterable clearable placeholder="房间">
                   <el-option
-                      v-for="item in repairTypeOptions"
-                      :key="item.repairKey"
+                      v-for="item in house_options"
+                      :key="item.house_key"
                       :label="item.label"
-                      :value="item.repairKey">
+                      :value="item.house_key">
                   </el-option>
                 </el-select>
               </el-col>
@@ -124,14 +123,14 @@
       </div>
 
       <!--   小区列表区, 数据展示   -->
-      <el-table :data="communicateList" stripe :header-cell-style="getRowClass">
+      <el-table :data="repair_list" stripe :header-cell-style="getRowClass">
         <el-table-column label="序号" prop="id"></el-table-column>
         <el-table-column label="小区名" prop="name"></el-table-column>
         <el-table-column label="报修时间" prop="name"></el-table-column>
         <el-table-column label="报修类型" prop="name"></el-table-column>
         <el-table-column label="报修问题">
           <template slot-scope="scope">
-            <click-span @click="showEditDialog(scope.row.id)" content1="详情"></click-span>
+            <span @click="showEditDialog(scope.row.id)" content1="详情"></span>
           </template>
         </el-table-column>
         <el-table-column label="报修地点" prop="name"></el-table-column>
@@ -142,11 +141,22 @@
         <el-table-column label="报修时间" prop="account"></el-table-column>
         <el-table-column label="操作" min-width="120" class="repair-table-lastcol">
           <template slot-scope="scope">
-            <click-span @click="showEditDialog(scope.row.id)" content1="维修反馈"></click-span>
-            <click-span @click="showEditDialog(scope.row.id)" content1="线下支付"></click-span>
+            <span @click="showEditDialog(scope.row.id)" class="active-font font-primary">维修反馈</span>
+            <span @click="showEditDialog(scope.row.id)" class="active-font font-primary">线下支付</span>
           </template>
         </el-table-column>
       </el-table>
+
+      <!-- 分页区域 -->
+      <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="queryInfo.pagenum"
+          :page-sizes="[5, 8, 15, 20, 30]"
+          :page-size="queryInfo.pagesize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="repair_total">
+      </el-pagination>
     </div>
   </main-card2>
 </template>
@@ -157,136 +167,99 @@
     name: "Repair",
     components:{},
     data() {
-      // 自定义校验规则
+      // 自定义手机号校验规则
       var checkMobile = (rule, value, cb) => {
-        const regMobile = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/
+        const regMobile = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/   //电话号码的 正则
         if(regMobile.test(value)) return cb()
         cb(new Error('请输入合法的手机号!~'))
       }
-
+      // 自定义邮箱校验
+      var checkEmail = (rule, value, cb) => {
+        const regEmail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/
+        if(regEmail.test(value)) return cb()
+        cb(new Error('请输入合法的邮箱!~'))
+      }
       return {
-        value: '',   //绑定当前被选中的小区
-        merchantGroups: [   // 物业分组数据
-          {label: '--同盛物业--',
-            options: [{
-              communityKey: '选项1',
-              label: '银河产业城'
-            }, {
-              communityKey: '选项2',
-              label: '恒大名都'
-            }, {
-              communityKey: '选项3',
-              label: '大度金沙湾'
-            }, {
-              communityKey: '选项4',
-              label: '三千海'
-            }, {
-              communityKey: '选项5',
-              label: '碧桂园'
-            }]
-          },
-          {label: '--小海物业--',
-            options: [{
-              communityKey: '选项6',
-              label: '大山花园'
-            }, {
-              communityKey: '选项7',
-              label: '世纪城'
-            }, {
-              communityKey: '选项8',
-              label: '文邦国际'
-            }, {
-              communityKey: '选项9',
-              label: '翰林苑'
-            }, {
-              communityKey: '选项10',
-              label: '桐洋新城'
-            }]
-          }
-        ],
-        dateValue: '',   // 报修日期
-        manValue: '',   // 报修人
-        repairValue: '',   // 报修类型
-        repairTypeOptions: [{   // 报修类型选项
-          repairKey: '选项1',
-          label: '类型1'
-        }, {
-          repairKey: '选项2',
-          label: '类型2'
-        }, {
-          repairKey: '选项3',
-          label: '类型3'
-        }, {
-          repairKey: '选项4',
-          label: '类型4'
-        }, {
-          repairKey: '选项5',
-          label: '类型5'
-        }],
-
-        //================================================================
-        queryInfo: {   // 获取小区列表时 传的参数对象
-          query: '',   // 查询参数
+        queryInfo: {   // 获取报修列表时 传的参数对象
+          query: '',   // 查询参数,
+          community: '',   // 查询参数,小区
+          repair_build: '',   // 查询参数,楼号
+          repair_unit: '',   // 查询参数,单元号
+          repair_house: '',   // 查询参数,房间号
+          repair_name: '',   // 查询参数,报修人
+          repair_date: '',   // 查询参数,报修时间
+          repair_type: '',   // 查询参数, 报修类型
           pagenum: 1,   // 当前页码
           pagesize: 2,   // 当前每页显示多少条数据
         },
-        communicateList: [],   // 小区列表
-        total: 0,   // 小区总数据条数
-        addDialogVisible: false,   // 控制添加小区的显示与隐藏
-        addForm: {
-          name: '',
-          address: '',
-          account: '',
-          password: ''
-        },
-        addFormRules: {
-          name: [
-            {required: true, message: '请输入小区名字!~', trigger: 'blur'}
-          ],
-          address: [
-            {required: true, message: '请输入小区地址!~', trigger: 'blur'}
-          ],
-          account: [
-            { required: true, message: '请输入账号!~', trigger: 'blur'},
-            { min: 5, max: 20, message: '长度在5 ~ 20个字符之间!~',trigger: 'blur'}
-            // { validator: checkMobile, trigger: 'blur'}
-          ],
-          password: [
-            {required: true, message: '请输入密码!~', trigger: 'blur'},
-            { min: 8, max: 32, message: '长度在8 ~ 32个字符之间!~',trigger: 'blur'}
-          ]
-        },
-        editFormRules: {
-          address: [
-            {required: true, message: '请输入小区地址!~', trigger: 'blur'}
-          ],
-          account: [
-            { required: true, message: '请输入账号!~', trigger: 'blur'},
-            { min: 5, max: 20, message: '长度在5 ~ 20个字符之间!~',trigger: 'blur'}
-            // { validator: checkMobile, trigger: 'blur'}
-          ],
-          password: [
-            {required: true, message: '请输入密码!~', trigger: 'blur'},
-            { min: 8, max: 32, message: '长度在8 ~ 32个字符之间!~',trigger: 'blur'}
-          ]
-        },
-        editDialogVisible: false,
-        editForm: {}
+
+        comm_options:  [{   // 小区数据下拉菜单列表
+          comm_key: '小区1',
+          label: '一小区'
+        }, {
+          comm_key: '小区2',
+          label: '二小区'
+        }, {
+          comm_key: '选项3',
+          label: '三小区'
+        }],
+        build_options:  [{   // 楼号数据下拉菜单列表
+          build_key: '楼1',
+          label: '1号楼'
+        }, {
+          build_key: '楼2',
+          label: '1号楼'
+        }, {
+          build_key: '楼3',
+          label: '1号楼'
+        }],
+        unit_options:  [{   // 单元号数据下拉菜单列表
+          unit_key: '单元1',
+          label: '一单元'
+        }, {
+          unit_key: '单元2',
+          label: '二单元'
+        }, {
+          unit_key: '单元3',
+          label: '三单元'
+        }],
+        house_options:  [{   // 房间数据下拉菜单列表
+          house_key: '房间1',
+          label: '301'
+        }, {
+          house_key: '房间2',
+          label: '302'
+        }, {
+          house_key: '房间3',
+          label: '303'
+        }],
+        type_options:  [{   // 报修类型数据下拉菜单列表
+          type_key: '类型1',
+          label: '门锁'
+        }, {
+          type_key: '类型2',
+          label: '水管'
+        }, {
+          type_key: '类型3',
+          label: '灯具'
+        }],
+        repair_list: [],   // 存储请求回来的 报修列表
+        repair_total: 0,   // 报修列表的总数
       }
     },
     created() {
-      this.getCommunicateList()
+      this.getRepairList()
     },
     methods: {
-      async getCommunicateList() {   //获取小区列表
-        const { data: comm } =await this.$axios.get('/api/communicate')   //,{ params: this.queryInfo}
-        if(comm.meta.status !==200) return this.$message.error('获取小区列表失败!~')
-        this.communicateList = comm.data.communicates
-        this.total = comm.data.total
+      async getRepairList() {   //获取小区列表    发起Ajax请求-----------???
+        const { data: res } =await this.$axios.get('/api/communicate')   //,{ params: this.queryInfo}
+        if(res.meta.status !==200) return this.$message.error('获取小区列表失败!~')
+        this.repair_list = res.data.communicates
+        this.repair_total = res.data.total
       },
-      resetCommunicateList(){   // 搜索框点击重置按钮时触发的事件
-        this.queryInfo.query=''
-        this.getCommunicateList()
+      resetRepairList(obj){   // 点击重置按钮时触发的事件
+        this.clearObj(obj)   // 调用全局函数清空对象
+        this.getRepairList()
       },
       getRowClass({ row, column, rowIndex, columnIndex }) {   // 设置table的首行背景颜色
         if(rowIndex == 0) {
@@ -296,63 +269,11 @@
       },
       handleSizeChange(newSize) {   // 监听pagesize改变的函数
         this.queryInfo.pagesize = newSize
-        this.getCommunicateList()
+        this.getRepairList()
       },
       handleCurrentChange(newPage) {   // 监听页码值改变的函数
         this.queryInfo.pagenum = newPage
-        this.getCommunicateList()
-      },
-
-
-      addDialogClosed() {   // 监听对话框关闭事件
-        this.$refs.addFormRef.resetFields()
-      },
-      addComm() {   // 点击确定按钮, 添加新小区
-        this.$refs.addFormRef.validate( (valid) => {
-          if(!valid) return
-          // 如果校验成功,, 可以发起网络请求???
-          // if!==200 添加失败
-          // this.$message.success('添加小区成功')
-          this.addDialogVisible = false   // 隐藏添加小区的对话框
-          // this.getCommunicateList()   // 重新获取用户的列表
-        })
-      },
-      async showEditDialog(row) {   // 点击修改按钮, 展示修改页
-        console.log("====================")
-        console.log(row)
-        this.editForm = row   // 当行数据赋值给 要修改的小区
-        // const {data:comm} =await this.$axios.get('/api/communicate')
-        // if(comm.meta.status !==200) return this.$message.error('查询小区信息失败')
-        // this.editForm = comm.data.communicates[parseInt(row.id)-1]
-        this.editDialogVisible = true
-      },
-      editDialogClosed() {   // 监听修改小区的对话框关闭事件
-        this.$refs.editFormRef.resetFields()
-      },
-      editComm() {   // 点击确定按钮, 修改小区
-        this.$refs.editFormRef.validate( (valid) => {
-          if(!valid) return
-          // 如果校验成功,, 可以发起网络请求???
-          // if!==200 添加失败
-          // this.$message.success('修改小区成功')
-          this.editDialogVisible = false   // 隐藏修改小区的对话框
-          // this.getCommunicateList()   // 重新获取用户的列表
-        })
-      },
-      async removeCommunicate(id) {   // 删除小区的函数
-        // 弹框询问用户是否确认删除
-        const confirmResult = await this.$confirm('此操作将永久删除该小区, 是否继续?','提示',{
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).catch( err => {return err})
-        if(confirmResult !== 'confirm'){
-          return this.$message.info('已取消了删除!~~')
-        }
-        // this.$axios.delete('')   // 用户确认删除???
-        // if!==200 删除失败
-        // this.$message.success('删除小区成功小区成功')
-        // this.getCommunicateList()   // 重新获取用户的列表
+        this.getRepairList()
       }
     }
   }
@@ -362,13 +283,7 @@
   .repairs-top {  }
   .el-row .el-col { line-height: 38px;}
   .el-row span { font-weight: 600; font-size: 14px;}
-  .repair-button { width: 70px; color: #fff; }
-  .repair-search { margin-left: 10px;}
-  .repair-row2 { margin: 20px 0; }
-
-  .repair-nav { }
   .repair-nav .el-button { color: #000; border-color: #DDD; background-color: #fff;}
   .repair-nav .el-button:hover { background-color: #235FED; border-color: #235FED; color: #fff;}
   .repair-nav .el-button:focus { background-color: #235FED; border-color: #235FED; color: #fff;}
-  /*.repair-nav-badge { margin: 10px 40px 0 0;}*/
 </style>
