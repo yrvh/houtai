@@ -1,3 +1,4 @@
+<!--2020.03月已经弃用      为各个页面定制的组件, 用于main展示区-->
 <template>
   <div class="box">
     <el-card>

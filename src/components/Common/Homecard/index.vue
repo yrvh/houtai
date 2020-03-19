@@ -1,47 +1,53 @@
+<!-- 专为home页 定制的组件,  只在home页面引入该组件-->
 <template>
-      <div class="homecard">
-        <div class="homecard-content">
-          <div>{{title}} <span class="homecard-content-span" :style="fontColor">  {{count}}</span></div>
-          <slot name="date"/>
-          <slot name="money"/>
+      <div class="homecard" :style="bgcolors">
+        <div class="content-col1">
+          <slot name="row1"></slot>
+          <slot name="row2"></slot>
         </div>
-
-        <div class="homecard-log" :style="logColor">
-          <slot name="log"/>
+        <div class="content-col2">
+          <home-data :title="title1" :count="count1"></home-data>
+          <home-data :title="title2" :count="count2"></home-data>
         </div>
       </div>
 </template>
 
 <script>
+  import Homedata from '@/components/Common/Homedata'   // 在Homecard组件中 引入Homedata组件
+
   export default {
     name: 'Homecard',
+    components: {
+      'home-data': Homedata,
+    },
     props: {
-      title: {
+      title1: {
         type: String,
-        required: true
+        required: false
       },
-      count: {
+      title2: {
         type: String,
-        required: true
+        required: false
       },
-      fontColor: {
+      count1: {
+        type: String,
+        required: false
+      },
+      count2: {
+        type: String,
+        required: false
+      },
+      bgcolors: {
         type: Object,
         required: true,
-      },
-      logColor: {
-        type: Object,
-        required: true
       }
     },
   }
 </script>
 
 <style scoped>
-  .homecard { padding: 30px; width: 27%; margin-bottom: 20px; background-color: #fff; border-radius: 4px; display: flex; justify-content: space-between; box-shadow: 0 1px 1px rgba(0,0,0,0.15)}
-  .homecard-content { height: 102px; display: flex; flex-direction: column; justify-content: space-around; }
-  .homecard-content-span { font-size: 28px; }
-  .homecard-log { height: 100px; width: 100px; border-radius: 50%; display: flex; justify-content: center;}
-  .homecard-log i { color: #fff; font-size: 80px; line-height: 100px;}
-  .iconfont { margin: 0;}
-
+  .homecard { padding: 12px 45px; margin-bottom: 20px; background-color: #eee; border-top-right-radius: 12px; border-bottom-left-radius: 12px; display: flex; justify-content: space-between; }
+  .content-col1 { display: flex; flex-direction: column; justify-content: space-around; margin-right: 20px; }
+  .content-col1 i{ color: rgba(230,230,230,0.7); font-size: 24px; text-align: center; }
+  .content-col2 { display: flex; flex-direction: column; justify-content: space-between; }
 </style>

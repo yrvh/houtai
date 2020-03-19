@@ -2,95 +2,27 @@
 <template>
   <main-card2 title1="数据管理" title2="公共设备">
     <div slot="content">
-      <div class="house-top">
-        <el-row :gutter="8">
-          <el-col :span="6">
-            <el-row :gutter="2">
-              <el-col :span="4.5"><span>物业名称</span></el-col>
-              <el-col :span="18">
-                <el-select v-model="queryInfo.merchant" allow-create filterable clearable placeholder="全部物业">
-                  <el-option
-                      v-for="item in merchant_options"
-                      :key="item.merchant_key"
-                      :label="item.label"
-                      :value="item.merchant_key">
-                  </el-option>
-                </el-select>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="5">
-            <el-row :gutter="2">
-              <el-col :span="4.5"><span>小区名称</span></el-col>
-              <el-col :span="17">
-                <el-select v-model="queryInfo.community" allow-create filterable clearable placeholder="请输入小区名">
-                  <el-option
-                      v-for="item in comm_options"
-                      :key="item.comm_key"
-                      :label="item.label"
-                      :value="item.comm_key">
-                  </el-option>
-                </el-select>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="4">
-            <el-row :gutter="4">
-              <el-col :span="5.5"><span>房间号</span></el-col>
-              <el-col :span="17">
-                <el-input
-                    placeholder="输入房间号"
-                    v-model="queryInfo.house"
-                    clearable>
-                </el-input>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="5">
-            <el-row :gutter="4">
-              <el-col :span="5.5"><span>业主姓名</span></el-col>
-              <el-col :span="17">
-                <el-input
-                    placeholder="请输入业主姓名"
-                    v-model="queryInfo.owner"
-                    clearable>
-                </el-input>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="2">
-            <el-button class="button-warning house-button" @click="getHouseList">查询</el-button>
-          </el-col>
-          <el-col :span="2">
-            <el-button class="button-info house-button" @click="resetHouseList(queryInfo)">重置</el-button>
-          </el-col>
-        </el-row>
-
+      <div class="equipment-top">
         <div class="second-line">
-          <el-button class="button-primary" size="small" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>手动添加</el-button>
-          <el-button class="button-success" size="medium" @click="addDialogVisible = true">Excel   模板</el-button>
-          <el-button class="button-primary" size="medium" @click="addDialogVisible = true">房间导入</el-button>
-          <el-button class="button-success" size="medium" @click="addDialogVisible = true">房间导出</el-button>
+          <el-button class="button-primary" size="small" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>设备添加</el-button>
         </div>
       </div>
 
-      <!--   小区列表区, 数据展示   -->
-      <el-table :data="house_list" stripe :header-cell-style="getRowClass">
+      <!--   设备列表区, 数据展示   -->
+      <el-table :data="equipment_list" stripe :header-cell-style="getRowClass">
         <el-table-column label="序号" prop="id"></el-table-column>
-        <el-table-column label="小区名" prop="name"></el-table-column>
-        <el-table-column label="房间号" prop="address"></el-table-column>
-        <el-table-column label="面积" prop="name"></el-table-column>
-        <el-table-column label="业主姓名" prop="name"></el-table-column>
-        <el-table-column label="业主电话" prop="name"></el-table-column>
-        <el-table-column label="租户姓名" prop="name"></el-table-column>
-        <el-table-column label="操作"  class="house-table-lastcol">
+        <el-table-column label="设备名称" prop="name"></el-table-column>
+        <el-table-column label="单位" prop="address"></el-table-column>
+        <el-table-column label="数量" prop="name"></el-table-column>
+        <el-table-column label="用途" prop="address"></el-table-column>
+        <el-table-column label="安装位置" prop="name"></el-table-column>
+        <el-table-column label="使用状态" prop="address"></el-table-column>
+        <el-table-column label="维护周期" prop="account"></el-table-column>
+        <el-table-column label="备注" prop="name"></el-table-column>
+        <el-table-column label="操作"  class="equipment-table-lastcol">
           <template slot-scope="scope">
-            <span @click="showDetailDialog(scope.row.id)" class="active-font font-primary">详情?</span>
-            <span @click="" class="active-font font-warning">删除?</span>
+            <span @click="showEditDialog(scope.row.id)" class="active-font font-primary">修改</span>
+            <span @click="removeEquipment(scope.row.id)" class="active-font font-warning">删除</span>
           </template>
         </el-table-column>
       </el-table>
@@ -103,117 +35,179 @@
           :page-sizes="[5, 8, 15, 20, 30]"
           :page-size="queryInfo.pagesize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="house_total">
+          :total="equipment_total">
       </el-pagination>
     </div>
+    <!--  这是添加设备的 对话框  -->
+    <el-dialog class="dialog-fontweight" title="添加设备" :visible.sync="addDialogVisible" width="650px" @close="addDialogClosed">
+
+      <el-form class="dialog-form" :model="addform" :rules="addform_rules" ref="addform_ref" label-width="100px">
+        <el-form-item label="设备名称" prop="equipment_name">
+          <el-input v-model="addform.equipment_name"></el-input>
+        </el-form-item>
+        <el-form-item label="单位" prop="equipment_per">
+          <el-input v-model="addform.equipment_per"></el-input>
+        </el-form-item>
+        <el-form-item label="数量" prop="equipment_num">
+          <el-input v-model="addform.equipment_num"></el-input>
+        </el-form-item>
+        <el-form-item label="用途" prop="equipment_use">
+          <el-input v-model="addform.equipment_use"></el-input>
+        </el-form-item>
+        <el-form-item label="安装位置"  prop="equipment_install">
+          <el-input v-model="addform.equipment_install"></el-input>
+        </el-form-item>
+        <el-form-item label="使用状态"  prop="equipment_status">
+          <el-input v-model="addform.equipment_use"></el-input>
+        </el-form-item>
+        <el-form-item label="维护周期"  prop="equipment_maintain">
+          <el-input v-model="addform.equipment_maintain"></el-input>
+        </el-form-item>
+        <el-form-item label="备注"  prop="equipment_remark">
+          <el-input v-model="addform.equipment_remark"></el-input>
+        </el-form-item>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button class="button-primary" @click="addEquipment">确 定</el-button>
+        <el-button class="button-info" @click="addDialogVisible = false">取 消</el-button>
+      </span>
+    </el-dialog>
+
+    <!--  修改设备信息的 对话框 -->
+    <el-dialog class="dialog-fontweight" title="修改设备信息" :visible.sync="editDialogVisible" width="650px" @close="editDialogClosed">
+
+      <el-form class="dialog-form" :model="editform" :rules="editform_rules" ref="editform_ref" label-width="100px">
+        <el-form-item label="设备名称">
+          <el-input v-model="editform.equipment_name" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="单位" prop="equipment_per">
+          <el-input v-model="editform.equipment_per"></el-input>
+        </el-form-item>
+        <el-form-item label="数量" prop="equipment_num">
+          <el-input v-model="editform.equipment_num"></el-input>
+        </el-form-item>
+        <el-form-item label="用途"  prop="equipment_use">
+          <el-input v-model="editform.equipment_use"></el-input>
+        </el-form-item>
+        <el-form-item label="安装位置"  prop="equipment_install">
+          <el-input v-model="editform.equipment_install"></el-input>
+        </el-form-item>
+        <el-form-item label="使用状态"  prop="equipment_status">
+          <el-input v-model="editform.equipment_use"></el-input>
+        </el-form-item>
+        <el-form-item label="维护周期"  prop="equipment_maintain">
+          <el-input v-model="editform.equipment_maintain"></el-input>
+        </el-form-item>
+        <el-form-item label="备注"  prop="equipment_remark">
+          <el-input v-model="editform.equipment_remark"></el-input>
+        </el-form-item>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button class="button-primary" @click="editEquipment">确 定</el-button>
+        <el-button class="button-info" @click="editDialogVisible = false">取 消</el-button>
+      </span>
+    </el-dialog>
+
   </main-card2>
 </template>
 
 <script>
-
+  import Qs from 'qs'
   export default {
-    name: "House",
+    name: "Equipment",
     components:{},
     data() {
-      // 自定义校验规则
-      var checkMobile = (rule, value, cb) => {
-        const regMobile = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/
-        if(regMobile.test(value)) return cb()
-        cb(new Error('请输入合法的手机号!~'))
-      }
-
       return {
-        queryInfo: {   // 获取房间信息时 传的参数对象
+        queryInfo: {   // 获取设备信息时 传的参数对象
           query: '',   // 查询参数,
-          merchant: '',   // 查询参数,物业公司
-          community: '',   // 查询参数,小区
-          house: '',   // 查询参数,房间号
-          owner: '',   // 查询参数,业主姓名
           pagenum: 1,   // 当前页码
           pagesize: 2,   // 当前每页显示多少条数据
         },
-
-        merchant_options:  [{   // 物业数据下拉菜单列表
-          merchant_key: '选项1',
-          label: '同盛物业'
-        }, {
-          merchant_key: '选项2',
-          label: '小海物业'
-        }, {
-          merchant_key: '选项3',
-          label: '银湾物业'
-        }],
-
-        comm_options:  [{   // 小区数据下拉菜单列表
-          comm_key: '小区1',
-          label: '一小区'
-        }, {
-          comm_key: '小区2',
-          label: '二小区'
-        }, {
-          comm_key: '选项3',
-          label: '三小区'
-        }],
-        house_list: [],   // 小区列表
-        house_total: 0,   // 房间信息总数据条数
-        //================================================================
-
-
-        addDialogVisible: false,   // 控制添加小区的显示与隐藏
-        addForm: {
-          name: '',
-          address: '',
-          account: '',
-          password: ''
+        equipment_list: [],   // 设备列表
+        equipment_total: 0,   // 设备信息总条数
+        //==================================================================添加
+        addDialogVisible: false,   // 控制添加设备的显示与隐藏
+        addform: {
+          equipment_name: '',
+          equipment_per: '',
+          equipment_num: '',
+          equipment_use: '',
+          equipment_install: '',
+          equipment_status: '',
+          equipment_maintain: '',
+          equipment_remark: ''
         },
-        addFormRules: {
-          name: [
-            {required: true, message: '请输入小区名字!~', trigger: 'blur'}
+        addform_rules: {   // 添加设备的校验规则
+          equipment_name: [
+            {required: true, message: '请输入设备名称!~', trigger: 'blur'}
           ],
-          address: [
-            {required: true, message: '请输入小区地址!~', trigger: 'blur'}
+          equipment_per: [
+            {required: true, message: '请输入单位( 台, 个, 套...)!~', trigger: 'blur'}
           ],
-          account: [
-            { required: true, message: '请输入账号!~', trigger: 'blur'},
-            { min: 5, max: 20, message: '长度在5 ~ 20个字符之间!~',trigger: 'blur'}
-            // { validator: checkMobile, trigger: 'blur'}
+          equipment_num: [
+            {required: true, message: '请输入设备数量!~', trigger: 'blur'}
           ],
-          password: [
-            {required: true, message: '请输入密码!~', trigger: 'blur'},
-            { min: 8, max: 32, message: '长度在8 ~ 32个字符之间!~',trigger: 'blur'}
+          equipment_use: [
+            { required: true, message: '请输入设备用途!~', trigger: 'blur'},
+          ],
+          equipment_install: [
+            {required: false, message: '请输入设备安装位置!~', trigger: 'blur'},
+          ],
+          equipment_status: [
+            {required: false, message: '请输入设备使用状态!~', trigger: 'blur'},
+            { min: 2, max: 32, message: '长度在2 ~ 32个字符之间!~',trigger: 'blur'}
+          ],
+          equipment_maintain: [
+            {required: false, message: '请输入设备维修周期!~', trigger: 'blur'}
+          ],
+          equipment_remark: [
+            {required: false, message: '请输入备注!~', trigger: 'blur'}
           ]
         },
-        editFormRules: {
-          address: [
-            {required: true, message: '请输入小区地址!~', trigger: 'blur'}
+        //====================================================================修改
+        editDialogVisible: false,   // 控制修改对话框的显隐
+        editform: { },   // 修改设备修改时的表单信息
+        editform_rules: {   // 添加设备的校验规则
+          equipment_name: [
+            {required: true, message: '请输入设备名称!~', trigger: 'blur'}
           ],
-          account: [
-            { required: true, message: '请输入账号!~', trigger: 'blur'},
-            { min: 5, max: 20, message: '长度在5 ~ 20个字符之间!~',trigger: 'blur'}
-            // { validator: checkMobile, trigger: 'blur'}
+          equipment_per: [
+            {required: true, message: '请输入单位( 台, 个, 套...)!~', trigger: 'blur'}
           ],
-          password: [
-            {required: true, message: '请输入密码!~', trigger: 'blur'},
-            { min: 8, max: 32, message: '长度在8 ~ 32个字符之间!~',trigger: 'blur'}
+          equipment_num: [
+            {required: true, message: '请输入设备数量!~', trigger: 'blur'}
+          ],
+          equipment_use: [
+            { required: true, message: '请输入设备用途!~', trigger: 'blur'},
+          ],
+          equipment_install: [
+            {required: false, message: '请输入设备安装位置!~', trigger: 'blur'}
+          ],
+          equipment_status: [
+            {required: false, message: '请输入设备使用状态!~', trigger: 'blur'},
+            { min: 2, max: 32, message: '长度在2 ~ 32个字符之间!~',trigger: 'blur'}
+          ],
+          equipment_maintain: [
+            {required: false, message: '请输入设备维修周期!~', trigger: 'blur'}
+          ],
+          equipment_remark: [
+            {required: false, message: '请输入备注!~', trigger: 'blur'}
           ]
         },
-        editDialogVisible: false,
-        editForm: {}
+
       }
     },
     created() {
-      this.getHouseList()
+      this.getEquipmentList()
     },
     methods: {
-      async getHouseList() {   //获取小区列表
+      async getEquipmentList() {   //获取设备列表
         const { data: res } =await this.$axios.get('/api/communicate')   //,{ params: this.queryInfo}
         if(res.meta.status !==200) return this.$message.error('获取小区列表失败!~')
-        this.house_list = res.data.communicates
-        this.house_total = res.data.total
-      },
-      resetHouseList(obj){   // 点击重置按钮时触发的事件
-        this.clearObj(obj)   // 调用全局函数清空对象
-        this.getHouseList()
+        this.equipment_list = res.data.communicates
+        this.equipment_total = res.data.total
       },
       getRowClass({ row, column, rowIndex, columnIndex }) {   // 设置table的首行背景颜色
         if(rowIndex == 0) {
@@ -223,75 +217,80 @@
       },
       handleSizeChange(newSize) {   // 监听pagesize改变的函数
         this.queryInfo.pagesize = newSize
-        this.getHouseList()
+        this.getEquipmentList()
       },
       handleCurrentChange(newPage) {   // 监听页码值改变的函数
         this.queryInfo.pagenum = newPage
-        this.getHouseList()
+        this.getEquipmentList()
       },
 
-
-      addDialogClosed() {   // 监听对话框关闭事件
-        this.$refs.addFormRef.resetFields()
+      //=================================================================添加
+      addDialogClosed() {   // 监听添加设备的对话框关闭事件
+        this.$refs.addform_ref.resetFields()
       },
-      addComm() {   // 点击确定按钮, 添加新小区
-        this.$refs.addFormRef.validate( (valid) => {
+      addEquipment() {   // 添加新设备,触发的函数
+        this.$refs.addform_ref.validate( (valid) => {
           if(!valid) return
           // 如果校验成功,, 可以发起网络请求???
           // if!==200 添加失败
           // this.$message.success('添加小区成功')
           this.addDialogVisible = false   // 隐藏添加小区的对话框
-          // this.getHouseList()   // 重新获取用户的列表
+          // this.getEquipmentList()   // 重新获取用户的列表
         })
       },
-      async showEditDialog(row) {   // 点击修改按钮, 展示修改页
+      //=================================================================修改
+      async showEditDialog(row) {   // 点击修改时的,处理函数
         console.log("====================")
-        console.log(row)
-        this.editForm = row   // 当行数据赋值给 要修改的小区
+        this.editform = row   // 当行数据赋值给 要修改的设备
         // const {data:comm} =await this.$axios.get('/api/communicate')
         // if(comm.meta.status !==200) return this.$message.error('查询小区信息失败')
-        // this.editForm = comm.data.house[parseInt(row.id)-1]
+        // this.editform = comm.data.equipment[parseInt(row.id)-1]
         this.editDialogVisible = true
       },
-      editDialogClosed() {   // 监听修改小区的对话框关闭事件
-        this.$refs.editFormRef.resetFields()
+      editDialogClosed() {   // 监听修改设备的对话框关闭事件
+        this.$refs.editform_ref.resetFields()
       },
-      editComm() {   // 点击确定按钮, 修改小区
-        this.$refs.editFormRef.validate( (valid) => {
+      editEquipment() {   // 点击确定按钮, 修改设备
+        this.$refs.editform_ref.validate( (valid) => {
           if(!valid) return
           // 如果校验成功,, 可以发起网络请求???
           // if!==200 添加失败
-          // this.$message.success('修改小区成功')
-          this.editDialogVisible = false   // 隐藏修改小区的对话框
-          // this.getHouseList()   // 重新获取用户的列表
+          // this.$message.success('修改设备成功')
+          this.editDialogVisible = false   // 隐藏修改设备的对话框
+          // this.getEquipmentList()   // 重新获取用户的列表
         })
       },
-      async removeCommunicate(id) {   // 删除小区的函数
+      //=================================================================删除
+      async removeEquipment() {   // 删除设备, 触发的函数
         // 弹框询问用户是否确认删除
-        const confirmResult = await this.$confirm('此操作将永久删除该小区, 是否继续?','提示',{
+        const confirmResult = await this.$confirm('此操作将永久删除该设备, 是否继续?','提示',{
           confirmButtonText: '确定',
+          confirmButtonClass: 'button-primary',
           cancelButtonText: '取消',
+          cancelButtonClass: 'button-info',
           type: 'warning'
         }).catch( err => {return err})
         if(confirmResult !== 'confirm'){
           return this.$message.info('已取消了删除!~~')
         }
-        // this.$axios.delete('')   // 用户确认删除???
-        // if!==200 删除失败
-        // this.$message.success('删除小区成功小区成功')
-        // this.getHouseList()   // 重新获取用户的列表
-      },
-      showDetailDialog() {   // 点击详情时的,处理函数
-        console.log('点击了详情')
+        const {data:res} =await this.$axios({   // 发起Ajax请求-----------???
+          url:'/ponyproperty-manager/equipment/deleteequipment',
+          method: 'post',
+          transformRequest: [function (data) {
+            return Qs.stringify(data)
+          }],
+          data: { equipment_id: this.editform.equipment_id }
+        })
+        if(res.msg !=='OK') return this.$message.error('删除设备信息失败!~')
+        this.getEquipmentList()   // 重新获取设备列表
+        this.$message.success('删除设备成功!~')
       }
     }
   }
 </script>
 
 <style scoped>
-  .house-top {  }
   .el-row .el-col { line-height: 38px;}
   .el-row span { font-weight: 600; font-size: 14px;}
-  .house-button { width: 70px; }
-  
+  /*.dialog-form{ display: flex; flex-wrap: wrap; }*/
 </style>

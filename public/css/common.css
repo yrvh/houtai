@@ -16,8 +16,9 @@ body{ font-size: 16px;}
 
 .font-primary { color: #235FED; }
 .font-info{ color: #999999; }
-.font-warning{ color: #FD7676;}
-.font-success{ color: #25D9BE;}
+.font-warning{ color: #FD7676; }
+.font-success{ color: #25D9BE; }
+.font-purple { color: #9526E6; }
 
 
 .button-default { background-color: #fff !important; color: #000 !important; }

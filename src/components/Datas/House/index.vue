@@ -78,7 +78,7 @@
         </div>
       </div>
 
-      <!--   小区列表区, 数据展示   -->
+      <!--   房间列表区, 数据展示   -->
       <el-table :data="house_list" stripe :header-cell-style="getRowClass">
         <el-table-column label="序号" prop="id"></el-table-column>
         <el-table-column label="小区名称" prop="name"></el-table-column>

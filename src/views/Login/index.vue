@@ -1,26 +1,6 @@
-<el-submenu index="2">
-  <template slot="title">
-    <i class="iconfont icon-containerXiaoma-count"></i>
-    <span>小区管理</span>
-  </template>
-  <el-menu-item index="/xiaoma/count/comminuty1">
-    <template slot="title">
-      <i class="iconfont icon-containerXiaoma-count1"></i>
-      <span>小区列表</span>
-    </template>
-  </el-menu-item>
-  <el-menu-item index="/xiaoma/count/comminuty2">
-    <template slot="title">
-      <i class="iconfont icon-containerXiaoma-count2"></i>
-      <span>小区设置</span>
-    </template>
-  </el-menu-item>
-</el-submenu>
-
-
 <template>
   <div class="login-container">
-    <div class="login-box" @dblclick="resetLoginForm">
+    <div class="login-info" @dblclick="resetLoginForm">
       <div class="login-avatar">
         <img src="../../../public/img/avatar.png" alt="头像">
       </div>
@@ -107,7 +87,7 @@
 
 <style scoped>
   .login-container {height: 100%; background: rgba(0,0,0,0) url("../../../public/img/loginBG.png") no-repeat scroll;background-size:100% 100%; display: flex;justify-content: center; align-items: center;}
-  .login-box {width: 350px; height: 420px; border-radius: 3px; background-color: rgba(50,50,50,0.7);}
+  .login-info {width: 350px; height: 420px; border-radius: 3px; background-color: rgba(50,50,50,0.7); position: relative; }
   .login-avatar {width:99px; height: 99px; border: 1px solid #f8f8f8; border-radius: 50%; padding: 1px;box-shadow: 0 0 10px #ddd; position: absolute;left: 50%;transform: translate(-50%,-50%)}
   .login-avatar img{width: 100%; height: 100%; border-radius: 50%;}
   .login-content {width: 270px; margin: 84px auto; color: #fff; font-size: 24px;}

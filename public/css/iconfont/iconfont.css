@@ -14,6 +14,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.icon-home-counts:before {
+    content: "\e8e9";
+}
+.icon-home-peoples:before {
+    content: "\e603";
+}
 
 .icon-home-top1:before {
     content: "\e888";
@@ -77,6 +83,9 @@
 
 .icon-login-eye:before {
     content: "\e763";
+}
+.icon-login-eyeoff:before {
+    content: "\e61d";
 }
 
 .icon-login-account:before {
@@ -215,6 +224,9 @@
 .icon-containerXiaoma-arrows:before {
     content: "\e612";
 }
+.icon-home-ul:before {
+    content: "\e605";
+}
 
 
 
@@ -272,9 +284,7 @@
   content: "\e617";
 }
 
-.iconyanjing-bi:before {
-  content: "\e61d";
-}
+
 
 .iconyanjing:before {
   content: "\e763";
@@ -324,9 +334,7 @@
   content: "\e61b";
 }
 
-.icontongjifenxi:before {
-  content: "\e605";
-}
+
 
 .iconshoukuan:before {
   content: "\e62d";
@@ -388,9 +396,7 @@
   content: "\e653";
 }
 
-.iconhu:before {
-  content: "\e603";
-}
+
 
 .iconziyuan:before {
   content: "\e62b";
@@ -412,9 +418,7 @@
   content: "\e613";
 }
 
-.iconico_jiudianguanli_yuanqifangtai:before {
-  content: "\e8e9";
-}
+
 
 .iconyonghu:before {
   content: "\e705";

@@ -3,7 +3,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './plugins/element.js'
+
+// 导入echarts插件
+import './echarts/Chart.min.js'
+
 import Qs2 from 'qs'
+Vue.prototype.$Qs2 = Qs2
 
 Vue.config.productionTip = false;
 
