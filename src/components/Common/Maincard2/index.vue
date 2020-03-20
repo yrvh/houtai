@@ -28,6 +28,6 @@
 
 <style scoped>
     .box { height: 100%; }
-    .el-card { width: 100%; }
+    .el-card { width: 100%; height: 94%; }
     .title { width: 100%; line-height: 14px; font-size: 14px; margin-bottom: 20px; }
 </style>

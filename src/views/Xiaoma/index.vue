@@ -15,32 +15,30 @@
                unique-opened>
         <el-menu-item index="/xiaoma/home">
           <template slot="title">
-            <i class="iconfont icon-containerXiaoma-home"></i>
+            <i class="iconfont icon-aside-home"></i>
             <span>首页</span>
           </template>
         </el-menu-item>
 
         <el-menu-item index="/xiaoma/swipers">
           <template slot="title">
-            <i class="iconfont icon-containerXiaoma-home"></i>
+            <i class="iconfont icon-aside-swipers"></i>
             <span>轮播图</span>
           </template>
         </el-menu-item>
 
         <el-submenu index="3">
           <template slot="title">
-            <i class="iconfont icon-containerXiaoma-count"></i>
+            <i class="iconfont icon-aside-community"></i>
             <span>小区管理</span>
           </template>
           <el-menu-item index="/xiaoma/community/list">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count1"></i>
               <span>小区列表</span>
             </template>
           </el-menu-item>
           <el-menu-item index="/xiaoma/community/seting">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count2"></i>
               <span>小区设置</span>
             </template>
           </el-menu-item>
@@ -48,36 +46,31 @@
 
         <el-submenu index="4">
           <template slot="title">
-            <i class="iconfont icon-containerXiaoma-count"></i>
+            <i class="iconfont icon-aside-datas"></i>
             <span>数据管理</span>
           </template>
           <el-menu-item index="/xiaoma/datas/house">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count1"></i>
               <span>房间信息</span>
             </template>
           </el-menu-item>
           <el-menu-item index="/xiaoma/datas/car">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count2"></i>
               <span>车位信息</span>
             </template>
           </el-menu-item>
           <el-menu-item index="/xiaoma/datas/equipment">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count2"></i>
               <span>公共设备</span>
             </template>
           </el-menu-item>
           <el-menu-item index="/xiaoma/datas/material">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count2"></i>
               <span>物料库存</span>
             </template>
           </el-menu-item>
           <el-menu-item index="/xiaoma/datas/door">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count2"></i>
               <span>门禁信息</span>
             </template>
           </el-menu-item>
@@ -85,31 +78,28 @@
 
         <el-menu-item index="/xiaoma/notice">
           <template slot="title">
-            <i class="iconfont icon-containerXiaoma-count1"></i>
+            <i class="iconfont icon-aside-notice"></i>
             <span>公告管理</span>
           </template>
         </el-menu-item>
 
         <el-submenu index="6">
           <template slot="title">
-            <i class="iconfont icon-containerXiaoma-count"></i>
+            <i class="iconfont icon-aside-bill"></i>
             <span>账单管理</span>
           </template>
           <el-menu-item index="/xiaoma/bill/bills">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count1"></i>
               <span>账单列表</span>
             </template>
           </el-menu-item>
           <el-menu-item index="/xiaoma/bill/collection">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count1"></i>
               <span>催收单</span>
             </template>
           </el-menu-item>
           <el-menu-item index="/xiaoma/bill/check">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count1"></i>
               <span>账单审核</span>
             </template>
           </el-menu-item>
@@ -117,18 +107,16 @@
 
         <el-submenu index="7">
           <template slot="title">
-            <i class="iconfont icon-containerXiaoma-count"></i>
+            <i class="iconfont icon-aside-prepay"></i>
             <span>预缴管理</span>
           </template>
           <el-menu-item index="/xiaoma/prepay/prepayment">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count1"></i>
               <span>预缴费</span>
             </template>
           </el-menu-item>
           <el-menu-item index="/xiaoma/prepay/payquery">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count2"></i>
               <span>预缴查询</span>
             </template>
           </el-menu-item>
@@ -136,18 +124,16 @@
 
         <el-submenu index="8">
           <template slot="title">
-            <i class="iconfont icon-containerXiaoma-count"></i>
+            <i class="iconfont icon-aside-deal"></i>
             <span>交易管理</span>
           </template>
           <el-menu-item index="/xiaoma/deal/dealpayment">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count1"></i>
               <span>后台缴费</span>
             </template>
           </el-menu-item>
           <el-menu-item index="/xiaoma/deal/deals">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count2"></i>
               <span>交易列表</span>
             </template>
           </el-menu-item>
@@ -155,25 +141,23 @@
 
         <el-menu-item index="/xiaoma/repair">
           <template slot="title">
-            <i class="iconfont icon-containerXiaoma-count1"></i>
+            <i class="iconfont icon-aside-repair"></i>
             <span>报修管理</span>
           </template>
         </el-menu-item>
 
         <el-submenu index="10">
           <template slot="title">
-            <i class="iconfont icon-containerXiaoma-count"></i>
+            <i class="iconfont icon-aside-finance"></i>
             <span>财务报表</span>
           </template>
           <el-menu-item index="/xiaoma/finance/finance1">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count1"></i>
               <span>报表1</span>
             </template>
           </el-menu-item>
           <el-menu-item index="/xiaoma/finance/finance2">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count2"></i>
               <span>报表2</span>
             </template>
           </el-menu-item>
@@ -181,18 +165,16 @@
 
         <el-submenu index="11">
           <template slot="title">
-            <i class="iconfont icon-containerXiaoma-count"></i>
+            <i class="iconfont icon-aside-vip"></i>
             <span>会员用户</span>
           </template>
           <el-menu-item index="/xiaoma/vip/userinfo">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count1"></i>
               <span>用户信息</span>
             </template>
           </el-menu-item>
           <el-menu-item index="/xiaoma/vip/bindinfo">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count2"></i>
               <span>绑定信息</span>
             </template>
           </el-menu-item>
@@ -200,24 +182,21 @@
 
         <el-submenu index="12">
           <template slot="title">
-            <i class="iconfont icon-containerXiaoma-count"></i>
+            <i class="iconfont icon-aside-permission"></i>
             <span>权限管理</span>
           </template>
           <el-menu-item index="/xiaoma/permission/account">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count1"></i>
               <span>账号管理</span>
             </template>
           </el-menu-item>
           <el-menu-item index="/xiaoma/permission/role">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count2"></i>
               <span>角色管理</span>
             </template>
           </el-menu-item>
           <el-menu-item index="/xiaoma/permission/permis">
             <template slot="title">
-              <i class="iconfont icon-containerXiaoma-count2"></i>
               <span>权限管理</span>
             </template>
           </el-menu-item>
@@ -232,21 +211,21 @@
       <!-- 页面头部区域 -->
       <el-header height="76px">
         <div class="header-left">
-          <i class="iconfont icon-containerXiaoma-list"></i>
-          <i class="iconfont icon-containerXiaoma-refresh"></i>
+          <i class="iconfont icon-header-list"></i>
+          <i class="iconfont icon-header-refresh" @click="logout"></i>
         </div>
         <div class="header-right">
           <div class="header-menu">
-            <i class="iconfont icon-containerXiaoma-link"></i>
-            <i class="iconfont icon-containerXiaoma-fullScreen"></i>
-            <i class="iconfont icon-containerXiaoma-share"></i>
-            <i class="iconfont icon-containerXiaoma-help"></i>
-            <i class="iconfont icon-containerXiaoma-hint"></i>
+            <i class="iconfont icon-header-link"></i>
+            <i class="iconfont icon-header-full"></i>
+            <i class="iconfont icon-header-share"></i>
+            <i class="iconfont icon-header-help"></i>
+            <i class="iconfont icon-header-hint"></i>
           </div>
           <div class="header-admin">
-            <i class="iconfont icon-containerXiaoma-avatar"></i>
+            <i class="iconfont icon-header-avatar"></i>
             <span>admin</span>
-            <i class="iconfont icon-containerXiaoma-arrows"></i>
+            <i class="iconfont icon-header-arrows"></i>
           </div>
         </div>
         <!--<div class="header-exit" :class="{activatedExit:isActivated}" @click="logout" @mouseover="overChangeColor" @mouseleave="leaveChangeColor">-->
@@ -268,7 +247,7 @@
 
 <script>
   export default {
-    name: "containerXiaoma",
+    name: "Xiaoma",
     data() {
       return {
         isActivated: false,
@@ -276,8 +255,9 @@
       }
     },
     methods: {
-      logout() {
-        // const { data:res } = await this.$axios.get('/ponyproperty-manager/login/logout')
+      async logout() {
+        const { data:res } = await this.$axios.get('/ponyproperty-manager/login/logout')
+        console.log(res)
         window.sessionStorage.clear();   // 清除token, 强制跳转到登录页 
         this.$router.push('/login');
       },

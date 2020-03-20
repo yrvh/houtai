@@ -91,23 +91,23 @@
     </div>
 
     <!--  这是添加账号的 对话框  -->
-    <el-dialog title="添加账号公司" :visible.sync="addDialogVisible" width="40%" @close="addDialogClosed">
+    <el-dialog title="添加账号" :visible.sync="addDialogVisible" width="40%" @close="addDialogClosed">
 
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="90px">
+      <el-form :model="addform" :rules="addform_rules" ref="addform_ref" label-width="90px">
         <el-form-item label="账号名称" prop="account_name">
-          <el-input v-model="addForm.account_name"></el-input>
+          <el-input v-model="addform.account_name"></el-input>
         </el-form-item>
         <el-form-item label="账号ID" prop="account_id">
-          <el-input v-model="addForm.account_id"></el-input>
+          <el-input v-model="addform.account_id"></el-input>
         </el-form-item>
-        <el-form-item label="账号密码" prop="account_password">
-          <el-input v-model="addForm.account_password" type="password"></el-input>
+        <el-form-item label="账号密码" prop="password">
+          <el-input v-model="addform.password" type="password"></el-input>
         </el-form-item>
-        <el-form-item label="联系人" prop="concat_name">
-          <el-input v-model="addForm.concat_name"></el-input>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="addform.email" ></el-input>
         </el-form-item>
-        <el-form-item label="联系电话" prop="concat_phone">
-          <el-input v-model="addForm.concat_phone" ></el-input>
+        <el-form-item label="联系电话" prop="phone">
+          <el-input v-model="addform.phone" ></el-input>
         </el-form-item>
       </el-form>
 
@@ -120,21 +120,21 @@
     <!--  修改账号的 对话框 -->
     <el-dialog title="修改账号信息" :visible.sync="editDialogVisible" width="40%" @close="editDialogClosed">
 
-      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="80px">
+      <el-form :model="editform" :rules="editform_rules" ref="editformRef" label-width="80px">
         <el-form-item label="账号名称">
-          <el-input v-model="editForm.name" disabled></el-input>
+          <el-input v-model="editform.name" disabled></el-input>
         </el-form-item>
         <el-form-item label="账号ID">
-          <el-input v-model="editForm.id" disabled></el-input>
+          <el-input v-model="editform.id" disabled></el-input>
         </el-form-item>
         <el-form-item label="账号密码" prop="password">
-          <el-input v-model="editForm.password" type="password"></el-input>
+          <el-input v-model="editform.password" type="password"></el-input>
         </el-form-item>
         <el-form-item label="联系人" prop="concat_name">
-          <el-input v-model="editForm.concat_name"></el-input>
+          <el-input v-model="editform.concat_name"></el-input>
         </el-form-item>
         <el-form-item label="联系电话" prop="concat_phone">
-          <el-input v-model="editForm.concat_phone" ></el-input>
+          <el-input v-model="editform.concat_phone" ></el-input>
         </el-form-item>
       </el-form>
 
@@ -198,50 +198,60 @@
         account_total: 0,   // 账号列表的总数
         //========================================================================================添加
         addDialogVisible: false,   // 该属性控制 添加账号这个对话框的显隐
-        addForm: {   // 添加账号时的表单信息
+        addform: {   // 添加账号时的表单信息
           account_name: '',
           account_id: '',
-          account_password:'',
-          concat_name: '',
-          concat_phone: ''
+          password:'',
+          email: '',
+          phone: null,
+          type: 2,
+          grade: 1,
         },
-        addFormRules: {   // 添加账号时的 格式校验
+        addform_rules: {   // 添加账号时的 格式校验
           account_name: [
-            {required: true, message: '请输入账号名字!~', trigger: 'blur'},
-            { min: 2, max: 15, message: '长度在2 ~ 15个字符之间!~',trigger: 'blur'}
+            {required: true, message: '请输入账号名!~', trigger: 'blur'},
+            { min: 3, max: 30, message: '长度在3 ~ 30个字符之间!~',trigger: 'blur'}
           ],
           account_id: [
             {required: true, message: '请输入账号appID!~', trigger: 'blur'},
-            { min: 2, max: 32, message: '长度在2 ~ 32个字符之间!~',trigger: 'blur'}
+            { min: 3, max: 32, message: '长度在2 ~ 32个字符之间!~',trigger: 'blur'}
           ],
-          account_password:[
+          password:[
             {required:true, message: '请输入账号密码!~',trigger: 'blur'},
-            { min: 6, max: 32, message: '长度在6 ~ 32个字符之间!~',trigger: 'blur'}
+            { min: 5, max: 32, message: '长度在5 ~ 32个字符之间!~',trigger: 'blur'}
           ],
-          concat_name: [
+          email: [
             { required: false, message: '请输入联系人!~', trigger: 'blur'},
-            { min: 2, max: 15, message: '长度在2 ~ 15个字符之间!~',trigger: 'blur'}
+            { validator: checkEmail, trigger: 'blur'}
           ],
-          concat_phone: [
+          phone: [
             {required: false, message: '请输入联系电话!~', trigger: 'blur'},
             { validator: checkMobile, trigger: 'blur'}
           ]
         },
         //=========================================================================================修改
         editDialogVisible: false,   // 控制修改 对话框的显隐
-        editForm: { },   // 修改账号时的表单信息
-        editFormRules: {   //修改账号时的格式校验
-          account_password:[
+        editform: { },   // 修改账号时的表单信息
+        editform_rules: {   //修改账号时的格式校验
+          account_name: [
+            {required: true, message: '请输入账号名!~', trigger: 'blur'},
+            { min: 3, max: 30, message: '长度在3 ~ 30个字符之间!~',trigger: 'blur'}
+          ],
+          account_id: [
+            {required: true, message: '请输入账号appID!~', trigger: 'blur'},
+            { min: 3, max: 32, message: '长度在2 ~ 32个字符之间!~',trigger: 'blur'}
+          ],
+          password:[
             {required:true, message: '请输入账号密码!~',trigger: 'blur'},
-            { min: 6, max: 32, message: '长度在6 ~ 32个字符之间!~',trigger: 'blur'}
+            { min: 5, max: 32, message: '长度在5 ~ 32个字符之间!~',trigger: 'blur'}
           ],
-          concat_name: [
+          email: [
             { required: false, message: '请输入联系人!~', trigger: 'blur'},
-            { min: 2, max: 15, message: '长度在2 ~ 15个字符之间!~',trigger: 'blur'}
+            { validator: checkEmail, trigger: 'blur'}
           ],
-          concat_phone: [
+          phone: [
             {required: false, message: '请输入联系电话!~', trigger: 'blur'},
-            { validatot: checkMobile,trigger: 'blur'}
+            { validator: checkMobile, trigger: 'blur'}
           ]
         },
       }
@@ -277,25 +287,28 @@
         this.getAccountList()
       },
       addDialogClosed() {   // 监听添加账号的对话框关闭时触发的事件
-        this.$refs.addFormRef.resetFields()
+        this.$refs.addform_ref.resetFields()
       },
       addAccount() {   // 点击确定按钮, 添加新账号
-        this.$refs.addFormRef.validate(async (valid) => {
+        this.$refs.addform_ref.validate(async (valid) => {
           if(!valid) return
           // 如果校验成功,, 可以发起网络请求. 来添加账号
           const {data:res} = await this.$axios({
-            url:'/ponyproperty-manager/account/addAccount',
+            url:'/ponyproperty-manager/login/register',
             method: 'post',
             transformRequest: [function (data) {
               return Qs.stringify(data)
             }],
             data: {
-              concat_name: this.addForm.concat_name,
-              concat_phone: this.addForm.concat_phone,
-              account_id: this.addForm.account_id,
-              account_name: this.addForm.account_name
+              accountName: this.addform.account_name,
+              merchantId: this.addform.account_id,
+              email: this.addform.email,
+              phone: this.addform.phone,
+              password: this.addform.password,
+              type: this.addform.type
             }
           })
+          console.log(res)
           if(res.msg!=='OK') return this.$message.error('添加账号失败!~')
           this.$message.success('添加账号成功!~')
           this.addDialogVisible = false   // 隐藏对话框
@@ -305,18 +318,18 @@
       },
 
       showEditDialog(row) {   // 点击修改按钮, 展示修改页
-        this.editForm = row
+        this.editform = row
         this.editDialogVisible = true
       },
       editDialogClosed() {   // 监听对话框关闭事件
-        this.$refs.editFormRef.resetFields()
+        this.$refs.editformRef.resetFields()
       },
       editAccount() {   // 点击确定按钮, 修改账号  发起Ajax请求-----------???
-        this.$refs.editFormRef.validate(async (valid) => {
+        this.$refs.editformRef.validate(async (valid) => {
           if (!valid) return
-          console.log('修改后的editForm',this.editForm)
-          console.log(this.editForm.concat_phone)
-          console.log(this.editForm.account_id)
+          console.log('修改后的editform',this.editform)
+          console.log(this.editform.concat_phone)
+          console.log(this.editform.account_id)
           const {data:res} =await this.$axios({
             url:'/ponyproperty-manager/account/updateaccount',
             method: 'post',
@@ -324,10 +337,10 @@
               return Qs.stringify(data)
             }],
             data: {
-              concat_name: this.editForm.concat_name,
-              concat_phone: this.editForm.concat_phone,
-              account_id: this.editForm.account_id,
-              account_name: this.editForm.account_name
+              concat_name: this.editform.concat_name,
+              concat_phone: this.editform.concat_phone,
+              account_id: this.editform.account_id,
+              account_name: this.editform.account_name
             }
           })
           if(res.msg !=='OK') return this.$message.error('修改账号信息失败!~')
@@ -355,7 +368,7 @@
           transformRequest: [function (data) {
             return Qs.stringify(data)
           }],
-          data: { account_id: this.editForm.account_id }
+          data: { account_id: this.editform.account_id }
         })
         if(res.msg !=='OK') return this.$message.error('删除账号信息失败!~')
         this.getAccountList()   // 重新获取账号列表

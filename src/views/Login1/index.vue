@@ -91,11 +91,8 @@
           })
           if(res.msg !== 'OK') return this.$message.error('登录失败!~')
           this.$message.success('登录成功!~')
-
-          console.log("小马的数据:")
-          console.log(res)
           // window.sessionStorage.setItem('token',99)   // 将token存储在本地
-          this.$router.push('/xiaoma/home')   // 编程式导航
+          this.$router.push('/xiaoma/permission/account')   // 编程式导航
         })
       },
     },

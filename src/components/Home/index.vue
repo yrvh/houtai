@@ -3,18 +3,18 @@
   <div class="box">
     <div class="home-top">
       <home-card title1="小区总数" title2="常住人数" count1="5155" count2="34123" :bgcolors="{background:'linear-gradient(to right, #FD7676,#FD8686,#FDA6A6)'}">
-        <template slot="row1"><i class="iconfont icon-home-counts" ></i></template>
+        <template slot="row1"><i class="iconfont icon-home-community" ></i></template>
         <template slot="row2"><i class="iconfont icon-home-peoples"></i></template>
       </home-card>
       <home-card :bgcolors="{background:'linear-gradient(to right, #4172F5,#6387FE,#6387FE)'}">
-        <template slot="row1"><i class="home-money iconfont icon-home-counts" ></i></template>
+        <template slot="row1"><i class="home-money iconfont icon-home-money" ></i></template>
         <template slot="row2">
           <home-data title="总钱数" count="99900" class="home-money"></home-data>
         </template>
       </home-card>
       <home-card title1="业主" title2="租客" count1="5155" count2="4123" :bgcolors="{background:'linear-gradient(to right, #9223E5,#C456FB)'}">
-        <template slot="row1"><i class="iconfont icon-home-counts" ></i></template>
-        <template slot="row2"><i class="iconfont icon-home-peoples"></i></template>
+        <template slot="row1"><i class="iconfont icon-home-owner" ></i></template>
+        <template slot="row2"><i class="iconfont icon-home-rent"></i></template>
       </home-card>
       <home-card title1="空闲车位数" title2="未交房数" count1="5155" count2="34123" :bgcolors="{background:'linear-gradient(to right, #4172F5,#6387FE,#6387FE)'}">
         <template slot="row1">
@@ -25,8 +25,8 @@
         </template>
       </home-card>
       <home-card title1="应收户数" title2="实收户数" count1="5155" count2="3412" :bgcolors="{background:'linear-gradient(to right, #3FD6BF,#4BE7BD)'}">
-        <template slot="row1"><i class="iconfont icon-home-counts" ></i></template>
-        <template slot="row2"><i class="iconfont icon-home-peoples"></i></template>
+        <template slot="row1">档期</template>
+        <template slot="row2">2020</template>
       </home-card>
     </div>
 

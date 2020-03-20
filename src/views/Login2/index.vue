@@ -82,7 +82,7 @@
             url: '/ponyproperty-manager/login/login',
             method: 'post',
             transformRequest: [function (data) {
-              return Qs.stringify(data)
+              return this.$Qs.stringify(data)
             }],
             data: {
               account_name: this.loginForm.account_name,
@@ -95,7 +95,7 @@
           console.log("小马的数据:")
           console.log(res)
           // window.sessionStorage.setItem('token',99)   // 将token存储在本地
-          this.$router.push('/xiaoma/home')   // 编程式导航
+          this.$router.push('/permission/account')   // 编程式导航
         })
       },
     },

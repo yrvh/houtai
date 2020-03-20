@@ -15,7 +15,7 @@ const routes = [
   xiaoma,
   {
     path: '/*',
-    redirect: '/login'
+    redirect: '/login1'
   }
 ];
 

@@ -69,7 +69,7 @@
         <el-table-column label="发布时间" prop="address"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <span @click="" class="active-font font-primary">置顶?</span>
+            <span @click="" class="active-font font-primary"><i class="iconfont icon-notice-stick"></i></span>
           </template>
         </el-table-column>
         <el-table-column label="操作" min-width="100px">

@@ -6,7 +6,7 @@ module.exports = {
     hotOnly: false,
     proxy: {
       '/ponyproperty-manager': {
-        target: 'http://192.168.2.88:8001',
+        target: 'http://192.168.2.88:8800',
         changeOrigin: true,
         ws:true,
       },
