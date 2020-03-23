@@ -63,8 +63,8 @@
       <!--   角色列表展示区   -->
       <el-table :data="role_list" stripe :header-cell-style="getRowClass">
         <el-table-column label="序号" type="index"></el-table-column>
-        <el-table-column label="角色" prop="name"></el-table-column>
-        <el-table-column label="权限" prop="address"></el-table-column>
+        <el-table-column label="角色" prop="roleName"></el-table-column>
+        <el-table-column label="权限" prop="note"></el-table-column>
         <el-table-column label="操作" min-width="100px">
           <template slot-scope="scope">
             <span @click="showDetailDialog(scope.row)" class="active-font font-primary">详情?</span>
@@ -96,10 +96,11 @@
         queryInfo: {   // 获取角色列表时 传的参数对象
           query: '',   // 查询参数,
           community: '',   // 查询参数,小区
-          role_name: '',   // 查询参数,角色姓名
-          role_role: '',   // 查询参数,角色角色
+          role_name: '',   // 查询参数,角色名
+          role_role: '',   // 查询参数,角色
           pagenum: 1,   // 当前页码
           pagesize: 2,   // 当前每页显示多少条数据
+          type: '',
         },
 
         comm_options:  [{   // 小区数据下拉菜单列表
@@ -127,16 +128,27 @@
       }
     },
     created() {   // 生命周期函数, 用于初始化页面
+      this.queryInfo.type = window.sessionStorage.getItem('TYPE')
       this.getRoleList()   // 调用该函数初始化公告的列表区域
     },
 
 
     methods: {
-      async getRoleList() {   //获取公告列表,  发起Ajax请求-----------???
-        const { data: res } =await this.$axios.get('/api/communicate')   //,{ params: this.queryInfo}
-        if(res.meta.status !==200) return this.$message.error('获取小区列表失败!~')
-        this.role_list = res.data.communicates
-        this.role_total = res.data.total
+      async getRoleList() {   //获取角色列表
+        const {data:res} =await this.$axios({
+          url:'/ponyproperty-manager/role/listRoles',
+          method: 'post',
+          transformRequest: [function (data) {
+            return Qs.stringify(data)
+          }],
+          data: {
+            role_type: this.queryInfo.type
+          }
+        })
+        if(res.msg !=='OK') return this.$message.error('获取角色列表失败!~')
+        this.role_list = res.data
+        this.role_total = this.role_list.length
+        console.log(this.role_list)
       },
       resetRoleList(obj){   // 点击重置按钮时触发的事件
         this.clearObj(obj)   // 调用全局函数清空对象

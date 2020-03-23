@@ -93,6 +93,8 @@
           this.$message.success('登录成功!~')
           // window.sessionStorage.setItem('token',99)   // 将token存储在本地
           this.$router.push('/xiaoma/permission/account')   // 编程式导航
+          window.sessionStorage.setItem('TYPE',res.data.type)
+          window.sessionStorage.setItem('GRADE',res.data.grade)
         })
       },
     },

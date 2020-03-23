@@ -8,7 +8,7 @@
             <el-row :gutter="2">
               <el-col :span="4.5"><span>物业名称</span></el-col>
               <el-col :span="18">
-                <el-select v-model="queryInfo.merchant" allow-create filterable clearable placeholder="全部物业">
+                <el-select v-model="queryInfo.merchantId" allow-create filterable clearable placeholder="全部物业">
                   <el-option
                       v-for="item in merchant_options"
                       :key="item.merchant_key"
@@ -24,7 +24,7 @@
             <el-row :gutter="2">
               <el-col :span="4.5"><span>小区名称</span></el-col>
               <el-col :span="17">
-                <el-select v-model="queryInfo.community" allow-create filterable clearable placeholder="请输入小区名">
+                <el-select v-model="queryInfo.communityName" allow-create filterable clearable placeholder="请输入小区名">
                   <el-option
                       v-for="item in comm_options"
                       :key="item.comm_key"
@@ -42,7 +42,7 @@
               <el-col :span="17">
                 <el-input
                     placeholder="输入房间号"
-                    v-model="queryInfo.house"
+                    v-model="queryInfo.roomNo"
                     clearable>
                 </el-input>
               </el-col>
@@ -55,7 +55,7 @@
               <el-col :span="17">
                 <el-input
                     placeholder="请输入业主姓名"
-                    v-model="queryInfo.owner"
+                    v-model="queryInfo.ownerName"
                     clearable>
                 </el-input>
               </el-col>
@@ -99,9 +99,9 @@
       <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="queryInfo.pagenum"
+          :current-page="queryInfo.pageNO"
           :page-sizes="[5, 8, 15, 20, 30]"
-          :page-size="queryInfo.pagesize"
+          :page-size="queryInfo.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="house_total">
       </el-pagination>
@@ -110,53 +110,53 @@
     <el-dialog class="dialog-fontweight" title="添加房间" :visible.sync="addDialogVisible" width="650px" @close="addDialogClosed">
 
       <el-form class="dialog-form" :model="addform" :rules="addform_rules" ref="addform_ref" label-width="100px">
-        <el-form-item label="物业公司" prop="house_area">
-          <el-input v-model="addform.merchant"></el-input>
+        <el-form-item label="物业ID" prop="merchantId">
+          <el-input v-model="addform.merchantId"></el-input>
         </el-form-item>
-        <el-form-item label="小区名称" prop="house_community">
-          <el-input v-model="addform.community"></el-input>
+        <el-form-item label="小区名称" prop="communityName">
+          <el-input v-model="addform.communityName"></el-input>
         </el-form-item>
-        <el-form-item label="房间号" prop="house_num">
-          <el-input v-model="addform.house_num"></el-input>
+        <el-form-item label="房间号" prop="roomNo">
+          <el-input v-model="addform.roomNo"></el-input>
         </el-form-item>
-        <el-form-item label="面积" prop="house_area">
-          <el-input v-model="addform.house_area"></el-input>
+        <el-form-item label="面积" prop="roomArea">
+          <el-input v-model="addform.roomArea"></el-input>
         </el-form-item>
-        <el-form-item label="业主姓名"  prop="house_owner">
-          <el-input v-model="addform.owner"></el-input>
+        <el-form-item label="业主姓名"  prop="ownerName">
+          <el-input v-model="addform.ownerName"></el-input>
         </el-form-item>
-        <el-form-item label="业主身份证"  prop="house_owner_identity">
-          <el-input v-model="addform.house_owner_identity"></el-input>
+        <el-form-item label="业主身份证"  prop="ownerIdCard">
+          <el-input v-model="addform.ownerIdCard"></el-input>
         </el-form-item>
-        <el-form-item label="业主电话"  prop="house_tel">
-          <el-input v-model="addform.house_tel"></el-input>
+        <el-form-item label="业主电话"  prop="ownerPhone">
+          <el-input v-model="addform.ownerPhone"></el-input>
         </el-form-item>
-        <el-form-item label="业主电话2"  prop="house_tel2">
-          <el-input v-model="addform.house_tel2"></el-input>
+        <el-form-item label="业主电话2"  prop="ownerPhone2">
+          <el-input v-model="addform.ownerPhone2"></el-input>
         </el-form-item>
-        <el-form-item label="租户姓名"  prop="house_lessee">
-          <el-input v-model="addform.house_area"></el-input>
+        <el-form-item label="租户姓名"  prop="rentName">
+          <el-input v-model="addform.rentName"></el-input>
         </el-form-item>
-        <el-form-item label="租户身份证"  prop="house_lessee_identity">
-          <el-input v-model="addform.house_lessee_identity"></el-input>
+        <el-form-item label="租户身份证"  prop="rentIdCard">
+          <el-input v-model="addform.rentIdCard"></el-input>
         </el-form-item>
-        <el-form-item label="车牌号"  prop="house_carnum">
-          <el-input v-model="addform.house_carnum"></el-input>
+        <el-form-item label="车牌号"  prop="carNumber">
+          <el-input v-model="addform.carNumber"></el-input>
         </el-form-item>
-        <el-form-item label="车牌号2"  prop="house_carnum">
-          <el-input v-model="addform.house_carnum2"></el-input>
+        <el-form-item label="车牌号2"  prop="carNumber">
+          <el-input v-model="addform.carNumber2"></el-input>
         </el-form-item>
-        <el-form-item label="车位"  prop="house_carport">
-          <el-input v-model="addform.house_carport"></el-input>
+        <el-form-item label="车位"  prop="parkingPlace">
+          <el-input v-model="addform.parkingPlace"></el-input>
         </el-form-item>
-        <el-form-item label="车位2"  prop="house_carport">
-          <el-input v-model="addform.house_carport2"></el-input>
+        <el-form-item label="车位2"  prop="parkingPlace">
+          <el-input v-model="addform.parkingPlace2"></el-input>
         </el-form-item>
-        <el-form-item label="租入住时间"  prop="house_date">
-          <el-input v-model="addform.house_date"></el-input>
+        <el-form-item label="租入住时间"  prop="rentStartTime">
+          <el-input v-model="addform.rentStartTime"></el-input>
         </el-form-item>
-        <el-form-item label="备注"  prop="house_remark">
-          <el-input v-model="addform.house_remark"></el-input>
+        <el-form-item label="备注"  prop="remark">
+          <el-input v-model="addform.remark"></el-input>
         </el-form-item>
       </el-form>
 
@@ -174,49 +174,49 @@
           <el-input v-model="detailform.house_merchant" disabled></el-input>
         </el-form-item>
         <el-form-item label="小区名称">
-          <el-input v-model="detailform.house_community" disabled></el-input>
+          <el-input v-model="detailform.communityName" disabled></el-input>
         </el-form-item>
         <el-form-item label="房间号">
-          <el-input v-model="detailform.house_num" disabled></el-input>
+          <el-input v-model="detailform.roomNo" disabled></el-input>
         </el-form-item>
-        <el-form-item label="面积"  prop="house_area">
-          <el-input v-model="detailform.house_area"></el-input>
+        <el-form-item label="面积"  prop="roomArea">
+          <el-input v-model="detailform.roomArea"></el-input>
         </el-form-item>
-        <el-form-item label="业主姓名"  prop="house_owner">
-          <el-input v-model="detailform.owner"></el-input>
+        <el-form-item label="业主姓名"  prop="ownerName">
+          <el-input v-model="detailform.ownerName"></el-input>
         </el-form-item>
-        <el-form-item label="业主身份证"  prop="house_owner_identity">
-          <el-input v-model="detailform.house_owner_identity"></el-input>
+        <el-form-item label="业主身份证"  prop="ownerIdCard">
+          <el-input v-model="detailform.ownerIdCard"></el-input>
         </el-form-item>
-        <el-form-item label="业主电话"  prop="house_tel">
-          <el-input v-model="detailform.house_tel"></el-input>
+        <el-form-item label="业主电话"  prop="ownerPhone">
+          <el-input v-model="detailform.ownerPhone"></el-input>
         </el-form-item>
-        <el-form-item label="业主电话2"  prop="house_tel2">
-          <el-input v-model="detailform.house_tel2"></el-input>
+        <el-form-item label="业主电话2"  prop="ownerPhone2">
+          <el-input v-model="detailform.ownerPhone2"></el-input>
         </el-form-item>
-        <el-form-item label="租户姓名"  prop="house_lessee">
-          <el-input v-model="detailform.house_area"></el-input>
+        <el-form-item label="租户姓名"  prop="rentName">
+          <el-input v-model="detailform.rentName"></el-input>
         </el-form-item>
-        <el-form-item label="租户身份证"  prop="house_lessee_identity">
-          <el-input v-model="detailform.house_lessee_identity"></el-input>
+        <el-form-item label="租户身份证"  prop="rentIdCard">
+          <el-input v-model="detailform.rentIdCard"></el-input>
         </el-form-item>
-        <el-form-item label="车牌号"  prop="house_carnum">
-          <el-input v-model="detailform.house_carnum"></el-input>
+        <el-form-item label="车牌号"  prop="carNumber">
+          <el-input v-model="detailform.carNumber"></el-input>
         </el-form-item>
-        <el-form-item label="车牌号2"  prop="house_carnum">
-          <el-input v-model="detailform.house_carnum2"></el-input>
+        <el-form-item label="车牌号2"  prop="carNumber">
+          <el-input v-model="detailform.carNumber2"></el-input>
         </el-form-item>
-        <el-form-item label="车位"  prop="house_carport">
-          <el-input v-model="detailform.house_carport"></el-input>
+        <el-form-item label="车位"  prop="parkingPlace">
+          <el-input v-model="detailform.parkingPlace"></el-input>
         </el-form-item>
-        <el-form-item label="车位2"  prop="house_carport">
-          <el-input v-model="detailform.house_carport2"></el-input>
+        <el-form-item label="车位2"  prop="parkingPlace">
+          <el-input v-model="detailform.parkingPlace2"></el-input>
         </el-form-item>
-        <el-form-item label="租入住时间"  prop="house_date">
-          <el-input v-model="detailform.house_date"></el-input>
+        <el-form-item label="租入住时间"  prop="rentStartTime">
+          <el-input v-model="detailform.rentStartTime"></el-input>
         </el-form-item>
-        <el-form-item label="备注"  prop="house_remark">
-          <el-input v-model="detailform.house_remark"></el-input>
+        <el-form-item label="备注"  prop="remark">
+          <el-input v-model="detailform.remark"></el-input>
         </el-form-item>
       </el-form>
 
@@ -244,13 +244,14 @@
 
       return {
         queryInfo: {   // 获取房间信息时 传的参数对象
-          query: '',   // 查询参数,
-          merchant: '',   // 查询参数,物业公司
-          community: '',   // 查询参数,小区
-          house: '',   // 查询参数,房间号
-          owner: '',   // 查询参数,业主姓名
-          pagenum: 1,   // 当前页码
-          pagesize: 2,   // 当前每页显示多少条数据
+          merchantId: '',   // 查询参数,物业公司
+          communityName: '',   // 查询参数,小区
+          buildingNo: '',   // 查询参数,楼号
+          unitNo: '',   // 查询参数,单元号
+          roomNo: '',   // 查询参数,房间号
+          ownerName: '',   // 查询参数,业主姓名
+          pageNO: 1,   // 当前页码
+          pageSize: 2,   // 当前每页显示多少条数据
         },
 
         merchant_options:  [{   // 物业数据下拉菜单列表
@@ -279,61 +280,66 @@
         //==================================================================添加
         addDialogVisible: false,   // 控制添加房间的显示与隐藏
         addform: {
-          house_community: '',
-          house_num: '',
-          house_area: '',
-          house_owner: '',
-          house_owner_identity: '',
-          house_tel: '',
-          house_tel2: '',
-          house_lessee: '',
-          house_lessee_identity: '',
-          house_carnum: '',
-          house_carport: '',
-          house_date: '',
-          house_remark: ''
+
+          roomNo: '',
+          roomArea: '',
+          ownerPhone: '',
+          ownerPhone2: '',
+          rentName: '',
+          rentIdCard: '',
+          merchantId: '',
+          communityId: '',
+          ownerName: '',
+          ownerIdCard: '',
+          communityName: '',
+          carNumber: '',
+          carNumber2: '',
+          parkingPlace: '',
+          parkingPlace2: '',
+          rentStartTime: '',
+          remark: ''
         },
         addform_rules: {   // 添加房间的校验规则
-          house_community: [
+          communityName: [
             {required: true, message: '请输入小区名字!~', trigger: 'blur'}
           ],
-          house_num: [
+          roomNo: [
             {required: true, message: '请输入房间号!~', trigger: 'blur'}
           ],
-          house_area: [
+          roomArea: [
             { required: true, message: '请输入房间面积!~', trigger: 'blur'},
           ],
-          house_owner: [
+          ownerName: [
             {required: true, message: '请输入业主姓名!~', trigger: 'blur'}
           ],
-          house_owner_identity: [
+          ownerIdCard: [
             {required: true, message: '请输入业主身份证!~', trigger: 'blur'}
           ],
-          house_tel: [
+          ownerPhone: [
             {required: true, message: '请输入业主电话!~', trigger: 'blur'},
             { validator: checkMobile, trigger: 'blur'}
           ],
-          house_tel2: [
+          ownerPhone2: [
             {required: false, message: '请输入业主电话!~', trigger: 'blur'},
             { validator: checkMobile, trigger: 'blur'}
           ],
-          house_lessee: [
+          rentName: [
             {required: false, message: '请输入租户姓名!~', trigger: 'blur'},
             { min: 0, max: 8, message: '长度在0 ~ 8个字符之间!~',trigger: 'blur'}
           ],
-          house_lessee_identity: [
+          rentIdCard: [
             {required: false, message: '请输入租户身份证!~', trigger: 'blur'}
           ],
-          house_carnum: [
+          carNumber: [
             {required: false, message: '请输入车牌号!~', trigger: 'blur'}
           ],
-          house_carport: [
+          parkingPlace: [
             {required: false, message: '请输入车位!~', trigger: 'blur'}
           ],
-          house_date: [
+          rentStartTime: [
             {required: false, message: '请输入租户入住时间!~', trigger: 'blur'}
           ],
-          house_remark: [
+          remark: [
             {required: false, message: '请输入备注!~', trigger: 'blur'}
           ]
         },
@@ -341,40 +347,40 @@
         detailDialogVisible: false,   // 控制详情对话框的显隐
         detailform: { },   // 修改房间详情时的表单信息
         detailform_rules: {   // 添加房间的校验规则
-          house_area: [
+          roomArea: [
             { required: true, message: '请输入房间面积!~', trigger: 'blur'},
           ],
-          house_owner: [
+          ownerName: [
             {required: true, message: '请输入业主姓名!~', trigger: 'blur'}
           ],
-          house_owner_identity: [
+          ownerIdCard: [
             {required: true, message: '请输入业主身份证!~', trigger: 'blur'}
           ],
-          house_tel: [
+          ownerPhone: [
             {required: true, message: '请输入业主电话!~', trigger: 'blur'},
             { validator: checkMobile, trigger: 'blur'}
           ],
-          house_tel2: [
+          ownerPhone2: [
             {required: false, message: '请输入业主电话!~', trigger: 'blur'},
             { validator: checkMobile, trigger: 'blur'}
           ],
-          house_lessee: [
+          rentName: [
             {required: false, message: '请输入租户姓名!~', trigger: 'blur'},
             { min: 0, max: 8, message: '长度在0 ~ 8个字符之间!~',trigger: 'blur'}
           ],
-          house_lessee_identity: [
+          rentIdCard: [
             {required: false, message: '请输入租户身份证!~', trigger: 'blur'}
           ],
-          house_carnum: [
+          carNumber: [
             {required: false, message: '请输入车牌号!~', trigger: 'blur'}
           ],
-          house_carport: [
+          parkingPlace: [
             {required: false, message: '请输入车位!~', trigger: 'blur'}
           ],
-          house_date: [
+          rentStartTime: [
             {required: false, message: '请输入租户入住时间!~', trigger: 'blur'}
           ],
-          house_remark: [
+          remark: [
             {required: false, message: '请输入备注!~', trigger: 'blur'}
           ]
         },
@@ -385,8 +391,23 @@
       this.getHouseList()
     },
     methods: {
-      async getHouseList() {   //获取小区列表
-        const { data: res } =await this.$axios.get('/api/communicate')   //,{ params: this.queryInfo}
+      async getHouseList() {   //获取房间列表
+        // const { data: res } =await this.$axios.get('/api/communicate')   //,{ params: this.queryInfo}
+        const {data:res} = await this.$axios({
+          url:'/ponyproperty-manager/room/listRoom',
+          method: 'post',
+          transformRequest: [function (data) {
+            return Qs.stringify(data)
+          }],
+          data: {
+            merchantId: this.queryInfo.merchantId,
+            communityName: this.queryInfo.communityName,
+            roomNo: this.queryInfo.roomNo,
+            ownerName: this.queryInfo.ownerName
+
+          }
+        })
+
         if(res.meta.status !==200) return this.$message.error('获取小区列表失败!~')
         this.house_list = res.data.communicates
         this.house_total = res.data.total
@@ -401,12 +422,12 @@
         }
         else { return ''}
       },
-      handleSizeChange(newSize) {   // 监听pagesize改变的函数
-        this.queryInfo.pagesize = newSize
+      handleSizeChange(newSize) {   // 监听pageSize改变的函数
+        this.queryInfo.pageSize = newSize
         this.getHouseList()
       },
       handleCurrentChange(newPage) {   // 监听页码值改变的函数
-        this.queryInfo.pagenum = newPage
+        this.queryInfo.pageNO = newPage
         this.getHouseList()
       },
 

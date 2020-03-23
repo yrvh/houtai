@@ -2,13 +2,10 @@
 <template>
   <main-card2 title1="小区管理" title2="小区列表">
     <div slot="content">
-      <el-row>
-        <el-col></el-col>
-      </el-row>
       <div class="list-communityName">
         <el-input class="list-input" placeholder="请输入小区名称" v-model="queryInfo.query" clearable @clear="getCommunicateList"></el-input>
-        <el-button class="button-warning list-search" @click="getCommunicateList">查询</el-button>
-        <el-button class="button-info list-search" @click="resetCommunicateList(queryInfo)">重置</el-button>
+        <el-button class="button-warning search-button" @click="getCommunicateList">查询</el-button>
+        <el-button class="button-info reset-button" @click="resetCommunicateList(queryInfo)">重置</el-button>
         <el-button class="list-add button-primary" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>添加小区</el-button>
       </div>
 
@@ -240,7 +237,6 @@
 <style scoped>
   .list-communityName { position: relative; display: flex; align-items: center; }
   .list-input { width: 300px; }
-  .list-search { width: 80px; color: #fff; margin-left: 9px;}
   .list-add { position: absolute; right: 0; }
 
 </style>

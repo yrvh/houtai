@@ -3,7 +3,7 @@
 
     <!-- 侧边栏 -->
     <el-aside :width="isCollapse? '64px':'246px'">
-      <!--侧边栏小马logo-->
+      <!--侧边栏logo-->
       <div class="aside-logo"><img src="@/assets/logo.png" alt="小马物业"></div>
       <!--  侧边栏折叠按钮  -->
       <div class="toggle-button" @click="toggleCollapse">|||</div>
@@ -11,19 +11,26 @@
       <!-- 侧边栏的菜单-->
       <el-menu text-color="#fff" active-text-color="#235FED"
                :collapse="isCollapse" :collapse-transition="false"
-               router   default-active="/xiaoma/home"
+               router   :default-active="activePath"
                unique-opened>
-        <el-menu-item index="/xiaoma/home">
+        <el-menu-item index="/xiaoma/home" @click="saveNavState('/xiaoma/home')">
           <template slot="title">
             <i class="iconfont icon-aside-home"></i>
             <span>首页</span>
           </template>
         </el-menu-item>
 
-        <el-menu-item index="/xiaoma/swipers">
+        <el-menu-item index="/xiaoma/swipers" @click="saveNavState('/xiaoma/swipers')">
           <template slot="title">
             <i class="iconfont icon-aside-swipers"></i>
             <span>轮播图</span>
+          </template>
+        </el-menu-item>
+
+        <el-menu-item index="/xiaoma/merchants" @click="saveNavState('/xiaoma/merchants')">
+          <template slot="title">
+            <i class="iconfont icon-header-list"></i>
+            <span>商户列表</span>
           </template>
         </el-menu-item>
 
@@ -32,12 +39,12 @@
             <i class="iconfont icon-aside-community"></i>
             <span>小区管理</span>
           </template>
-          <el-menu-item index="/xiaoma/community/list">
+          <el-menu-item index="/xiaoma/community/list" @click="saveNavState('/xiaoma/community/list')">
             <template slot="title">
               <span>小区列表</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/community/seting">
+          <el-menu-item index="/xiaoma/community/seting" @click="saveNavState('/xiaoma/community/seting')">
             <template slot="title">
               <span>小区设置</span>
             </template>
@@ -49,34 +56,34 @@
             <i class="iconfont icon-aside-datas"></i>
             <span>数据管理</span>
           </template>
-          <el-menu-item index="/xiaoma/datas/house">
+          <el-menu-item index="/xiaoma/datas/house" @click="saveNavState('/xiaoma/datas/house')">
             <template slot="title">
               <span>房间信息</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/datas/car">
+          <el-menu-item index="/xiaoma/datas/car" @click="saveNavState('/xiaoma/datas/car')">
             <template slot="title">
               <span>车位信息</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/datas/equipment">
+          <el-menu-item index="/xiaoma/datas/equipment" @click="saveNavState('/xiaoma/datas/equipment')">
             <template slot="title">
               <span>公共设备</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/datas/material">
+          <el-menu-item index="/xiaoma/datas/material" @click="saveNavState('/xiaoma/datas/material')">
             <template slot="title">
               <span>物料库存</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/datas/door">
+          <el-menu-item index="/xiaoma/datas/door" @click="saveNavState('/xiaoma/datas/door')">
             <template slot="title">
               <span>门禁信息</span>
             </template>
           </el-menu-item>
         </el-submenu>
 
-        <el-menu-item index="/xiaoma/notice">
+        <el-menu-item index="/xiaoma/notice" @click="saveNavState('/xiaoma/notice')">
           <template slot="title">
             <i class="iconfont icon-aside-notice"></i>
             <span>公告管理</span>
@@ -88,17 +95,17 @@
             <i class="iconfont icon-aside-bill"></i>
             <span>账单管理</span>
           </template>
-          <el-menu-item index="/xiaoma/bill/bills">
+          <el-menu-item index="/xiaoma/bill/bills" @click="saveNavState('/xiaoma/bill/bills')">
             <template slot="title">
               <span>账单列表</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/bill/collection">
+          <el-menu-item index="/xiaoma/bill/collection" @click="saveNavState('/xiaoma/bill/collection')">
             <template slot="title">
               <span>催收单</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/bill/check">
+          <el-menu-item index="/xiaoma/bill/check" @click="saveNavState('/xiaoma/bill/check')">
             <template slot="title">
               <span>账单审核</span>
             </template>
@@ -110,12 +117,12 @@
             <i class="iconfont icon-aside-prepay"></i>
             <span>预缴管理</span>
           </template>
-          <el-menu-item index="/xiaoma/prepay/prepayment">
+          <el-menu-item index="/xiaoma/prepay/prepayment" @click="saveNavState('/xiaoma/prepay/prepayment')">
             <template slot="title">
               <span>预缴费</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/prepay/payquery">
+          <el-menu-item index="/xiaoma/prepay/payquery" @click="saveNavState('/xiaoma/prepay/payquery')">
             <template slot="title">
               <span>预缴查询</span>
             </template>
@@ -127,19 +134,19 @@
             <i class="iconfont icon-aside-deal"></i>
             <span>交易管理</span>
           </template>
-          <el-menu-item index="/xiaoma/deal/dealpayment">
+          <el-menu-item index="/xiaoma/deal/dealpayment" @click="saveNavState('/xiaoma/deal/dealpayment')">
             <template slot="title">
               <span>后台缴费</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/deal/deals">
+          <el-menu-item index="/xiaoma/deal/deals" @click="saveNavState('/xiaoma/deal/deals')">
             <template slot="title">
               <span>交易列表</span>
             </template>
           </el-menu-item>
         </el-submenu>
 
-        <el-menu-item index="/xiaoma/repair">
+        <el-menu-item index="/xiaoma/repair" @click="saveNavState('/xiaoma/repair')">
           <template slot="title">
             <i class="iconfont icon-aside-repair"></i>
             <span>报修管理</span>
@@ -151,12 +158,12 @@
             <i class="iconfont icon-aside-finance"></i>
             <span>财务报表</span>
           </template>
-          <el-menu-item index="/xiaoma/finance/finance1">
+          <el-menu-item index="/xiaoma/finance/finance1" @click="saveNavState('/xiaoma/finance/finance1')">
             <template slot="title">
               <span>报表1</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/finance/finance2">
+          <el-menu-item index="/xiaoma/finance/finance2" @click="saveNavState('/xiaoma/finance/finance2')">
             <template slot="title">
               <span>报表2</span>
             </template>
@@ -168,12 +175,12 @@
             <i class="iconfont icon-aside-vip"></i>
             <span>会员用户</span>
           </template>
-          <el-menu-item index="/xiaoma/vip/userinfo">
+          <el-menu-item index="/xiaoma/vip/userinfo" @click="saveNavState('/xiaoma/vip/userinfo')">
             <template slot="title">
               <span>用户信息</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/vip/bindinfo">
+          <el-menu-item index="/xiaoma/vip/bindinfo" @click="saveNavState('/xiaoma/vip/bindinfo')">
             <template slot="title">
               <span>绑定信息</span>
             </template>
@@ -185,17 +192,17 @@
             <i class="iconfont icon-aside-permission"></i>
             <span>权限管理</span>
           </template>
-          <el-menu-item index="/xiaoma/permission/account">
+          <el-menu-item index="/xiaoma/permission/account" @click="saveNavState('/xiaoma/permission/account')">
             <template slot="title">
               <span>账号管理</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/permission/role">
+          <el-menu-item index="/xiaoma/permission/role" @click="saveNavState('/xiaoma/permission/role')">
             <template slot="title">
               <span>角色管理</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="/xiaoma/permission/permis">
+          <el-menu-item index="/xiaoma/permission/permis" @click="saveNavState('/xiaoma/permission/permis')">
             <template slot="title">
               <span>权限管理</span>
             </template>
@@ -251,8 +258,13 @@
     data() {
       return {
         isActivated: false,
-        isCollapse: false
+        isCollapse: false,
+        activePath: '/xiaoma/permission/account',   // 保存被激活的连接地址
       }
+    },
+    created() {
+      // this.getMenuList()
+      this.activePath = window.sessionStorage.getItem('activePath')
     },
     methods: {
       async logout() {
@@ -269,13 +281,16 @@
       },
       toggleCollapse() {   // 点击按钮,折叠菜单
         this.isCollapse = !this.isCollapse
+      },
+      saveNavState(activePath) {   // 保存连接的激活状态
+        window.sessionStorage.setItem('activePath',activePath)
       }
     }
   }
 </script>
 
 <style scoped>
-  .containerXiaoma  {height: 100%;}
+  .containerXiaoma  { height: 100%;}
   .el-aside { width: 246px; height: 100%; background-color: #235FED; color: #fff !important; }
   .aside-logo{ width: 100%; }
   .aside-logo img{ margin: 20px auto;width: 74px;height: 65px;}

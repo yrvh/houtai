@@ -19,6 +19,7 @@ export default {
     {path : 'swipers', component: () => import('@/components/Swipers')},
     {path : 'notice', component: () => import('@/components/Notice')},
     {path : 'repair', component: () => import('@/components/Repair')},
+    {path : 'merchants', component: () => import('@/components/Merchants')},
     bill,
     vip,
     community,
