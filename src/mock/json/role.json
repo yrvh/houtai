@@ -1,0 +1,163 @@
+{
+  "data": [
+    {
+      "id":0,
+      "roleName":"主管",
+      "note": "这是主管理",
+      "children":[
+        {
+          "id":10,
+          "authName": "小区管理",
+          "children":[
+            {
+              "id":20,
+              "authName": "小区列表",
+              "children":[
+                {
+                  "id":30,
+                  "authName": "小区列表查询"
+                },
+                {
+                  "id":31,
+                  "authName": "添加小区"
+                },
+                {
+                  "id":32,
+                  "authName": "删除小区"
+                },
+                {
+                  "id":33,
+                  "authName": "修改小区"
+                }
+              ]
+            },
+            {
+              "id":21,
+              "authName": "设置小区",
+              "children":[
+                {
+                  "id":34,
+                  "authName": "修改小区设置"
+                },
+                {
+                  "id":35,
+                  "authName": "添加小区设置"
+                }
+                  ]
+                }
+              ]
+        },
+        {
+          "id":11,
+          "authName": "交易管理",
+          "children":[
+            {
+              "id":22,
+              "authName": "后台缴费",
+              "children":[
+                {
+                  "id":36,
+                  "authName": "后台缴费查询"
+                },
+                {
+                  "id":37,
+                  "authName": "后台缴费修改"
+                }
+              ]
+            },
+            {
+              "id":23,
+              "authName": "交易列表",
+              "children":[
+                {
+                  "id":38,
+                  "authName": "交易列表查询"
+                },
+                {
+                  "id":39,
+                  "authName": "交易列表删除"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id":2,
+      "roleName":"财务",
+      "note": "这是财务",
+      "children":[
+        {
+          "id":10,
+          "authName": "小区管理",
+          "children":[
+            {
+              "id":20,
+              "authName": "小区列表",
+              "children":[
+                {
+                  "id":30,
+                  "authName": "小区列表查询"
+                },
+                {
+                  "id":31,
+                  "authName": "添加小区"
+                }
+              ]
+            },
+            {
+              "id":21,
+              "authName": "设置小区",
+              "children":[
+                {
+                  "id":34,
+                  "authName": "查询小区设置"
+                },
+                {
+                  "id":35,
+                  "authName": "添加小区设置"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id":11,
+          "authName": "交易管理",
+          "children":[
+            {
+              "id":22,
+              "authName": "后台缴费",
+              "children":[
+                {
+                  "id":36,
+                  "authName": "后台缴费查询"
+                },
+                {
+                  "id":37,
+                  "authName": "后台缴费修改"
+                }
+              ]
+            },
+            {
+              "id":23,
+              "authName": "交易列表",
+              "children":[
+                {
+                  "id":38,
+                  "authName": "交易列表查询"
+                },
+                {
+                  "id":39,
+                  "authName": "交易列表删除"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "msg": "OK"
+}

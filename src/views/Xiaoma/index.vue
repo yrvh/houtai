@@ -204,7 +204,7 @@
           </el-menu-item>
           <el-menu-item index="/xiaoma/permission/permis" @click="saveNavState('/xiaoma/permission/permis')">
             <template slot="title">
-              <span>权限管理</span>
+              <span>权限列表</span>
             </template>
           </el-menu-item>
         </el-submenu>
@@ -259,7 +259,7 @@
       return {
         isActivated: false,
         isCollapse: false,
-        activePath: '/xiaoma/permission/account',   // 保存被激活的连接地址
+        activePath: '',   // 保存被激活的连接地址
       }
     },
     created() {

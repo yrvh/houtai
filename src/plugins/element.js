@@ -5,7 +5,7 @@ import { Button, Form, FormItem, Input, Container,
         TableColumn, Switch, Tooltip, Pagination,
         Dialog, DatePicker, Select, Option,OptionGroup,
         Breadcrumb, BreadcrumbItem, Message, MessageBox,Badge,
-        Radio,Upload,Steps,Step} from 'element-ui'
+        Radio,Upload,Steps,Step,Tag} from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Form)
@@ -38,7 +38,7 @@ Vue.use(Radio)
 Vue.use(Upload)
 Vue.use(Steps)
 Vue.use(Step)
-
+Vue.use(Tag)
 
 
 Vue.prototype.$message = Message   // 为vue原型挂载message

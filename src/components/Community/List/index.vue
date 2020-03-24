@@ -31,7 +31,7 @@
               :page-sizes="[5, 8, 15, 20, 30]"
               :page-size="queryInfo.pagesize"
               layout="total, sizes, prev, pager, next, jumper"
-              :total="total">
+              :total="list_toal">
       </el-pagination>
     </div>
 
@@ -107,7 +107,7 @@
           pagesize: 2,   // 当前每页显示多少条数据
         },
         communicateList: [],   // 小区列表
-        total: 0,   // 小区总数据条数
+        list_toal: 0,   // 小区总数据条数
         addDialogVisible: false,   // 控制添加小区的显示与隐藏
         addForm: {   // 添加小区时的数据对象
           name: '',
@@ -158,7 +158,7 @@
         const { data: comm } =await this.$axios.get('/api/communicate')   //,{ params: this.queryInfo}
         if(comm.meta.status !==200) return this.$message.error('获取小区列表失败!~')
         this.communicateList = comm.data.communicates
-        this.total = comm.data.total
+        this.list_toal = comm.data.total
       },
       resetCommunicateList(obj){   // 搜索框点击重置按钮时触发的事件
         this.clearObj(obj)   // 调用全局函数清空对象

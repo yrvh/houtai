@@ -2,7 +2,7 @@
 <template>
   <main-card2 title1="轮播图">
     <div slot="content">
-      <div class="swipers-add">
+      <div class="swipers-top">
         <el-button class="button-primary" type="primary" size="small" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>添加轮播图</el-button>
       </div>
 
@@ -209,6 +209,6 @@
 </script>
 
 <style scoped>
-  .swipers-add{ margin-top: 20px;}
+  .swipers-top{ }
 
 </style>

@@ -33,7 +33,7 @@ import axios from 'axios'
 // 自定义全局函数, 用于清空对象
 Vue.prototype.clearObj = function(obj) {
   for(let k in obj) {
-    if(k!='pagesize' && k!='pagenum'){
+    if(k!='pageSize' && k!='pageNo'){
       obj[k] = ''
     }
   }

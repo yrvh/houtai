@@ -2,20 +2,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import login from './login'
-import login1 from './login1'
-import login2 from './login2'
 import xiaoma from './xiaoma'
 
 Vue.use(VueRouter);
 
 const routes = [
   login,
-  login1,
-  login2,
   xiaoma,
   {
     path: '/*',
-    redirect: '/login1'
+    redirect: '/login'
   }
 ];
 

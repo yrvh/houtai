@@ -2,63 +2,6 @@
 <template>
   <main-card2 title1="权限管理" title2="权限管理">
     <div slot="content">
-      <div class="permis-top">
-        <el-row :gutter="6">
-          <el-col :span="6">
-            <el-row :gutter="2">
-              <el-col :span="4.5"><span>小区名称</span></el-col>
-              <el-col :span="18">
-                <el-select v-model="queryInfo.community" allow-create filterable clearable placeholder="全部小区">
-                  <el-option
-                      v-for="item in comm_options"
-                      :key="item.comm_key"
-                      :label="item.label"
-                      :value="item.comm_key">
-                  </el-option>
-                </el-select>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="5">
-            <el-row :gutter="4" >
-              <el-col :span="5.5"><span>标题</span></el-col>
-              <el-col :span="18">
-                <el-input
-                    placeholder="请输入公告标题"
-                    v-model="queryInfo.permis_title"
-                    clearable>
-                </el-input>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="7">
-            <el-row :gutter="4" >
-              <el-col :span="5.5"><span>发布时间</span></el-col>
-              <el-col :span="6">
-                <el-date-picker
-                    v-model="queryInfo.permis_date"
-                    type="date"
-                    placeholder="选择日期">
-                </el-date-picker>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="2">
-            <el-button type="danger" class="button-warning permis-button" @click="getpermisList">查询</el-button>
-          </el-col>
-          <el-col :span="2">
-            <el-button type="info" class="button-info permis-button" @click="resetPermisList(queryInfo)">重置</el-button>
-          </el-col>
-        </el-row>
-        <div class="second-line">
-          <el-button class="button-primary" size="small" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>新建账号</el-button>
-        </div>
-      </div>
-
-
       <!--   账号列表展示区   -->
       <el-table :data="permis_list" stripe :header-cell-style="getRowClass">
         <el-table-column label="序号" type="index"></el-table-column>
