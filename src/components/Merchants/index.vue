@@ -111,7 +111,7 @@
     </el-dialog>
 
     <!--  注册商户主账号的 对话框 -->
-    <el-dialog title="修改商户信息" :visible.sync="regiDialogVisible" width="40%" @close="regiDialogClosed">
+    <el-dialog title="注册商户信息" :visible.sync="regiDialogVisible" width="40%" @close="regiDialogClosed">
 
       <el-form :model="regiform" :rules="formRules" ref="regiFormRef" label-width="80px">
         <el-form-item label="物业ID">
@@ -224,7 +224,7 @@
         editForm: {},   // 修改商户对话框的数据对象
 
         regiDialogVisible: false,   // 注册商户对话框的显示与隐藏
-        regiform: {
+        regiform: {   // 注册商户对话框的数据对象
           merchantId: '',
           accountName: '',
           email: '',
@@ -233,7 +233,7 @@
           password: '',
           type: 2,
           grade: 1,
-        }   // 注册商户对话框的数据对象
+        }
       }
     },
     created() {
@@ -363,8 +363,7 @@
         this.getMerchantList()   // 重新获取商户的列表
       },
       //==================================================================注册
-      async showRegiDialog(id) {   // 点击修改按钮, 展示注册页
-        console.log(id)
+      async showRegiDialog(id) {   // 展示注册页
         this.regiform.merchantId = id
         this.regiDialogVisible = true
       },

@@ -3,48 +3,17 @@
   <main-card2 title1="权限管理" title2="账号管理">
     <div slot="content">
       <div class="account-top">
-        <el-row :gutter="6">
-          <el-col :span="6">
+        <el-row :gutter="2">
+          <el-col :span="7">
             <el-row :gutter="2">
-              <el-col :span="4.5"><span>小区名称</span></el-col>
-              <el-col :span="18">
-                <el-select v-model="queryInfo.community" allow-create filterable clearable placeholder="全部小区">
-                  <el-option
-                      v-for="item in comm_options"
-                      :key="item.comm_key"
-                      :label="item.label"
-                      :value="item.comm_key">
-                  </el-option>
-                </el-select>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="5">
-            <el-row :gutter="4" >
-              <el-col :span="5.5"><span>姓名</span></el-col>
-              <el-col :span="18">
+              <el-col :span="5"><span>账号ID</span></el-col>
+              <el-col :span="17">
                 <el-input
-                    placeholder="请输入姓名"
-                    v-model="queryInfo.accountName"
-                    clearable>
+                    placeholder="请输入账号ID"
+                    v-model="queryInfo.accountId"
+                    clearable
+                    @clear="getAccountList">
                 </el-input>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="6">
-            <el-row :gutter="2">
-              <el-col :span="4.5"><span>角色</span></el-col>
-              <el-col :span="18">
-                <el-select v-model="queryInfo.accountRole" allow-create filterable clearable placeholder="请选择角色">
-                  <el-option
-                      v-for="item in role_options"
-                      :key="item.role_key"
-                      :label="item.label"
-                      :value="item.role_key">
-                  </el-option>
-                </el-select>
               </el-col>
             </el-row>
           </el-col>
@@ -56,9 +25,7 @@
             <el-button class="button-info reset-button" @click="resetAccountList(queryInfo)">重置</el-button>
           </el-col>
         </el-row>
-        <div class="second-line">
-          <el-button class="button-primary" size="small" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>新建账号</el-button>
-        </div>
+        <el-button class="account-add button-primary" size="small" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>新建账号</el-button>
       </div>
 
 
@@ -72,7 +39,8 @@
         <el-table-column label="操作" min-width="100px">
           <template slot-scope="scope">
             <span @click="showDetailDialog(scope.row)" class="active-font font-success">详情?</span>
-            <span @click="showEditDialog(scope.row.id)" class="active-font font-primary">修改</span>
+            <span @click="showEditDialog(scope.row.id)" class="active-font font-primary">修改密码</span>
+            <span @click="" class="active-font font-success">重置密码</span>
             <span @click="removeAccount(scope.row.id)" class="active-font font-warning">删除</span>
           </template>
         </el-table-column>
@@ -82,9 +50,9 @@
       <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="queryInfo.pagenum"
+          :current-page="queryInfo.pageNo"
           :page-sizes="[5, 8, 15, 20, 30]"
-          :page-size="queryInfo.pagesize"
+          :page-size="queryInfo.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="accountTotal">
       </el-pagination>
@@ -165,11 +133,11 @@
             { min: 3, max: 30, message: '长度在3 ~ 30个字符之间!~',trigger: 'blur'}
           ],
           merchantId: [
-            {required: true, message: '请输入商户ID!~', trigger: 'blur'},
+            {required: false, message: '请输入商户ID!~', trigger: 'blur'},
             { min: 2, max: 32, message: '长度在2 ~ 32个字符之间!~',trigger: 'blur'}
           ],
           communityId: [
-            {required: true, message: '请输入小区ID!~', trigger: 'blur'},
+            {required: false, message: '请输入小区ID!~', trigger: 'blur'},
             { min: 1, max: 32, message: '长度在1 ~ 32个字符之间!~',trigger: 'blur'}
           ],
           roleId: [
@@ -190,35 +158,11 @@
           ]
         },
         
-        queryInfo: {   // 获取账号信息时 传的参数对象
-          query: '',   // 查询参数,
-          community: '',   // 查询参数,小区
-          accountName: '',   // 查询参数,账号姓名
-          accountRole: '',   // 查询参数,账号角色
-          pagenum: 1,   // 当前页码
-          pagesize: 2,   // 当前每页显示多少条数据
+        queryInfo: {
+          accountId: '',
+          pageNo: 1,   // 当前页码
+          pageSize: 5,   // 当前每页显示多少条数据
         },
-
-        comm_options:  [{   // 小区数据下拉菜单列表
-          comm_key: '小区1',
-          label: '一小区'
-        }, {
-          comm_key: '小区2',
-          label: '二小区'
-        }, {
-          comm_key: '选项3',
-          label: '三小区'
-        }],
-        role_options:  [{   // 角色数据下拉菜单列表
-          role_key: '角色1',
-          label: '小马'
-        }, {
-          role_key: '角色2',
-          label: '账号物业'
-        }, {
-          role_key: '角色3',
-          label: '小区'
-        }],
         accountList: [],   // 存储请求回来的 账号列表
         accountTotal: 0,   // 账号列表的总数
         
@@ -244,19 +188,30 @@
       }
     },
     created() {   // 生命周期函数, 用于初始化页面
-      this.getAccountList()   // 调用该函数初始化账号的列表区域
       this.addForm.type = window.sessionStorage.getItem('TYPE')
-      console.log(this.addForm.type)
+      this.getAccountList()   // 调用该函数初始化账号的列表区域
     },
 
 
     methods: {
       async getAccountList() {   //获取账号列表
-        const { data: res } =await this.$axios.post('/account/listAccount')   //,{ params: this.queryInfo}
+        const { data:res } =await this.$axios({
+          url:'/ponyproperty-manager/account/listAccount',
+          method: 'post',
+          transformRequest: [function (data) {
+            return Qs.stringify(data)
+          }],
+          data: {
+            aid: this.queryInfo.accountId
+          }
+        })
         console.log(res)
-        if(res.meta.status !==200) return this.$message.error('获取账号列表失败!~')
-        this.accountList = res.data.communicates
-        this.accountTotal = res.data.total
+        if(res.code =='3000') return this.$message.warning('账号列表无数据!~')
+        else if(res.msg !== 'OK') return this.$message.error('获取账号列表失败!~')
+        else {
+          this.accountList = res.data
+          this.accountTotal = res.data.length || 0
+        }
       },
       resetAccountList(obj){   // 点击重置按钮时触发的事件
         this.clearObj(obj)   // 调用全局函数清空对象
@@ -268,12 +223,12 @@
         }
         else { return ''}
       },
-      handleSizeChange(newSize) {   // 分页显示: 监听pagesize改变的函数
-        this.queryInfo.pagesize = newSize
+      handleSizeChange(newSize) {   // 分页显示: 监听pageSize改变的函数
+        this.queryInfo.pageSize = newSize
         this.getAccountList()
       },
       handleCurrentChange(newPage) {   // 分页显示: 监听页码值改变的函数
-        this.queryInfo.pagenum = newPage
+        this.queryInfo.pageNo = newPage
         this.getAccountList()
       },
       addDialogClosed() {   // 监听添加账号的对话框关闭时触发的事件
@@ -281,13 +236,13 @@
       },
       addAccount() {   // 点击确定按钮, 添加新账号
         this.$refs.addFormRef.validate(async (valid) => {
-          console.log(this.addForm)
           if(!valid) return
           // 如果校验成功,, 可以发起网络请求. 来添加账号
           const {data:res} = await this.$axios({
             url:'/ponyproperty-manager/account/addAccount',
             method: 'post',
             transformRequest: [function (data) {
+              console.log(data)
               return Qs.stringify(data)
             }],
             data: {
@@ -296,9 +251,10 @@
               merchantId: this.addForm.merchantId,
               roleId: this.addForm.roleId,
               password: this.addForm.password,
-              type: this.addForm.type
+              type: 2
             }
           })
+          console.log(res)
           if(res.msg!=='OK') return this.$message.error('添加账号失败!~')
           this.$message.success('添加账号成功!~')
           this.addDialogVisible = false   // 隐藏对话框
@@ -372,6 +328,9 @@
 </script>
 
 <style scoped>
+  .account-top { position: relative; }
+  .account-add { position: absolute; right: 0; top: 0;}
+
   .el-row .el-col { line-height: 38px;}
   .el-row span { font-weight: 600; font-size: 14px;}
 </style>

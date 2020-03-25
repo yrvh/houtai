@@ -89,13 +89,18 @@
               password: this.loginForm.password
             }
           })
+          console.log(res)
           if(res.msg !== 'OK') return this.$message.error('登录失败!~')
           this.$message.success('登录成功!~')
-          // window.sessionStorage.setItem('token',99)   // 将token存储在本地
-          this.$router.push('/xiaoma/permission/account')   // 编程式导航
           window.sessionStorage.setItem('activePath','/xiaoma/permission/account')  // 设置当前被激活的 连接地址
           window.sessionStorage.setItem('TYPE',res.data.type)   // 保存账号类型(isv, 物业, 小区)
           window.sessionStorage.setItem('GRADE',res.data.grade)  // 保存账号等级( 主账号, 子账号)
+          window.sessionStorage.setItem('MERCHANTID',res.data.merchant_id)   // 保存merchantId值
+          window.sessionStorage.setItem('ACCOUNTID',res.data.account_id)   // 保存账户Id
+          window.sessionStorage.setItem('ACCOUNTNAME',res.data.account_name)   // 保存账户名
+          window.sessionStorage.setItem('STOREID',res.data.store_id)   // 保存storeId
+
+          this.$router.push('/xiaoma/permission/account')   // 编程式导航
         })
       },
     },

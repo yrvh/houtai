@@ -3,31 +3,70 @@
   <main-card2 title1="权限管理" title2="角色管理">
     <div slot="content">
       <div class="role-top">
-        <el-button class="button-primary" size="small" @click="addDialogVisible = true"><i class="iconfont icon-add"></i>添加角色</el-button>
+<!--        <el-row :gutter="6">-->
+<!--          <el-col :span="6">-->
+<!--            <el-row :gutter="2">-->
+<!--              <el-col :span="4.5"><span>小区名称</span></el-col>-->
+<!--              <el-col :span="18">-->
+<!--                <el-select v-model="queryInfo.community" allow-create filterable clearable placeholder="全部小区">-->
+<!--                  <el-option-->
+<!--                      v-for="item in comm_options"-->
+<!--                      :key="item.comm_key"-->
+<!--                      :label="item.label"-->
+<!--                      :value="item.comm_key">-->
+<!--                  </el-option>-->
+<!--                </el-select>-->
+<!--              </el-col>-->
+<!--            </el-row>-->
+<!--          </el-col>-->
+
+<!--          <el-col :span="5">-->
+<!--            <el-row :gutter="4" >-->
+<!--              <el-col :span="5.5"><span>姓名</span></el-col>-->
+<!--              <el-col :span="18">-->
+<!--                <el-input-->
+<!--                    placeholder="请输入姓名"-->
+<!--                    v-model="queryInfo.accountName"-->
+<!--                    clearable>-->
+<!--                </el-input>-->
+<!--              </el-col>-->
+<!--            </el-row>-->
+<!--          </el-col>-->
+
+<!--          <el-col :span="6">-->
+<!--            <el-row :gutter="2">-->
+<!--              <el-col :span="4.5"><span>角色</span></el-col>-->
+<!--              <el-col :span="18">-->
+<!--                <el-select v-model="queryInfo.accountRole" allow-create filterable clearable placeholder="请选择角色">-->
+<!--                  <el-option-->
+<!--                      v-for="item in role_options"-->
+<!--                      :key="item.role_key"-->
+<!--                      :label="item.label"-->
+<!--                      :value="item.role_key">-->
+<!--                  </el-option>-->
+<!--                </el-select>-->
+<!--              </el-col>-->
+<!--            </el-row>-->
+<!--          </el-col>-->
+
+<!--          <el-col :span="2">-->
+<!--            <el-button class="button-warning search-button" @click="getAccountList">查询</el-button>-->
+<!--          </el-col>-->
+<!--          <el-col :span="2">-->
+<!--            <el-button class="button-info reset-button" @click="resetAccountList(queryInfo)">重置</el-button>-->
+<!--          </el-col>-->
+<!--        </el-row>-->
       </div>
 
 
       <!--   角色列表展示区   -->
       <el-table :data="roleList" stripe :header-cell-style="getRowClass">
-        <el-table-column type="expand">
-          <template slot-scope="scope">
-            <el-row v-for="(item1,i1) in scope.row.children" :key="item1.id">
-              <el-col :span="5">
-                <el-tag>{{ item1.authName }}</el-tag>
-              </el-col>
-              <el-col :span="19"></el-col>
-            </el-row>
-            <pre>{{ scope.row }}</pre>
-          </template>
-        </el-table-column>
         <el-table-column label="序号" type="index"></el-table-column>
         <el-table-column label="角色" prop="roleName"></el-table-column>
         <el-table-column label="角色描述" prop="note"></el-table-column>
         <el-table-column label="操作" min-width="100px">
           <template slot-scope="scope">
-            <span @click="showDetailDialog(scope.row)" class="active-font font-primary">修改</span>
-            <span @click="showDetailDialog(scope.row)" class="active-font font-warning">删除</span>
-            <span @click="showDetailDialog(scope.row)" class="active-font font-success">分配权限</span>
+            <span @click="showDetailDialog(scope.row)" class="active-font font-primary">详情</span>
           </template>
         </el-table-column>
       </el-table>
@@ -36,9 +75,9 @@
       <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="queryInfo.pagenum"
+          :current-page="queryInfo.pageNo"
           :page-sizes="[5, 8, 15, 20, 30]"
-          :page-size="queryInfo.pagesize"
+          :page-size="queryInfo.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="roleTotal">
       </el-pagination>
@@ -58,8 +97,8 @@
           community: '',   // 查询参数,小区
           roleName: '',   // 查询参数,角色名
           role: '',   // 查询参数,角色
-          pagenum: 1,   // 当前页码
-          pagesize: 2,   // 当前每页显示多少条数据
+          pageNo: 1,   // 当前页码
+          pageSize: 2,   // 当前每页显示多少条数据
           type: '',
         },
 
@@ -95,21 +134,19 @@
 
     methods: {
       async getRoleList() {   //获取角色列表
-        const { data:res } = await this.$axios.get('api/role')
-        // const {data:res} =await this.$axios({
-        //   url:'/ponyproperty-manager/role/listRoles',
-        //   method: 'post',
-        //   transformRequest: [function (data) {
-        //     return Qs.stringify(data)
-        //   }],
-        //   data: {
-        //     roleType: this.queryInfo.type
-        //   }
-        // })
+        const {data:res} =await this.$axios({
+          url:'/ponyproperty-manager/role/listRoles',
+          method: 'post',
+          transformRequest: [function (data) {
+            return Qs.stringify(data)
+          }],
+          data: {
+            roleType: this.queryInfo.type
+          }
+        })
         if(res.msg !=='OK') return this.$message.error('获取角色列表失败!~')
         this.roleList = res.data
         this.roleTotal = this.roleList.length || 0
-        console.log(this.roleList)
       },
       resetRoleList(obj){   // 点击重置按钮时触发的事件
         this.clearObj(obj)   // 调用全局函数清空对象
@@ -121,12 +158,12 @@
         }
         else { return ''}
       },
-      handleSizeChange(newSize) {   // 分页显示: 监听pagesize改变的函数
-        this.queryInfo.pagesize = newSize
+      handleSizeChange(newSize) {   // 分页显示: 监听pageSize改变的函数
+        this.queryInfo.pageSize = newSize
         this.getRoleList()
       },
       handleCurrentChange(newPage) {   // 分页显示: 监听页码值改变的函数
-        this.queryInfo.pagenum = newPage
+        this.queryInfo.pageNo = newPage
         this.getRoleList()
       },
       showDetailDialog() {   // 点击详情时的,处理函数
@@ -140,7 +177,4 @@
 
   .el-row .el-col { line-height: 38px;}
   .el-row span { font-weight: 600; font-size: 14px;}
-  .el-tag { margin: 7px; }
-  .bd-top { border-top: 1px solid #EEE; }
-  .bd-bottom { border-bottom: 1px solid #EEE; }
 </style>

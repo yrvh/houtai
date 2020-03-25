@@ -218,8 +218,8 @@
       <!-- 页面头部区域 -->
       <el-header height="76px">
         <div class="header-left">
-          <i class="iconfont icon-header-list"></i>
-          <i class="iconfont icon-header-refresh" @click="logout"></i>
+          <i class="iconfont icon-header-list" @click="logout"></i>
+          <i class="refresh-fw iconfont icon-header-refresh" @click="refreshPage"></i>
         </div>
         <div class="header-right">
           <div class="header-menu">
@@ -267,17 +267,20 @@
       this.activePath = window.sessionStorage.getItem('activePath')
     },
     methods: {
-      async logout() {
+      async logout() {   // 退出登录的事件
         const { data:res } = await this.$axios.get('/ponyproperty-manager/login/logout')
-        console.log(res)
+        if(res.msg !== 'OK') return this.$message.error('退出失败!~')
         window.sessionStorage.clear();   // 清除token, 强制跳转到登录页 
         this.$router.push('/login');
       },
+      refreshPage() {
+        window.location.reload()
+      },
       overChangeColor() {
-        this.isActivated = true;
+        this.isActivated = true
       },
       leaveChangeColor() {
-        this.isActivated = false;
+        this.isActivated = false
       },
       toggleCollapse() {   // 点击按钮,折叠菜单
         this.isCollapse = !this.isCollapse
@@ -311,7 +314,7 @@
 
   .headerMain { width: 100%; height: 100%;}
   .el-header { height: 76px; width: 100%; border-bottom: 1px solid #eee; background-color: #FFF; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;}
-  .header-left { color: #333; line-height: 38px; }
+  .header-left { color: #666; line-height: 38px; }
   .header-left i {margin-right: 30px; cursor: pointer; font-size: 22px;}
 
   /*.header-right {background-color: crimson; }*/
@@ -320,6 +323,7 @@
   .header-admin { line-height: 38px; margin-left:20px; float: right; cursor: pointer;}
   .header-admin i{ font-size: 20px; color: #ccc; margin: 0 0 0 5px;}
   .header-admin span{ color: #999; margin-left: 10px;}
-
+  .el-header .iconfont:hover{ color: #235FED; }
+  .refresh-fw { font-weight: 600; }
   .el-main { background-color: #eee; padding: 20px; }
 </style>
