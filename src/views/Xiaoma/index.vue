@@ -83,9 +83,9 @@
           </el-menu-item>
         </el-submenu>
 
-        <el-menu-item index="/xiaoma/notice" @click="saveNavState('/xiaoma/notice')">
+        <el-menu-item index="/xiaoma/announcement" @click="saveNavState('/xiaoma/Announcement')">
           <template slot="title">
-            <i class="iconfont icon-aside-notice"></i>
+            <i class="iconfont icon-aside-announcement"></i>
             <span>公告管理</span>
           </template>
         </el-menu-item>

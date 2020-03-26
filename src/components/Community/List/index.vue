@@ -93,7 +93,7 @@
 
       <span slot="footer" class="dialog-footer">
         <el-button class="button-info"  @click="addDialogVisible = false">取 消</el-button>
-        <el-button class="button-primary" @click="addComm" type="primary">确 定</el-button>
+        <el-button class="button-primary" @click="addComm">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -129,7 +129,7 @@
 
       <span slot="footer" class="dialog-footer">
         <el-button class="button-info" @click="editDialogVisible = false">取 消</el-button>
-        <el-button class="button-primary" @click="editComm" type="primary">确 定</el-button>
+        <el-button class="button-primary" @click="editComm">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -163,7 +163,7 @@
 
       <span slot="footer" class="dialog-footer">
         <el-button class="button-info" @click="regiDialogVisible = false">取 消</el-button>
-        <el-button class="button-primary" @click="regiCommunity" type="primary">确 定</el-button>
+        <el-button class="button-primary" @click="regiCommunity">确 定</el-button>
       </span>
     </el-dialog>
   </main-card2>
@@ -340,18 +340,20 @@
             url:'/ponyproperty-manager/community/addCommunity',
             method: 'post',
             transformRequest: [function (data) {
+              console.log(data)
               return Qs.stringify(data)
             }],
             data: {
               communityName: this.addForm.communityName,
               communityAddr: this.addForm.communityAddr,
-              merchantId: this.addForm.merchantId,
+              merchantId: this.queryInfo.merchantId,
               accuracy: this.addForm.accuracy,
               autoFeebill: this.addForm.autoFeebill,
               isDxjf: this.addForm.isDxjf,
               isReview: this.addForm.isReview
             }
           })
+          console.log(res)
           if(res.msg !=='OK') return this.$message.error('添加小区失败!~')
           this.$message.success('添加小区成功')
           this.addDialogVisible = false   // 隐藏添加小区的对话框

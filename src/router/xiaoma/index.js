@@ -17,7 +17,7 @@ export default {
   children: [
     {path : 'home', component: () => import('@/components/Home')},
     {path : 'swipers', component: () => import('@/components/Swipers')},
-    {path : 'notice', component: () => import('@/components/Notice')},
+    {path : 'announcement', component: () => import('@/components/Announcement')},
     {path : 'repair', component: () => import('@/components/Repair')},
     {path : 'merchants', component: () => import('@/components/Merchants')},
     bill,

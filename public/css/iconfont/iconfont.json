@@ -6,6 +6,20 @@
   "description": "商城后台的icon",
   "glyphs": [
     {
+      "icon_id": "1048857",
+      "name": "账号",
+      "font_class": "icon_account",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "4922802",
+      "name": "账号安全",
+      "font_class": "zhanghaoanquan",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
       "icon_id": "13332680",
       "name": "首页-1",
       "font_class": "shouye-",

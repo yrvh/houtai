@@ -4,6 +4,14 @@ import router from './router'
 import store from './store'
 import './plugins/element.js'
 
+// 富文本编辑框
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+Vue.use(VueQuillEditor)
+
 // 导入echarts插件
 import './echarts/Chart.min.js'
 
